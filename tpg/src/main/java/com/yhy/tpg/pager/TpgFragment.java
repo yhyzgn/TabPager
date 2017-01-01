@@ -1,0 +1,177 @@
+package com.yhy.tpg.pager;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.yhy.tpg.R;
+import com.yhy.tpg.dispatch.DispatchLoading;
+import com.yhy.tpg.config.PagerConfig;
+import com.yhy.tpg.utils.ViewUtils;
+
+/**
+ * 所有页面的父类
+ * Created by 颜洪毅 on 2016/12/22 0022.
+ */
+public abstract class TpgFragment extends Fragment {
+    //每个页面中分发页面的对象
+    private DispatchLoading mDispatch;
+
+    private PagerConfig mConfig;
+
+    /**
+     * 设置当前页面的一些参数，比如错误页面之类等
+     *
+     * @param config 页面参数
+     */
+    public void setPagerConfig(PagerConfig config) {
+        mConfig = config;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
+        //如果mDispatch为空，就创建，否则就不创建。
+        //由于ViewPager的页面缓存特性，它只会缓存当前页面及其前后各一页（共3页）的页面。
+        //当mDispatch不为空时，直接把mDispatc返回就能达到不重复创建mDispatch的效果。
+        if (null == mDispatch) {
+            //创建mDispatch对象，实现其抽象方法，并回调页面中相应的抽象方法
+            mDispatch = new DispatchLoading(getContext()) {
+                @Override
+                public View getSuccessView() {
+                    return TpgFragment.this.getSuccessView();
+                }
+
+                @Override
+                public View getLoadingView() {
+                    return TpgFragment.this.getLoadingView();
+                }
+
+                @Override
+                public View getErrorView() {
+                    return TpgFragment.this.getErrorView();
+                }
+
+                @Override
+                public View getEmptyView() {
+                    return TpgFragment.this.getEmptyView();
+                }
+
+                @Override
+                public void initData() {
+                    TpgFragment.this.initData();
+                }
+            };
+        } else {
+            //由于一个View不能同时有两个parent，而当mDispatch不为空时说明当前页面（View）已经添加过给其他parent了，
+            //所以这里需要把mDispatch从原来的parent中移除
+            ViewUtils.removeFromParent(mDispatch);
+        }
+        return mDispatch;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //如果需要首先加载该页面数据，就自动调用shouldLoadData()方法加载数据
+        if (shouldLoadDataAtFirst()) {
+            shouldLoadData();
+        }
+    }
+
+    /**
+     * 获取加载成功页面
+     *
+     * @return 加载成功页面
+     */
+    protected abstract View getSuccessView();
+
+    /**
+     * 获取加载中页面
+     * 先从全局配置中获取，如果未设置的话再使用默认页面
+     *
+     * @return 加载中页面
+     */
+    protected View getLoadingView() {
+        if (null != mConfig) {
+            int loadingViewResId = mConfig.getLoadingViewResId();
+            if (loadingViewResId > -1) {
+                return LayoutInflater.from(mConfig.getContext()).inflate(loadingViewResId, null);
+            }
+        }
+        return LayoutInflater.from(getContext()).inflate(R.layout.layout_def_loading, null);
+    }
+
+    /**
+     * 获取加载错误页面
+     * 先从全局配置中获取，如果未设置的话再使用默认页面
+     *
+     * @return 错误页面
+     */
+    protected View getErrorView() {
+        if (null != mConfig) {
+            int errorViewResId = mConfig.getErrorViewResId();
+            if (errorViewResId > -1) {
+                return LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
+            }
+        }
+        return LayoutInflater.from(getContext()).inflate(R.layout.layout_def_error, null);
+    }
+
+    /**
+     * 获取空数据页面
+     * 先从全局配置中获取，如果未设置的话再使用默认页面
+     *
+     * @return 空数据页面
+     */
+    protected View getEmptyView() {
+        if (null != mConfig) {
+            int emptyViewResId = mConfig.getEmptyViewResId();
+            if (emptyViewResId > -1) {
+                return LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
+            }
+        }
+        return LayoutInflater.from(getContext()).inflate(R.layout.layout_def_empty, null);
+    }
+
+    /**
+     * 初始化数据，DispatchLoading中的initData()方法就回调该方法。
+     * 在子类中实现该方法。
+     * 注意：必须在该方法中加载数据完成(无论成功与否)以后调用refresh(DispatchLoading.STATE state)
+     * 方法刷新加载结果状态，否则不会自动更新UI。
+     */
+    protected abstract void initData();
+
+    /**
+     * 判断是否应该加载数据(交给mDispatch处理)
+     */
+    public void shouldLoadData() {
+        if (null != mDispatch) {
+            mDispatch.shouldLoadData();
+        }
+    }
+
+    /**
+     * 是否需要首先加载该页面（比如第一个页面，子类重写该方法，并返回true；其他页面无需重写）
+     * 由于加载数据时在ViewPager的页面切换时加载的，而第一次加载页面时不会引起页面切换，
+     * 故不会引起数据加载，所以这里需要判断是不是第一页，是的话就在onActivityCreated方法中加载数据。
+     *
+     * @return 是否需要首先加载该页面
+     */
+    public boolean shouldLoadDataAtFirst() {
+        return false;
+    }
+
+    /**
+     * 刷新状态，交给mDispatch处理
+     *
+     * @param state 页面将要显示的黄台
+     */
+    public void refresh(DispatchLoading.STATE state) {
+        if (null != mDispatch) {
+            mDispatch.refresh(state);
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TpgViewAttrs">
+        <!--整个Tab栏的高度，默认为：48dp-->
+        <attr name="tab_height" format="dimension" />
+        <!--整个Tab栏的背景颜色，默认为：透明-->
+        <attr name="tab_bg_color" format="color" />
+        <!--普通状态下选项卡字体颜色，默认为：#aaff4400-->
+        <attr name="tab_text_normal_color" format="color" />
+        <!--选中状态下选项卡字体颜色，默认为：#ffff2200-->
+        <attr name="tab_text_selected_color" format="color" />
+        <!--选项指示条的颜色，默认为：#ffff2200-->
+        <attr name="tab_indicator_color" format="color" />
+        <!--选项指示条的高度，默认为：3dp-->
+        <attr name="tab_indicator_height" format="dimension" />
+        <!--TabLayout的TabMode，默认为：MODE_SCROLLABLE-->
+        <attr name="tab_mode" format="integer">
+            <enum name="scrollable" value="0" />
+            <enum name="fixed" value="1" />
+        </attr>
+        <!--TabLayout的TabGravity，默认为：GRAVITY_FILL-->
+        <attr name="tab_gravity" format="integer">
+            <enum name="fill" value="0" />
+            <enum name="center" value="1" />
+        </attr>
+        <!--是否显示可扩展图标，默认为：VISIBLE-->
+        <attr name="expand_visible" format="integer">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="4" />
+            <enum name="gone" value="8" />
+        </attr>
+        <!--可扩展图标资源-->
+        <attr name="expand_icon" format="reference" />
+    </declare-styleable>
+</resources>
