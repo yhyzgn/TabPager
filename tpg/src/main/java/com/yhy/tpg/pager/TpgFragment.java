@@ -1,7 +1,9 @@
 package com.yhy.tpg.pager;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +103,9 @@ public abstract class TpgFragment extends Fragment {
                 return LayoutInflater.from(mConfig.getContext()).inflate(loadingViewResId, null);
             }
         }
-        return LayoutInflater.from(getContext()).inflate(R.layout.layout_def_loading, null);
+        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.layout_def_loading,
+                null);
+        return loadingView;
     }
 
     /**
@@ -117,7 +121,14 @@ public abstract class TpgFragment extends Fragment {
                 return LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
             }
         }
-        return LayoutInflater.from(getContext()).inflate(R.layout.layout_def_error, null);
+        View errorView = LayoutInflater.from(getContext()).inflate(R.layout.layout_def_error, null);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shouldLoadData();
+            }
+        });
+        return errorView;
     }
 
     /**
@@ -133,7 +144,14 @@ public abstract class TpgFragment extends Fragment {
                 return LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
             }
         }
-        return LayoutInflater.from(getContext()).inflate(R.layout.layout_def_empty, null);
+        View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.layout_def_empty, null);
+        emptyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shouldLoadData();
+            }
+        });
+        return emptyView;
     }
 
     /**

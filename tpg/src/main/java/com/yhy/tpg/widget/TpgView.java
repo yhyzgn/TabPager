@@ -105,7 +105,7 @@ public class TpgView extends LinearLayout {
         mTabMode = ta.getInt(R.styleable.TpgViewAttrs_tab_mode, TabLayout.MODE_SCROLLABLE);
         mTabGravity = ta.getInt(R.styleable.TpgViewAttrs_tab_gravity, TabLayout.GRAVITY_FILL);
         mExpandVisible = ta.getInt(R.styleable.TpgViewAttrs_expand_visible, VISIBLE);
-        mExpandIcon = ta.getResourceId(R.styleable.TpgViewAttrs_expand_icon, R.drawable.ic_expand);
+        mExpandIcon = ta.getResourceId(R.styleable.TpgViewAttrs_expand_icon, R.mipmap.ic_expand);
 
         ta.recycle();
     }

@@ -40,7 +40,7 @@ public class GPager extends TpgFragment {
         new Thread() {
             @Override
             public void run() {
-                SystemClock.sleep(1000);
+                SystemClock.sleep(2000);
                 refresh(STATES[random.nextInt(STATES.length)]);
             }
         }.start();

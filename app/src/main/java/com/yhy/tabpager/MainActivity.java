@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setGlobalLoadingPage() {
         mConfig = new PagerConfig(this);
-        mConfig.setEmptyViewResId(R.layout.layout_view_empty);
+//        mConfig.setEmptyViewResId(R.layout.layout_view_empty);
     }
 
     private void initData() {

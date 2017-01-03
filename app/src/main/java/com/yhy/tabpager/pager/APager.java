@@ -51,7 +51,7 @@ public class APager extends TpgFragment {
             @Override
             public void run() {
                 //模拟网络加载延迟
-                SystemClock.sleep(1000);
+                SystemClock.sleep(2000);
 
                 //数据加载结束后，需要手动刷新页面状态
                 refresh(STATES[random.nextInt(STATES.length)]);
