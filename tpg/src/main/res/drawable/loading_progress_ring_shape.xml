@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<animated-rotate
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@mipmap/ic_progress_loading"
-    android:duration="160"
-    android:fromDegrees="0"
-    android:pivotX="50%"
-    android:pivotY="50%"
-    android:repeatCount="100000000"
-    android:repeatMode="restart"
-    android:toDegrees="720">
-
-</animated-rotate>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <rotate
+            android:drawable="@mipmap/ic_progress_loading"
+            android:fromDegrees="0"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="1080" />
+    </item>
+</layer-list>
