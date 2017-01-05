@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -10,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="哎呀，出错啦，点击屏幕重试"
-        android:textColor="#666"
-        android:textSize="14sp"/>
+        android:textColor="@color/tab_def_pager_text_color"
+        android:textSize="14sp" />
 
 </RelativeLayout>

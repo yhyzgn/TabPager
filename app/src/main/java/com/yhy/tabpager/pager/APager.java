@@ -25,8 +25,6 @@ public class APager extends TpgFragment {
     @Override
     protected View getSuccessView() {
         TextView tv = new TextView(getContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
-                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         tv.setText("A页面加载成功");
         tv.setTextColor(Color.RED);
         tv.setTextSize(32);
@@ -51,7 +49,7 @@ public class APager extends TpgFragment {
             @Override
             public void run() {
                 //模拟网络加载延迟
-                SystemClock.sleep(2000);
+                SystemClock.sleep(3000);
 
                 //数据加载结束后，需要手动刷新页面状态
                 refresh(STATES[random.nextInt(STATES.length)]);

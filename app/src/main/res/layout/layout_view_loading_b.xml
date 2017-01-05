@@ -6,16 +6,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <!--如果设置ProgressView的背景颜色，请使用app:bg_color="..."，android:background="..."已无效-->
-    <com.yhy.tpg.widget.ProgressView
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+    <ProgressBar
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:indeterminateDrawable="@drawable/loading_progress_ring_layer" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="正在加载..."
-        android:textColor="@color/tab_def_pager_text_color"
+        android:text="我是只属于B页面的加载中页面"
+        android:textColor="#4600ff"
         android:textSize="14sp" />
 </LinearLayout>

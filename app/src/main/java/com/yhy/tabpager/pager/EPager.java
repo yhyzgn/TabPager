@@ -25,8 +25,6 @@ public class EPager extends TpgFragment {
     @Override
     protected View getSuccessView() {
         TextView tv = new TextView(getContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
-                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         tv.setText("E页面加载成功");
         tv.setTextColor(Color.RED);
         tv.setTextSize(32);
@@ -40,7 +38,7 @@ public class EPager extends TpgFragment {
         new Thread() {
             @Override
             public void run() {
-                SystemClock.sleep(2000);
+                SystemClock.sleep(3000);
                 refresh(STATES[random.nextInt(STATES.length)]);
             }
         }.start();

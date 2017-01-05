@@ -24,11 +24,6 @@ import com.yhy.tpg.utils.DensityUtils;
  * Created by 颜洪毅 on 2016/12/22 0022.
  */
 public class TpgView extends LinearLayout {
-    //一般状态下的字体颜色默认值
-    private static final int TEXT_NORMAL_COLOR_DEF = Color.parseColor("#aaff4400");
-    //选中状态下的字体颜色默认值
-    private static final int TEXT_SELECTED_COLOR_DEF = Color.parseColor("#ffff2200");
-
     //包含了TabLayout和ImageView的布局
     private RelativeLayout rlTab;
     //TabLayout控件
@@ -95,11 +90,11 @@ public class TpgView extends LinearLayout {
         mTabHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_height, 48f);
         mTabBgColor = ta.getColor(R.styleable.TpgViewAttrs_tab_bg_color, Color.TRANSPARENT);
         mTabTextNormalColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_normal_color,
-                TEXT_NORMAL_COLOR_DEF);
+                getResources().getColor(R.color.tab_def_normal_color));
         mTabTextSelectedColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_selected_color,
-                TEXT_SELECTED_COLOR_DEF);
+                getResources().getColor(R.color.tab_def_selected_color));
         mTabIndicatorColor = ta.getColor(R.styleable.TpgViewAttrs_tab_indicator_color,
-                TEXT_SELECTED_COLOR_DEF);
+                getResources().getColor(R.color.tab_def_indicator_color));
         mTabIndicatorHeight = (int) ta.getDimension(R.styleable
                 .TpgViewAttrs_tab_indicator_height, 3f);
         mTabMode = ta.getInt(R.styleable.TpgViewAttrs_tab_mode, TabLayout.MODE_SCROLLABLE);

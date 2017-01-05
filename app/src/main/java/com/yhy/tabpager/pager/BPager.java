@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yhy.tabpager.R;
 import com.yhy.tpg.pager.TpgFragment;
 import com.yhy.tpg.dispatch.DispatchLoading;
 
@@ -36,14 +37,7 @@ public class BPager extends TpgFragment {
 
     @Override
     protected View getLoadingView() {
-        TextView tv = new TextView(getContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
-                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        tv.setText("B页面加载中...");
-        tv.setTextColor(Color.GREEN);
-        tv.setTextSize(32);
-        tv.setGravity(Gravity.CENTER);
-        return tv;
+        return View.inflate(getContext(), R.layout.layout_view_loading_b, null);
     }
 
     @Override
@@ -52,7 +46,7 @@ public class BPager extends TpgFragment {
         new Thread() {
             @Override
             public void run() {
-                SystemClock.sleep(2000);
+                SystemClock.sleep(3000);
                 refresh(STATES[random.nextInt(STATES.length)]);
             }
         }.start();

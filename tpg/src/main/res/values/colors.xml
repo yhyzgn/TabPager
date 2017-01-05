@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tab_def_normal_color">#aaff4400</color>
+    <color name="tab_def_selected_color">#ffff2200</color>
+    <color name="tab_def_indicator_color">#ffff2200</color>
+    <color name="tab_def_pager_text_color">#2f2459</color>
+</resources>
