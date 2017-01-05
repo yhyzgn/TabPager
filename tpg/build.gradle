@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 25
@@ -19,6 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -27,10 +32,21 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    
+
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
 
     compile 'com.orhanobut:logger:1.15'
+}
+
+publish {
+    userOrg = 'yhyzgn'
+    groupId = 'com.yhy'
+    artifactId = 'tpg'
+    publishVersion = '1.0.0'
+    desc = 'Encapsulate a component with TabLayout and ViewPager together, and implement the function of switch provided default pagers, such as LoadingPager, ErrorPager or EmptyPager. ' +
+            'You only need return a SuccessView for SuccessPager by overriding the method getSuccessView(), you can also custom LoadingPager, ErrorPager or EmptyPager. Resolved some ' +
+            'default event and provided interface accordingly. Welcome the usage.'
+    website = 'https://github.com/SilentWolf1993/TabPager'
 }
