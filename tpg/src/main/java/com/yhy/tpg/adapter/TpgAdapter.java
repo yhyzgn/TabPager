@@ -1,6 +1,5 @@
 package com.yhy.tpg.adapter;
 
-
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 

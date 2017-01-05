@@ -13,11 +13,6 @@ import com.yhy.tpg.dispatch.DispatchLoading;
 
 import java.util.Random;
 
-/**
- * @author 颜洪毅
- * @dateTime 2016/12/22 21:46
- * @copyRight SilentWolf
- */
 public class EPager extends TpgFragment {
     private static final DispatchLoading.STATE[] STATES = {DispatchLoading.STATE.ERROR,
             DispatchLoading.STATE.EMPTY, DispatchLoading.STATE.SUCCESS};

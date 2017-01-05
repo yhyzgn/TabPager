@@ -13,11 +13,6 @@ import com.yhy.tpg.dispatch.DispatchLoading;
 
 import java.util.Random;
 
-/**
- * @author 颜洪毅
- * @dateTime 2016/12/22 21:46
- * @copyRight SilentWolf
- */
 public class APager extends TpgFragment {
     private static final DispatchLoading.STATE[] STATES = {DispatchLoading.STATE.ERROR,
             DispatchLoading.STATE.EMPTY, DispatchLoading.STATE.SUCCESS};
@@ -35,7 +30,7 @@ public class APager extends TpgFragment {
     /**
      * 由于该页面是第一页，所以需要重写该方法，并返回true
      *
-     * @return
+     * @return 是否首先加载
      */
     @Override
     public boolean shouldLoadDataAtFirst() {

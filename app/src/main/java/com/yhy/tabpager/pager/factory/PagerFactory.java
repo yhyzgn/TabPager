@@ -11,11 +11,6 @@ import com.yhy.tabpager.pager.HPager;
 import com.yhy.tpg.pager.TpgFragment;
 import com.yhy.tpg.cache.PagerCache;
 
-/**
- * @author 颜洪毅
- * @dateTime 2016/12/22 21:41
- * @copyRight SilentWolf
- */
 public class PagerFactory {
 
     public static TpgFragment create(int position) {

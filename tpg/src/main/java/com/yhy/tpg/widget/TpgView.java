@@ -57,8 +57,6 @@ public class TpgView extends LinearLayout {
     //页面缓存
     private PagerCache mCache;
 
-    private PagerConfig mConfig;
-
     //扩展图标点击监听事件
     private OnExpandListener mExpandListener;
     //ViewPager页面切换监听事件

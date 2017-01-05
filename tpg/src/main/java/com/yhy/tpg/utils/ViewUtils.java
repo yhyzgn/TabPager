@@ -12,6 +12,11 @@ public class ViewUtils {
     private ViewUtils() {
     }
 
+    /**
+     * 从View的Parent中移除该View
+     *
+     * @param view 要移除的View对象
+     */
     public static void removeFromParent(View view) {
         if (null != view) {
             ViewParent parent = view.getParent();
