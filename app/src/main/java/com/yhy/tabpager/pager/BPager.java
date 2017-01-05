@@ -26,8 +26,6 @@ public class BPager extends TpgFragment {
     @Override
     protected View getSuccessView() {
         TextView tv = new TextView(getContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
-                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         tv.setText("B页面加载成功");
         tv.setTextColor(Color.RED);
         tv.setTextSize(32);
