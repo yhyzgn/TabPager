@@ -6,12 +6,15 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tpg.handler.ResultHandler;
 import com.yhy.tpg.pager.TpgFragment;
 
 import java.util.Random;
 
 public class APager extends TpgFragment {
+
+    private ResultHandler mResultHandler;
 
     @Override
     protected View getSuccessView() {
@@ -34,7 +37,28 @@ public class APager extends TpgFragment {
     }
 
     @Override
-    protected void initData(final ResultHandler handler) {
+    protected void initData(ResultHandler handler) {
+        mResultHandler = handler;
+
+        getDataFromServer();
+    }
+
+    @Override
+    public void reloadDate(Object... args) {
+        //调用父类方法才会重新显示加载中页面，否则只是执行重新加载操作，不会显示加载中页面
+        super.reloadDate();
+
+        //子类的具体操作...
+        String temp = "";
+        if (null != args && args.length > 0 && args[0] instanceof String) {
+            temp = (String) args[0];
+        }
+        ToastUtils.shortToast(temp + "页面重新加载数据");
+
+        getDataFromServer();
+    }
+
+    private void getDataFromServer() {
         final Random random = new Random();
         new Thread() {
             @Override
@@ -46,13 +70,13 @@ public class APager extends TpgFragment {
                 int temp = random.nextInt(3);
                 switch (temp) {
                     case 0:
-                        handler.sendSuccessHandler();
+                        mResultHandler.sendSuccessHandler();
                         break;
                     case 1:
-                        handler.sendErrorHandler();
+                        mResultHandler.sendErrorHandler();
                         break;
                     case 2:
-                        handler.sendEmptyHandler();
+                        mResultHandler.sendEmptyHandler();
                         break;
                     default:
                         break;

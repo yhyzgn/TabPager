@@ -20,6 +20,13 @@ public class ResultHandler {
     }
 
     /**
+     * 发送加载中消息
+     */
+    public void sendLoadingHandler() {
+        mHandler.obtainMessage(Const.LoadingStatus.STATE_LOADING).sendToTarget();
+    }
+
+    /**
      * 发送错误消息
      */
     public void sendErrorHandler() {

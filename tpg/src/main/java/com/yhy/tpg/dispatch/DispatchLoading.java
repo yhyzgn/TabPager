@@ -60,7 +60,8 @@ public abstract class DispatchLoading extends FrameLayout {
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if (null != msg) {
+                //只有要更新的状态不等于当前状态时，才有效
+                if (null != msg && msg.what != mCurrentState) {
                     //更新状态
                     mCurrentState = msg.what;
                     //更新UI

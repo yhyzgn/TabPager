@@ -11,48 +11,53 @@ import android.widget.Toast;
  * Toast工具类
  */
 public class ToastUtils {
+    private static Context ctx;
+
     private ToastUtils() {
     }
 
     /**
-     * 短时间显示
+     * 初始化，在Application中
      *
-     * @param context 上下文对象
-     * @param text    提示的内容
+     * @param ctx 上下文对象
      */
-    public static void shortToast(Context context, String text) {
-        Toast.makeText(context.getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 长时间显示
-     *
-     * @param context 上下文对象
-     * @param text    提示的内容
-     */
-    public static void longToast(Context context, String text) {
-        Toast.makeText(context.getApplicationContext(), text, Toast.LENGTH_LONG).show();
+    public static void init(Context ctx) {
+        ToastUtils.ctx = ctx;
     }
 
     /**
      * 短时间显示
      *
-     * @param context 上下文对象
-     * @param resId   提示的内容资源id
+     * @param text 提示的内容
      */
-    public static void shortToast(Context context, int resId) {
-        Toast.makeText(context.getApplicationContext(), context.getResources().getString(resId),
-                Toast.LENGTH_SHORT).show();
+    public static void shortToast(String text) {
+        Toast.makeText(ctx, text, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * 长时间显示
      *
-     * @param context 上下文对象
-     * @param resId   提示的内容资源id
+     * @param text 提示的内容
      */
-    public static void longToast(Context context, int resId) {
-        Toast.makeText(context.getApplicationContext(), context.getResources().getString(resId),
-                Toast.LENGTH_LONG).show();
+    public static void longToast(String text) {
+        Toast.makeText(ctx, text, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * 短时间显示
+     *
+     * @param resId 提示的内容资源id
+     */
+    public static void shortToast(int resId) {
+        Toast.makeText(ctx, ctx.getResources().getString(resId), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 长时间显示
+     *
+     * @param resId 提示的内容资源id
+     */
+    public static void longToast(int resId) {
+        Toast.makeText(ctx, ctx.getResources().getString(resId), Toast.LENGTH_LONG).show();
     }
 }

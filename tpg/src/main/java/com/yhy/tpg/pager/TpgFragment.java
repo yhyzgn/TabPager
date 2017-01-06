@@ -23,6 +23,9 @@ public abstract class TpgFragment extends Fragment {
     //页面配置
     private PagerConfig mConfig;
 
+    //结果集Handler对象
+    private ResultHandler mHandler;
+
     /**
      * 设置当前页面的一些参数，比如错误页面之类等
      *
@@ -63,7 +66,8 @@ public abstract class TpgFragment extends Fragment {
 
                 @Override
                 public void initData(ResultHandler handler) {
-                    TpgFragment.this.initData(handler);
+                    mHandler = handler;
+                    TpgFragment.this.initData(mHandler);
                 }
             };
         } else {
@@ -190,5 +194,9 @@ public abstract class TpgFragment extends Fragment {
      * @param args 重新加载数据时可能需要的参数
      */
     public void reloadDate(Object... args) {
+        if (null != mHandler) {
+            //发送加载中消息
+            mHandler.sendLoadingHandler();
+        }
     }
 }

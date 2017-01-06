@@ -1,10 +1,9 @@
 package com.yhy.tabpager;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.BaseAdapter;
 
 import com.yhy.tabpager.pager.factory.PagerFactory;
 import com.yhy.tabpager.utils.ToastUtils;
@@ -17,49 +16,67 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C", "菜单D", "菜单E", "菜单F", "菜单G", "菜单H"};
 
     private TpgView tvContent;
+    //页面配置，只在当前TpgView有效
     private PagerConfig mConfig;
+    private PagersAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setGlobalLoadingPage();
+        //初始化ToastUtils，最后要在Application中初始化
+        ToastUtils.init(this);
+
+        setTpgLoadingPage();
 
         tvContent = (TpgView) findViewById(R.id.tv_content);
 
         initData();
+
+        initListener();
     }
 
-    private void setGlobalLoadingPage() {
+    private void setTpgLoadingPage() {
         mConfig = new PagerConfig(this);
 //        mConfig.setEmptyViewResId(R.layout.layout_view_empty);
     }
 
     private void initData() {
-        tvContent.setAdapter(new TpgAdapter(getSupportFragmentManager(), mConfig) {
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return TABS[position];
-            }
+        mAdapter = new PagersAdapter(getSupportFragmentManager(), mConfig);
+        tvContent.setAdapter(mAdapter);
+    }
 
-            @Override
-            public int getCount() {
-                return TABS.length;
-            }
-
-            @Override
-            public TpgFragment getPager(int position) {
-                return PagerFactory.create(position);
-            }
-        });
-
-
+    private void initListener() {
         tvContent.setOnExpandListener(new TpgView.OnExpandListener() {
             @Override
             public void onExpand(View view) {
-                ToastUtils.shortToast(MainActivity.this, "展开");
+                if (null != mAdapter) {
+                    mAdapter.reloadDataForCurrentPager(TABS[tvContent.getCurrentPager()]);
+                }
             }
         });
+    }
+
+    private class PagersAdapter extends TpgAdapter {
+
+        public PagersAdapter(FragmentManager fm, PagerConfig config) {
+            super(fm, config);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return TABS[position];
+        }
+
+        @Override
+        public int getCount() {
+            return TABS.length;
+        }
+
+        @Override
+        public TpgFragment getPager(int position) {
+            return PagerFactory.create(position);
+        }
     }
 }
