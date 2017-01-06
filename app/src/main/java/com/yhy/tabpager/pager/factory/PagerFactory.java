@@ -9,7 +9,6 @@ import com.yhy.tabpager.pager.FPager;
 import com.yhy.tabpager.pager.GPager;
 import com.yhy.tabpager.pager.HPager;
 import com.yhy.tpg.pager.TpgFragment;
-import com.yhy.tpg.cache.PagerCache;
 
 public class PagerFactory {
 

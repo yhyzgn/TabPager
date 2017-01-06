@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import com.yhy.tpg.R;
 import com.yhy.tpg.dispatch.DispatchLoading;
 import com.yhy.tpg.config.PagerConfig;
+import com.yhy.tpg.global.Const;
+import com.yhy.tpg.handler.ResultHandler;
 import com.yhy.tpg.utils.ViewUtils;
 
 /**
@@ -18,7 +20,7 @@ import com.yhy.tpg.utils.ViewUtils;
 public abstract class TpgFragment extends Fragment {
     //每个页面中分发页面的对象
     private DispatchLoading mDispatch;
-
+    //页面配置
     private PagerConfig mConfig;
 
     /**
@@ -60,8 +62,8 @@ public abstract class TpgFragment extends Fragment {
                 }
 
                 @Override
-                public void initData() {
-                    TpgFragment.this.initData();
+                public void initData(ResultHandler handler) {
+                    TpgFragment.this.initData(handler);
                 }
             };
         } else {
@@ -97,7 +99,7 @@ public abstract class TpgFragment extends Fragment {
     protected View getLoadingView() {
         if (null != mConfig) {
             int loadingViewResId = mConfig.getLoadingViewResId();
-            if (loadingViewResId > -1) {
+            if (loadingViewResId > Const.PagerResIdDef.PAGER_RES_ID_DEF) {
                 return LayoutInflater.from(mConfig.getContext()).inflate(loadingViewResId, null);
             }
         }
@@ -115,7 +117,7 @@ public abstract class TpgFragment extends Fragment {
     protected View getErrorView() {
         if (null != mConfig) {
             int errorViewResId = mConfig.getErrorViewResId();
-            if (errorViewResId > -1) {
+            if (errorViewResId > Const.PagerResIdDef.PAGER_RES_ID_DEF) {
                 return LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
             }
         }
@@ -138,7 +140,7 @@ public abstract class TpgFragment extends Fragment {
     protected View getEmptyView() {
         if (null != mConfig) {
             int emptyViewResId = mConfig.getEmptyViewResId();
-            if (emptyViewResId > -1) {
+            if (emptyViewResId > Const.PagerResIdDef.PAGER_RES_ID_DEF) {
                 return LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
             }
         }
@@ -157,8 +159,10 @@ public abstract class TpgFragment extends Fragment {
      * 在子类中实现该方法。
      * 注意：必须在该方法中加载数据完成(无论成功与否)以后调用refresh(DispatchLoading.STATE state)
      * 方法刷新加载结果状态，否则不会自动更新UI。
+     *
+     * @param handler 子类用来发送结果状态的ResultHandler对象
      */
-    protected abstract void initData();
+    protected abstract void initData(ResultHandler handler);
 
     /**
      * 判断是否应该加载数据(交给mDispatch处理)
@@ -181,13 +185,10 @@ public abstract class TpgFragment extends Fragment {
     }
 
     /**
-     * 刷新状态，交给mDispatch处理
+     * 重新加载数据，主要为了能在适配器中直接重新加载
      *
-     * @param state 页面将要显示的黄台
+     * @param args 重新加载数据时可能需要的参数
      */
-    public void refresh(DispatchLoading.STATE state) {
-        if (null != mDispatch) {
-            mDispatch.refresh(state);
-        }
+    public void reloadDate(Object... args) {
     }
 }

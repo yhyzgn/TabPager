@@ -14,12 +14,24 @@ public class PagerCache {
         mCache = new SparseArray<>();
     }
 
+    /**
+     * 保存一页
+     *
+     * @param index 页面索引
+     * @param page  页面
+     */
     public void savePager(int index, TpgFragment page) {
         if (null != mCache) {
             mCache.put(index, page);
         }
     }
 
+    /**
+     * 获取某一页
+     *
+     * @param index 页面索引
+     * @return 页面
+     */
     public TpgFragment getPager(int index) {
         if (null != mCache) {
             return mCache.get(index);

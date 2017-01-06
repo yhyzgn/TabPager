@@ -16,10 +16,21 @@ public abstract class TpgAdapter extends FragmentStatePagerAdapter {
     private PagerCache mCache;
     private TpgView mTpgView;
 
+    /**
+     * 创建适配器
+     *
+     * @param fm FragmentManager
+     */
     public TpgAdapter(FragmentManager fm) {
         this(fm, null);
     }
 
+    /**
+     * 创建适配器
+     *
+     * @param fm     FragmentManager
+     * @param config 页面配置参数
+     */
     public TpgAdapter(FragmentManager fm, PagerConfig config) {
         super(fm);
         mConfig = config;
@@ -31,7 +42,7 @@ public abstract class TpgAdapter extends FragmentStatePagerAdapter {
     }
 
     /**
-     * 重试加载数据，适用于之前加载错误，点击后的重试操作
+     * 重试加载数据，适用于之前加载错误或者为空，点击后的重试操作
      */
     public void retryLoadDataForCurrentPager() {
         if (null != mCache && null != mTpgView) {
@@ -76,9 +87,42 @@ public abstract class TpgAdapter extends FragmentStatePagerAdapter {
         return POSITION_NONE;
     }
 
+    /**
+     * 获取具体的页面
+     *
+     * @param position
+     * @return 一个页面
+     */
     public abstract TpgFragment getPager(int position);
 
+    /**
+     * 获取页面的缓存
+     *
+     * @return 页面缓存
+     */
     public PagerCache getPagerCache() {
         return mCache;
+    }
+
+    /**
+     * 重新加载某一页的数据
+     *
+     * @param index 页面索引
+     * @param args  可能需要的参数
+     */
+    public void reloadDataForPager(int index, Object... args) {
+        TpgFragment pager = mCache.getPager(index);
+        if (null != pager) {
+            pager.reloadDate(args);
+        }
+    }
+
+    /**
+     * 重新加载当前页面的数据
+     *
+     * @param args 可能需要的参数
+     */
+    public void reloadDataForCurrentPager(Object... args) {
+        reloadDataForPager(mTpgView.getCurrentPager(), args);
     }
 }
