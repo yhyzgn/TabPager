@@ -90,7 +90,7 @@ public abstract class TpgAdapter extends FragmentStatePagerAdapter {
     /**
      * 获取具体的页面
      *
-     * @param position
+     * @param position 页面索引
      * @return 一个页面
      */
     public abstract TpgFragment getPager(int position);
