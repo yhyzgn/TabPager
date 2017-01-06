@@ -1,6 +1,8 @@
 package com.yhy.tpg.pager;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,9 @@ public abstract class TpgFragment extends Fragment {
     //结果集Handler对象
     private ResultHandler mHandler;
 
+    //当前Activity对象
+    public Activity mActivity;
+
     /**
      * 设置当前页面的一些参数，比如错误页面之类等
      *
@@ -36,6 +41,12 @@ public abstract class TpgFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActivity = getActivity();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         //如果mDispatch为空，就创建，否则就不创建。
@@ -43,7 +54,7 @@ public abstract class TpgFragment extends Fragment {
         //当mDispatch不为空时，直接把mDispatc返回就能达到不重复创建mDispatch的效果。
         if (null == mDispatch) {
             //创建mDispatch对象，实现其抽象方法，并回调页面中相应的抽象方法
-            mDispatch = new DispatchLoading(getContext()) {
+            mDispatch = new DispatchLoading(mActivity) {
                 @Override
                 public View getSuccessView() {
                     return TpgFragment.this.getSuccessView();
@@ -107,7 +118,7 @@ public abstract class TpgFragment extends Fragment {
                 return LayoutInflater.from(mConfig.getContext()).inflate(loadingViewResId, null);
             }
         }
-        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.layout_def_loading,
+        View loadingView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_loading,
                 null);
         return loadingView;
     }
@@ -125,7 +136,7 @@ public abstract class TpgFragment extends Fragment {
                 return LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
             }
         }
-        View errorView = LayoutInflater.from(getContext()).inflate(R.layout.layout_def_error, null);
+        View errorView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_error, null);
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,7 +159,7 @@ public abstract class TpgFragment extends Fragment {
                 return LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
             }
         }
-        View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.layout_def_empty, null);
+        View emptyView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_empty, null);
         emptyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
