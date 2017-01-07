@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         //初始化ToastUtils，最后要在Application中初始化
         ToastUtils.init(this);
 
-        setTpgLoadingPage();
+        setTpgEmptyPage();
 
         tvContent = (TpgView) findViewById(R.id.tv_content);
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         initListener();
     }
 
-    private void setTpgLoadingPage() {
+    private void setTpgEmptyPage() {
         mConfig = new PagerConfig(this);
 //        mConfig.setEmptyViewResId(R.layout.layout_view_empty);
     }
@@ -48,12 +48,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+        //扩展按钮点击事件
         tvContent.setOnExpandListener(new TpgView.OnExpandListener() {
             @Override
             public void onExpand(View view) {
                 if (null != mAdapter) {
                     mAdapter.reloadDataForCurrentPager(TABS[tvContent.getCurrentPager()]);
                 }
+            }
+        });
+
+        //页面滑动事件
+        tvContent.setOnPageChangedListener(new TpgView.OnPageChangedListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
             }
         });
     }
