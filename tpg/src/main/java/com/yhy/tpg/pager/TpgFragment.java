@@ -97,7 +97,7 @@ public abstract class TpgFragment extends Fragment {
             shouldLoadData();
         }
 
-        //初始化事件一些事件监听器
+        //初始化事件一些事件监听
         initListener();
     }
 
@@ -183,7 +183,7 @@ public abstract class TpgFragment extends Fragment {
     protected abstract void initData(ResultHandler handler);
 
     /**
-     * 子类初始化一些事件监听器
+     * 子类初始化一些事件监听
      */
     protected void initListener() {
     }

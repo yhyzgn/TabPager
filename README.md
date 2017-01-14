@@ -150,6 +150,11 @@
     getDataFromServer();
   }
 
+  @Override
+  protected void initListener(){
+    //初始化一些事件监听
+  }
+
   //模拟请求服务器数据过程
   private void getDataFromServer() {
     //用来产生一个随机的状态
@@ -315,6 +320,8 @@
   //重写父类方法
   @Override
   public void reloadDate(Object... args) {
+    //如果要重新显示Loading页面，就需要在这里加上此句，否则不需要添加
+    super.reloadData(args);
     //接收参数
     String temp = "";
     if (null != args && args.length > 0 && args[0] instanceof String) {
