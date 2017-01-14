@@ -1,6 +1,6 @@
 # TabPager
 
-[![TabPager](https://img.shields.io/badge/TabPager-1.0.1-brightgreen.svg)](https://bintray.com/yhyzgn/maven/tpg/_latestVersion)
+[![TabPager](https://img.shields.io/badge/TabPager-1.0.2-brightgreen.svg)](https://bintray.com/yhyzgn/maven/tpg/_latestVersion)
 
 > `TabPager`不仅集成了`TabLayout`和`ViewPager`，还封装了根据具体页面根据不同的加载状态而显示不同页面的功能，也可以自定义这些页面和其他一些属性。如果某个页面加载数据不成功，切换到其他页面再回来时，框架会自动调用重试加载功能；如果加载成功了，则不再重试加载。
 
