@@ -96,6 +96,9 @@ public abstract class TpgFragment extends Fragment {
         if (shouldLoadDataAtFirst()) {
             shouldLoadData();
         }
+
+        //初始化事件一些事件监听器
+        initListener();
     }
 
     /**
@@ -178,6 +181,12 @@ public abstract class TpgFragment extends Fragment {
      * @param handler 子类用来发送结果状态的ResultHandler对象
      */
     protected abstract void initData(ResultHandler handler);
+
+    /**
+     * 子类初始化一些事件监听器
+     */
+    protected void initListener() {
+    }
 
     /**
      * 判断是否应该加载数据(交给mDispatch处理)
