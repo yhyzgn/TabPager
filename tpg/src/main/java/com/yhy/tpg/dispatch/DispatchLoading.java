@@ -18,9 +18,6 @@ import com.yhy.tpg.global.Const;
 public abstract class DispatchLoading extends FrameLayout {
     private static final String TAG = "DispatchLoading";
 
-    //用来给Handler发送更新UI消息的标记
-    private static final int UPDATE_UI_HANDLER_WHAT = 1000;
-
     //用来更新UI的Handler(为了提高更新UI的安全性，这里就用Handler来更新UI)
     private Handler mHandler;
 
@@ -97,8 +94,6 @@ public abstract class DispatchLoading extends FrameLayout {
 
         //当前状态初始值
         mCurrentState = Const.LoadingStatus.STATE_LOADING;
-        //这里不引发界面更新，在ViewPager界面发生变化时调用shouldLoadData()方法更新界面
-//        mHandler.sendEmptyMessage(UPDATE_UI_HANDLER_WHAT);
     }
 
     /**
@@ -142,7 +137,7 @@ public abstract class DispatchLoading extends FrameLayout {
     public void shouldLoadData() {
         if (mCurrentState != Const.LoadingStatus.STATE_SUCCESS) {
             //如果当前状态不是成功状态，就把当前状态改为加载中状态，并更新UI
-            mHandler.obtainMessage(Const.LoadingStatus.STATE_LOADING).sendToTarget();
+            mResultHandler.sendLoadingHandler();
 
             //回调页面中的加载数据方法
             initData(mResultHandler);
@@ -155,7 +150,6 @@ public abstract class DispatchLoading extends FrameLayout {
     private void updateUI() {
         if (null != mLoadingView) {
             mLoadingView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_LOADING ? VISIBLE : GONE);
-            Logger.t(TAG).i("mLoadingView Visible = " + mLoadingView.getVisibility());
         }
         if (null != mErrorView) {
             mErrorView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_ERROR ? VISIBLE : GONE);

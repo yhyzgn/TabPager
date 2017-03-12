@@ -22,9 +22,9 @@ public class PagerConfig {
         //初始值
         mCtx = ctx;
         //默认值
-        mLoadingViewResId = Const.PagerResIdDef.PAGER_RES_ID_DEF;
-        mErrorViewResId = Const.PagerResIdDef.PAGER_RES_ID_DEF;
-        mEmpryViewResId = Const.PagerResIdDef.PAGER_RES_ID_DEF;
+        mLoadingViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
+        mErrorViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
+        mEmpryViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
     }
 
     /**

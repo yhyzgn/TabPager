@@ -38,6 +38,8 @@ dependencies {
     compile 'com.android.support:support-v4:25.1.0'
 
     compile 'com.orhanobut:logger:1.15'
+
+    compile 'cn.bingoogolapple:bga-badgeview:1.1.3@aar'
 }
 
 publish {

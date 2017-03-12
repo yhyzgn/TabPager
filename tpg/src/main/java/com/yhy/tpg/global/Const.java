@@ -24,7 +24,7 @@ public interface Const {
      * 页面布局资源id默认值
      */
     interface PagerResIdDef {
-        //默认都为-1
-        int PAGER_RES_ID_DEF = -1;
+        //没有设置默认资源ID时默认都为-1
+        int PAGER_NO_RES_ID = -1;
     }
 }

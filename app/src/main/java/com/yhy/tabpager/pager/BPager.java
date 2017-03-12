@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tpg.handler.ResultHandler;
@@ -60,6 +61,7 @@ public class BPager extends TpgFragment {
 
                 //数据加载结束后，需要手动刷新页面状态
                 int temp = random.nextInt(3);
+                Logger.i(temp + "");
                 switch (temp) {
                     case 0:
                         mResultHandler.sendSuccessHandler();

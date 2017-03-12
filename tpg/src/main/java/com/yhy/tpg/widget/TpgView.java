@@ -16,14 +16,16 @@ import android.widget.RelativeLayout;
 import com.yhy.tpg.R;
 import com.yhy.tpg.adapter.TpgAdapter;
 import com.yhy.tpg.config.PagerConfig;
+import com.yhy.tpg.listener.OnPageChangedListener;
 import com.yhy.tpg.pager.TpgFragment;
 import com.yhy.tpg.cache.PagerCache;
 import com.yhy.tpg.utils.DensityUtils;
+import com.yhy.tpg.widget.base.TpgInterface;
 
 /**
- * Created by 颜洪毅 on 2016/12/22 0022.
+ * Created by 颜洪毅 on 2016/12/22 00:22.
  */
-public class TpgView extends LinearLayout {
+public class TpgView extends LinearLayout implements TpgInterface {
     //包含了TabLayout和ImageView的布局
     private RelativeLayout rlTab;
     //TabLayout控件
@@ -109,6 +111,7 @@ public class TpgView extends LinearLayout {
      */
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_tpg, this);
         rlTab = (RelativeLayout) view.findViewById(R.id.rl_tab);
         tlTabs = (TabLayout) view.findViewById(R.id.tl_tabs);
@@ -251,6 +254,7 @@ public class TpgView extends LinearLayout {
      *
      * @param index 页面的索引
      */
+    @Override
     public void setCurrentPager(int index) {
         setCurrentPager(index, true);
     }
@@ -270,6 +274,7 @@ public class TpgView extends LinearLayout {
      *
      * @return 当前页面索引
      */
+    @Override
     public int getCurrentPager() {
         return vpContent.getCurrentItem();
     }
@@ -371,35 +376,5 @@ public class TpgView extends LinearLayout {
          * @param view 点击的控件
          */
         void onExpand(View view);
-    }
-
-    /**
-     * ViewPager页面切换事件监听器
-     */
-    public interface OnPageChangedListener {
-
-        /**
-         * 当页面滑动时
-         *
-         * @param position             当前页面序号，只有翻页成功的情况下最后一次调用才会变为目标页面。
-         * @param positionOffset       是当前页面滑动比例
-         * @param positionOffsetPixels 是当前页面滑动像素，变化情况和positionOffset一致。
-         */
-        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
-
-        /**
-         * 页面切换成功
-         *
-         * @param position 当前页面序号
-         */
-        void onPageSelected(int position);
-
-        /**
-         * 手指操作屏幕的时候发生变化。有三个值：0（END）,1(PRESS) , 2(UP)。
-         * 当setCurrentItem翻页时，会执行这个方法两次，state值分别为2 , 0 。
-         *
-         * @param state 有三个值：0（END）,1(PRESS) , 2(UP)
-         */
-        void onPageScrollStateChanged(int state);
     }
 }

@@ -1,13 +1,14 @@
 package com.yhy.tabpager;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.yhy.tabpager.pager.factory.PagerFactory;
-import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tpg.adapter.TpgAdapter;
+import com.yhy.tpg.listener.OnPageChangedListener;
 import com.yhy.tpg.pager.TpgFragment;
 import com.yhy.tpg.config.PagerConfig;
 import com.yhy.tpg.widget.TpgView;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //初始化ToastUtils，最后要在Application中初始化
-        ToastUtils.init(this);
+//        ToastUtils.init(this);
 
         setTpgEmptyPage();
 
@@ -52,14 +53,16 @@ public class MainActivity extends AppCompatActivity {
         tvContent.setOnExpandListener(new TpgView.OnExpandListener() {
             @Override
             public void onExpand(View view) {
-                if (null != mAdapter) {
-                    mAdapter.reloadDataForCurrentPager(TABS[tvContent.getCurrentPager()]);
-                }
+//                if (null != mAdapter) {
+//                    mAdapter.reloadDataForCurrentPager(TABS[tvContent.getCurrentPager()]);
+//                }
+
+                startActivity(new Intent(MainActivity.this, NavActivity.class));
             }
         });
 
         //页面滑动事件
-        tvContent.setOnPageChangedListener(new TpgView.OnPageChangedListener() {
+        tvContent.setOnPageChangedListener(new OnPageChangedListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int
                     positionOffsetPixels) {

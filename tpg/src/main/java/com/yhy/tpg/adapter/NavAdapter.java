@@ -1,61 +1,47 @@
 package com.yhy.tpg.adapter;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.yhy.tpg.adapter.base.BasePagerAdapter;
 import com.yhy.tpg.config.PagerConfig;
-import com.yhy.tpg.pager.TpgFragment;
-import com.yhy.tpg.cache.PagerCache;
-import com.yhy.tpg.widget.TpgView;
+import com.yhy.tpg.entity.NavTab;
+import com.yhy.tpg.widget.NavView;
+
+import java.util.List;
 
 /**
- * Created by 颜洪毅 on 2016/12/22 0022.
+ * Created by HongYi Yan on 2017/3/11 23:10.
  */
-public abstract class TpgAdapter extends BasePagerAdapter<TpgView> {
-//    private PagerConfig mConfig;
+public abstract class NavAdapter extends BasePagerAdapter<NavView> {
+    private List<NavTab> mTabList;
+
+//    private BtgView mBtgView;
 //    private PagerCache mCache;
-//    private TpgView mTpgView;
-//
+//    private PagerConfig mConfig;
 
-    /**
-     * 创建适配器
-     *
-     * @param fm FragmentManager
-     */
-    public TpgAdapter(FragmentManager fm) {
-        this(fm, null);
+    public NavAdapter(FragmentManager fm, List<NavTab> tabList) {
+        this(fm, tabList, null);
     }
 
-    /**
-     * 创建适配器
-     *
-     * @param fm     FragmentManager
-     * @param config 页面配置参数
-     */
-    public TpgAdapter(FragmentManager fm, PagerConfig config) {
+    public NavAdapter(FragmentManager fm, List<NavTab> tabList, PagerConfig config) {
         super(fm, config);
-//        mConfig = config;
+        if (null == tabList) {
+            throw new IllegalArgumentException("The argument tabList can not be null");
+        }
+        mTabList = tabList;
 //        mCache = new PagerCache();
+//        mConfig = config;
     }
-//
-//    public void bindTpgView(TpgView tpgView) {
-//        mTpgView = tpgView;
-//    }
-//
-//    /**
-//     * 重试加载数据，适用于之前加载错误或者为空，点击后的重试操作
-//     */
-//    public void retryLoadDataForCurrentPager() {
-//        if (null != mCache && null != mTpgView) {
-//            //取得当前页面
-//            TpgFragment pager = mCache.getPager(mTpgView.getCurrentPager());
-//            if (null != pager) {
-//                //重新判断是否加载数据并加载
-//                pager.shouldLoadData();
-//            }
-//        }
-//    }
+
+    //
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTabList.get(position).tabText;
+    }
+
+    public int getTabIconId(int position) {
+        return mTabList.get(position).tabIconId;
+    }
 //
 //    @Override
 //    public TpgFragment getItem(int position) {
@@ -77,19 +63,18 @@ public abstract class TpgAdapter extends BasePagerAdapter<TpgView> {
 //        return pager;
 //    }
 //
+//    public abstract TpgFragment getPager(int position);
+//
 //    @Override
 //    public int getItemPosition(Object object) {
 //        //重写该方法并返回POSITION_NONE，达到在调用notifyDataSetChanged()方法时强制刷新ViewPager页面的效果
 //        return POSITION_NONE;
 //    }
 //
-//    /**
-//     * 获取具体的页面
-//     *
-//     * @param position 页面索引
-//     * @return 一个页面
-//     */
-//    public abstract TpgFragment getPager(int position);
+//
+//    public void bindTpgView(BtgView btgView) {
+//        mBtgView = btgView;
+//    }
 //
 //    /**
 //     * 获取页面的缓存
@@ -119,6 +104,6 @@ public abstract class TpgAdapter extends BasePagerAdapter<TpgView> {
 //     * @param args 可能需要的参数
 //     */
 //    public void reloadDataForCurrentPager(Object... args) {
-//        reloadDataForPager(mTpgView.getCurrentPager(), args);
+//        reloadDataForPager(mBtgView.getCurrentPager(), args);
 //    }
 }

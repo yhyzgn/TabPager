@@ -117,7 +117,7 @@ public abstract class TpgFragment extends Fragment {
     protected View getLoadingView() {
         if (null != mConfig) {
             int loadingViewResId = mConfig.getLoadingViewResId();
-            if (loadingViewResId > Const.PagerResIdDef.PAGER_RES_ID_DEF) {
+            if (loadingViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
                 return LayoutInflater.from(mConfig.getContext()).inflate(loadingViewResId, null);
             }
         }
@@ -135,7 +135,7 @@ public abstract class TpgFragment extends Fragment {
     protected View getErrorView() {
         if (null != mConfig) {
             int errorViewResId = mConfig.getErrorViewResId();
-            if (errorViewResId > Const.PagerResIdDef.PAGER_RES_ID_DEF) {
+            if (errorViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
                 return LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
             }
         }
@@ -158,7 +158,7 @@ public abstract class TpgFragment extends Fragment {
     protected View getEmptyView() {
         if (null != mConfig) {
             int emptyViewResId = mConfig.getEmptyViewResId();
-            if (emptyViewResId > Const.PagerResIdDef.PAGER_RES_ID_DEF) {
+            if (emptyViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
                 return LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
             }
         }

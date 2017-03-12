@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--页面控件的自定义属性-->
+    <!--顶部控件的自定义属性-->
     <declare-styleable name="TpgViewAttrs">
         <!--整个Tab栏的高度，默认为：48dp-->
         <attr name="tab_height" format="dimension"/>
@@ -32,6 +32,18 @@
         </attr>
         <!--可扩展图标资源-->
         <attr name="expand_icon" format="reference"/>
+    </declare-styleable>
+
+    <!--底部导航栏自定义属性-->
+    <declare-styleable name="NavViewAttrs">
+        <!--导航栏背景色-->
+        <attr name="nav_bg_color" format="color"/>
+        <!--导航栏背景图片-->
+        <attr name="nav_bg_img" format="reference"/>
+        <!--导航栏默认字体颜色-->
+        <attr name="nav_text_default_color" format="color"/>
+        <!--导航栏选中时字体颜色-->
+        <attr name="nav_text_checked_color" format="color"/>
     </declare-styleable>
 
     <!--自定义进度条的自定义属性-->
