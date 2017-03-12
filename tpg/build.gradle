@@ -6,7 +6,7 @@ android {
     buildToolsVersion "25.0.1"
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -46,7 +46,7 @@ publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy'
     artifactId = 'tpg'
-    publishVersion = '1.0.2'
+    publishVersion = '1.0.3'
     desc = 'Encapsulate a component with TabLayout and ViewPager together, and implement the function of switch provided default pagers, such as LoadingPager, ErrorPager or EmptyPager. ' +
             'You only need return a SuccessView for SuccessPager by overriding the method getSuccessView(), you can also custom LoadingPager, ErrorPager or EmptyPager. Resolved some ' +
             'default event and provided interface accordingly. Welcome the usage.'
