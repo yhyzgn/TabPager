@@ -46,9 +46,7 @@ publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy'
     artifactId = 'tpg'
-    publishVersion = '1.0.3'
-    desc = 'Encapsulate a component with TabLayout and ViewPager together, and implement the function of switch provided default pagers, such as LoadingPager, ErrorPager or EmptyPager. ' +
-            'You only need return a SuccessView for SuccessPager by overriding the method getSuccessView(), you can also custom LoadingPager, ErrorPager or EmptyPager. Resolved some ' +
-            'default event and provided interface accordingly. Welcome the usage.'
+    publishVersion = '2.0.0'
+    desc = 'Encapsulate a component with TabLayout, ViewPager and BottomNavigationBar together, and implement the function of switch provided default pagers, such as LoadingPager, ErrorPager or EmptyPager. You only need return a SuccessView for SuccessPager by overriding the method getSuccessView(), you can also custom LoadingPager, ErrorPager or EmptyPager. Resolved some default event and provided interface accordingly. Welcome the usage.'
     website = 'https://github.com/SilentWolf1993/TabPager'
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.antfortune.freeline.FreelineCore;
 import com.yhy.tabpager.utils.ToastUtils;
+import com.yhy.tpg.config.PagerConfig;
 
 /**
  * Created by HongYi Yan on 2017/3/12 0:40.

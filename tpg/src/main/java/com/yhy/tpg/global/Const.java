@@ -18,6 +18,8 @@ public interface Const {
         int STATE_EMPTY = 102;
         //加载成功，且数据有效
         int STATE_SUCCESS = 103;
+        //默认状态
+        int STATE_DEFAULT = 104;
     }
 
     /**

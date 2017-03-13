@@ -5,7 +5,17 @@ package com.yhy.tpg.widget.base;
  */
 public interface TpgInterface {
 
+    /**
+     * 设置当前页面
+     *
+     * @param index 页面索引
+     */
     void setCurrentPager(int index);
 
+    /**
+     * 获取当前页面
+     *
+     * @return 当前页面索引
+     */
     int getCurrentPager();
 }

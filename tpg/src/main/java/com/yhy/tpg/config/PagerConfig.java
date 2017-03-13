@@ -11,7 +11,11 @@ public class PagerConfig {
 
     private int mErrorViewResId;
 
-    private int mEmpryViewResId;
+    private int mErrorViewRetryResId;
+
+    private int mEmptyViewResId;
+
+    private int mEmptyViewRetryResId;
 
     /**
      * 创建页面配置对象
@@ -24,7 +28,9 @@ public class PagerConfig {
         //默认值
         mLoadingViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
         mErrorViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
-        mEmpryViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
+        mEmptyViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
+        mErrorViewRetryResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
+        mEmptyViewRetryResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
     }
 
     /**
@@ -60,12 +66,14 @@ public class PagerConfig {
     /**
      * 设置错误页面
      *
-     * @param resId 页面资源id
+     * @param resId      页面资源id
+     * @param retryResId 错误页面的重试按钮资源id
      * @return 当前对象，便于链式编程
      */
-    public PagerConfig setErrorViewResId(int resId) {
+    public PagerConfig setErrorViewResId(int resId, int retryResId) {
         checkContext();
         mErrorViewResId = resId;
+        mErrorViewRetryResId = retryResId;
         return this;
     }
 
@@ -79,14 +87,25 @@ public class PagerConfig {
     }
 
     /**
+     * 获取错误页面的重试按钮资源id
+     *
+     * @return 重试按钮资源id
+     */
+    public int getErrorViewRetryResId() {
+        return mErrorViewRetryResId;
+    }
+
+    /**
      * 设置空数据页面
      *
-     * @param resId 页面资源id
+     * @param resId      页面资源id
+     * @param retryResId 空数据页面的重试按钮资源id
      * @return 当前对象，便于链式编程
      */
-    public PagerConfig setEmptyViewResId(int resId) {
+    public PagerConfig setEmptyViewResId(int resId, int retryResId) {
         checkContext();
-        mEmpryViewResId = resId;
+        mEmptyViewResId = resId;
+        mEmptyViewRetryResId = retryResId;
         return this;
     }
 
@@ -96,7 +115,16 @@ public class PagerConfig {
      * @return resId
      */
     public int getEmptyViewResId() {
-        return mEmpryViewResId;
+        return mEmptyViewResId;
+    }
+
+    /**
+     * 获取空数据页面的重试按钮资源id
+     *
+     * @return 重试按钮资源id
+     */
+    public int getEmptyViewRetryResId() {
+        return mEmptyViewRetryResId;
     }
 
     /**

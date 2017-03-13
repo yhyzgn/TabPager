@@ -68,10 +68,10 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentS
         }
         //如果没获取到缓存页面的话，就从子类获取
         pager = getPager(position);
-        //将页面缓存起来
-        mCache.savePager(position, pager);
         //获取到当前页面的页面配置参数，并设置给具体页面
         pager.setPagerConfig(mConfig);
+        //将页面缓存起来
+        mCache.savePager(position, pager);
         return pager;
     }
 

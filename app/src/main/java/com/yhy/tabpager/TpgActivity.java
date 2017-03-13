@@ -13,7 +13,7 @@ import com.yhy.tpg.pager.TpgFragment;
 import com.yhy.tpg.config.PagerConfig;
 import com.yhy.tpg.widget.TpgView;
 
-public class MainActivity extends AppCompatActivity {
+public class TpgActivity extends AppCompatActivity {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C", "菜单D", "菜单E", "菜单F", "菜单G", "菜单H"};
 
     private TpgView tvContent;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tpg);
 
         //初始化ToastUtils，最后要在Application中初始化
 //        ToastUtils.init(this);
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 //                    mAdapter.reloadDataForCurrentPager(TABS[tvContent.getCurrentPager()]);
 //                }
 
-                startActivity(new Intent(MainActivity.this, NavActivity.class));
+                startActivity(new Intent(TpgActivity.this, NavActivity.class));
             }
         });
 

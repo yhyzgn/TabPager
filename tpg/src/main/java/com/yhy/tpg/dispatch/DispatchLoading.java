@@ -92,8 +92,8 @@ public abstract class DispatchLoading extends FrameLayout {
             mSuccessView.setVisibility(GONE);
         }
 
-        //当前状态初始值
-        mCurrentState = Const.LoadingStatus.STATE_LOADING;
+        //当前状态为默认状态
+        mCurrentState = Const.LoadingStatus.STATE_DEFAULT;
     }
 
     /**
@@ -135,8 +135,9 @@ public abstract class DispatchLoading extends FrameLayout {
      * 判断是否应该加载数据，应该（当前状态不是成功）的话就加载
      */
     public void shouldLoadData() {
-        if (mCurrentState != Const.LoadingStatus.STATE_SUCCESS) {
-            //如果当前状态不是成功状态，就把当前状态改为加载中状态，并更新UI
+        if (mCurrentState != Const.LoadingStatus.STATE_SUCCESS && mCurrentState != Const
+                .LoadingStatus.STATE_LOADING) {
+            //如果当前状态不是成功状态或者加载中状态，就把当前状态改为加载中状态，请求数据并更新UI
             mResultHandler.sendLoadingHandler();
 
             //回调页面中的加载数据方法
@@ -149,16 +150,20 @@ public abstract class DispatchLoading extends FrameLayout {
      */
     private void updateUI() {
         if (null != mLoadingView) {
-            mLoadingView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_LOADING ? VISIBLE : GONE);
+            mLoadingView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_LOADING ?
+                    VISIBLE : GONE);
         }
         if (null != mErrorView) {
-            mErrorView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_ERROR ? VISIBLE : GONE);
+            mErrorView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_ERROR ? VISIBLE :
+                    GONE);
         }
         if (null != mEmptyView) {
-            mEmptyView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_EMPTY ? VISIBLE : GONE);
+            mEmptyView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_EMPTY ? VISIBLE :
+                    GONE);
         }
         if (null != mSuccessView) {
-            mSuccessView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_SUCCESS ? VISIBLE : GONE);
+            mSuccessView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_SUCCESS ?
+                    VISIBLE : GONE);
         }
     }
 }

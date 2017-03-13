@@ -9,7 +9,8 @@
         android:id="@+id/bv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:nav_bg_color="#030"
+        app:nav_bg_checked_color="#88ff2200"
+        app:nav_bg_color="#22ff4400"
         app:nav_text_checked_color="#f20"
         app:nav_text_default_color="#666"/>
 

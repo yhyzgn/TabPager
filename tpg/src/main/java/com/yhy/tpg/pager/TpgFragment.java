@@ -17,17 +17,15 @@ import com.yhy.tpg.utils.ViewUtils;
 
 /**
  * 所有页面的父类
- * Created by 颜洪毅 on 2016/12/22 0022.
+ * Created by 颜洪毅 on 2016/12/22 00:22.
  */
 public abstract class TpgFragment extends Fragment {
     //每个页面中分发页面的对象
     private DispatchLoading mDispatch;
     //页面配置
     private PagerConfig mConfig;
-
     //结果集Handler对象
     private ResultHandler mHandler;
-
     //当前Activity对象
     public Activity mActivity;
 
@@ -133,14 +131,34 @@ public abstract class TpgFragment extends Fragment {
      * @return 错误页面
      */
     protected View getErrorView() {
+        View errorView = null;
+        View retryView = null;
+
+        //如果设置过页面参数，就以该参数为主
         if (null != mConfig) {
+            //获取界面View
             int errorViewResId = mConfig.getErrorViewResId();
             if (errorViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
-                return LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
+                errorView = LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
+            }
+            //获取重试按钮View
+            int retryResId = mConfig.getErrorViewRetryResId();
+            if (retryResId > Const.PagerResIdDef.PAGER_NO_RES_ID && null != errorView) {
+                retryView = errorView.findViewById(retryResId);
             }
         }
-        View errorView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_error, null);
-        errorView.setOnClickListener(new View.OnClickListener() {
+
+        //如果没有设置过页面参数，就使用默认的页面
+        if (null == errorView) {
+            errorView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_error, null);
+        }
+        if (null == retryView) {
+            //默认将整个默认页面设置为重试View
+            retryView = errorView;
+        }
+
+        //设置重试加载事件
+        retryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 shouldLoadData();
@@ -156,14 +174,34 @@ public abstract class TpgFragment extends Fragment {
      * @return 空数据页面
      */
     protected View getEmptyView() {
+        View emptyView = null;
+        View retryView = null;
+
+        //如果设置过页面参数，就以该参数为主
         if (null != mConfig) {
+            //获取界面View
             int emptyViewResId = mConfig.getEmptyViewResId();
             if (emptyViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
-                return LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
+                emptyView = LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
+            }
+            //获取重试按钮View
+            int retryResId = mConfig.getErrorViewRetryResId();
+            if (retryResId > Const.PagerResIdDef.PAGER_NO_RES_ID && null != emptyView) {
+                retryView = emptyView.findViewById(retryResId);
             }
         }
-        View emptyView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_empty, null);
-        emptyView.setOnClickListener(new View.OnClickListener() {
+
+        //如果没有设置过页面参数，就使用默认的页面
+        if (null == emptyView) {
+            emptyView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_empty, null);
+        }
+        if (null == retryView) {
+            //默认将整个默认页面设置为重试View
+            retryView = emptyView;
+        }
+
+        //设置重试加载事件
+        retryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 shouldLoadData();
