@@ -276,6 +276,12 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         return getTabByIndex(index).isShowBadge();
     }
 
+    /**
+     * 设置Tab样式
+     *
+     * @param rb      Tab项
+     * @param checked 是否选中
+     */
     private void setTabStyle(RadioButton rb, boolean checked) {
         if (checked) {
             rb.setTextColor(mNavTextCheckedColor);
@@ -291,6 +297,12 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         }
     }
 
+    /**
+     * 通过资源ID获取Tab索引
+     *
+     * @param resId 资源ID
+     * @return 索引
+     */
     private int getTabIndexByResId(int resId) {
         for (int i = 0; i < rgTabs.getChildCount(); i++) {
             if (resId == rgTabs.getChildAt(i).getId()) {
@@ -300,6 +312,12 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         return -1;
     }
 
+    /**
+     * 按索引获取Tab
+     *
+     * @param index 索引
+     * @return Tab项
+     */
     private BGABadgeRadioButton getTabByIndex(int index) {
         int count = rgTabs.getChildCount();
         if (index < 0 || index > count) {
