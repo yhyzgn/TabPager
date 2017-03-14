@@ -119,8 +119,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         for (int i = 0; i < pageCount; i++) {
 
             BGABadgeRadioButton tab = (BGABadgeRadioButton) LayoutInflater.from(getContext())
-                    .inflate(R.layout
-                            .view_nav_tab, null);
+                    .inflate(R.layout.view_nav_tab, null);
             tab.setLayoutParams(params);
             tab.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(adapter
                     .getTabIconId(i)), null, null);
@@ -208,8 +207,9 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
                     setTabStyle(((BGABadgeRadioButton) rgTabs.getChildAt(i)), i == currentIndex);
                 }
 
-                //如果不是拖动ViewPager时，说明是直接点击导航跳转的页面，此时才联动ViewPager
-                if (!mDragScrolledFlag) {
+                //如果不是拖动ViewPager并且当前选中项与ViewPager页面不对应时，说明是直接点击导航跳转的页面，此时才联动ViewPager
+                //由于mDragScrolledFlag是在ViewPager的触摸事件中开启的，所以如果只判断mDragScrolledFlag的话，不能解决问题，会导致联动错乱
+                if (!mDragScrolledFlag && currentIndex != vpContent.getCurrentItem()) {
                     vpContent.setCurrentItem(currentIndex, true);
                 }
 
