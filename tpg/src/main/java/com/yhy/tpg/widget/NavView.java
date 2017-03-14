@@ -37,6 +37,8 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     private boolean mDragScrolledFlag = false;
     //是否是直接设置ViewPager页面
     private boolean isSetCurrentPagerFlag = false;
+    //页面是否切换过的标识
+    private boolean mPageChangedFlag = false;
     //页面缓存
     private PagerCache mCache;
     //页面切换事件
@@ -170,10 +172,13 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
 
             @Override
             public void onPageSelected(int position) {
+                mPageChangedFlag = true;
+
                 //页面切换后设置按钮选中状态
+                int currentTab = getTabIndexByResId(rgTabs.getCheckedRadioButtonId());
 
                 //如果是拖动ViewPager，就需要联动RadioGroup，并在联动后将该标识设置为初始值
-                if (mDragScrolledFlag || isSetCurrentPagerFlag) {
+                if ((mDragScrolledFlag && currentTab != position) || isSetCurrentPagerFlag) {
                     //联动RadioGroup
                     rgTabs.check(rgTabs.getChildAt(position).getId());
                 }
@@ -207,6 +212,11 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
                     setTabStyle(((BGABadgeRadioButton) rgTabs.getChildAt(i)), i == currentIndex);
                 }
 
+                if (mDragScrolledFlag && !mPageChangedFlag) {
+                    //如果触摸过ViewPager，但是页面没有发生改变的话，则将mDragScrolledFlag关闭
+                    mDragScrolledFlag = false;
+                }
+
                 //如果不是拖动ViewPager并且当前选中项与ViewPager页面不对应时，说明是直接点击导航跳转的页面，此时才联动ViewPager
                 //由于mDragScrolledFlag是在ViewPager的触摸事件中开启的，所以如果只判断mDragScrolledFlag的话，不能解决问题，会导致联动错乱
                 if (!mDragScrolledFlag && currentIndex != vpContent.getCurrentItem()) {
@@ -218,6 +228,9 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
 
                 //将设置当前页面的标识关闭
                 isSetCurrentPagerFlag = false;
+
+                //将页面切换过的标识关闭
+                mPageChangedFlag = false;
             }
         });
     }
