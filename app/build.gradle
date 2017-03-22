@@ -32,11 +32,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':tpg')
+
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     testCompile 'junit:junit:4.12'
-
+    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.6'
     debugCompile 'com.antfortune.freeline:runtime:0.8.6'
     releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.6'
-    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.6'
 }
