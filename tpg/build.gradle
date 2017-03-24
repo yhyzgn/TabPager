@@ -46,7 +46,7 @@ publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy'
     artifactId = 'tpg'
-    publishVersion = '2.0.2'
+    publishVersion = '2.0.3'
     desc = 'Encapsulate a component with TabLayout, ViewPager and BottomNavigationBar together, ' +
             'and implement the function of switch provided default pagers, such as LoadingPager, ' +
             'ErrorPager or EmptyPager. You only need return a SuccessView for SuccessPager by ' +

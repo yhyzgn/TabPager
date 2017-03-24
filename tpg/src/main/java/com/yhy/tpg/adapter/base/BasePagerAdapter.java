@@ -1,7 +1,7 @@
 package com.yhy.tpg.adapter.base;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.yhy.tpg.cache.PagerCache;
 import com.yhy.tpg.config.PagerConfig;
@@ -11,7 +11,7 @@ import com.yhy.tpg.widget.base.TpgInterface;
 /**
  * Created by HongYi Yan on 2017/3/12 23:11.
  */
-public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentStatePagerAdapter {
+public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentPagerAdapter {
     private PagerConfig mConfig;
     private PagerCache mCache;
     private T view;
