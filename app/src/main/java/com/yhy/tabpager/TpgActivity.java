@@ -53,9 +53,11 @@ public class TpgActivity extends AppCompatActivity {
         tvContent.setOnExpandListener(new TpgView.OnExpandListener() {
             @Override
             public void onExpand(View view) {
-//                if (null != mAdapter) {
-//                    mAdapter.reloadDataForCurrentPager(TABS[tvContent.getCurrentPager()]);
-//                }
+                if (null != mAdapter) {
+                    Bundle args = new Bundle();
+                    args.putString("args", TABS[tvContent.getCurrentPager()]);
+                    mAdapter.reloadDataForCurrentPager(args);
+                }
 
                 startActivity(new Intent(TpgActivity.this, NavActivity.class));
             }

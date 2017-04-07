@@ -1,5 +1,6 @@
 package com.yhy.tpg.adapter.base;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -104,7 +105,7 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
      * @param index 页面索引
      * @param args  可能需要的参数
      */
-    public void reloadDataForPager(int index, Object... args) {
+    public void reloadDataForPager(int index, Bundle args) {
         TpgFragment pager = mCache.getPager(index);
         if (null != pager) {
             pager.reloadDate(args);
@@ -116,7 +117,7 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
      *
      * @param args 可能需要的参数
      */
-    public void reloadDataForCurrentPager(Object... args) {
+    public void reloadDataForCurrentPager(Bundle args) {
         reloadDataForPager(view.getCurrentPager(), args);
     }
 }

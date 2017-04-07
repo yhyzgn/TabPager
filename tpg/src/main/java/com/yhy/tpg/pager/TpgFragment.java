@@ -251,7 +251,7 @@ public abstract class TpgFragment extends Fragment {
      *
      * @param args 重新加载数据时可能需要的参数
      */
-    public void reloadDate(Object... args) {
+    public void reloadDate(Bundle args) {
         if (null != mHandler) {
             //发送加载中消息
             mHandler.sendLoadingHandler();

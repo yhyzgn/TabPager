@@ -83,7 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public TpgFragment getPager(int position) {
-            return new NavPager();
+            Bundle args = new Bundle();
+            args.putBoolean("firstPage", position == 0);
+            TpgFragment fragment = new NavPager();
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override

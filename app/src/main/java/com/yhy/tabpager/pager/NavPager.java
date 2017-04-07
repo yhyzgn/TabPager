@@ -1,25 +1,18 @@
 package com.yhy.tabpager.pager;
 
-import android.graphics.Color;
-import android.os.SystemClock;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.pager.factory.PagerFactory;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tpg.adapter.TpgAdapter;
-import com.yhy.tpg.config.PagerConfig;
 import com.yhy.tpg.handler.ResultHandler;
 import com.yhy.tpg.listener.OnPageChangedListener;
 import com.yhy.tpg.pager.TpgFragment;
 import com.yhy.tpg.widget.TpgView;
-
-import java.util.Random;
 
 public class NavPager extends TpgFragment {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C"};
@@ -34,6 +27,12 @@ public class NavPager extends TpgFragment {
         return view;
     }
 
+    @Override
+    public boolean shouldLoadDataAtFirst() {
+        Bundle args = getArguments();
+        boolean firstPage = args.getBoolean("firstPage");
+        return firstPage;
+    }
 
     @Override
     protected void initData(ResultHandler handler) {
@@ -98,7 +97,11 @@ public class NavPager extends TpgFragment {
 
         @Override
         public TpgFragment getPager(int position) {
-            return PagerFactory.create(position);
+            Bundle args = new Bundle();
+            args.putBoolean("firstPage", position == 0);
+            TpgFragment fragment = new NavContentPager();
+            fragment.setArguments(args);
+            return fragment;
         }
     }
 }

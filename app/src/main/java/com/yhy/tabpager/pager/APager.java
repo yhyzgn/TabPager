@@ -1,6 +1,7 @@
 package com.yhy.tabpager.pager;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.View;
@@ -49,15 +50,12 @@ public class APager extends TpgFragment {
     }
 
     @Override
-    public void reloadDate(Object... args) {
+    public void reloadDate(Bundle args) {
         //调用父类方法才会重新显示加载中页面，否则只是执行重新加载操作，不会显示加载中页面
-        super.reloadDate();
+        super.reloadDate(args);
 
         //子类的具体操作...
-        String temp = "";
-        if (null != args && args.length > 0 && args[0] instanceof String) {
-            temp = (String) args[0];
-        }
+        String temp = args.getString("args");
         ToastUtils.shortToast(temp + "页面重新加载数据");
 
         getDataFromServer();

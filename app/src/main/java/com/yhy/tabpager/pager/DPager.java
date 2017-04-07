@@ -1,6 +1,7 @@
 package com.yhy.tabpager.pager;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.View;
@@ -36,13 +37,8 @@ public class DPager extends TpgFragment {
     }
 
     @Override
-    public void reloadDate(Object... args) {
-        super.reloadDate();
-
-        String temp = "";
-        if (null != args && args.length > 0 && args[0] instanceof String) {
-            temp = (String) args[0];
-        }
+    public void reloadDate(Bundle args) {
+        String temp = args.getString("args");
         ToastUtils.shortToast(temp + "页面重新加载数据");
 
         getDataFromServer();
