@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
@@ -23,7 +25,7 @@ public class NavContentPager extends TpgFragment {
     private ResultHandler mResultHandler;
 
     @Override
-    protected View getSuccessView() {
+    protected View getSuccessView(LayoutInflater inflater, ViewGroup container) {
         TextView tv = new TextView(getContext());
         tv.setText("NavContentPager加载成功");
         tv.setTextColor(Color.RED);

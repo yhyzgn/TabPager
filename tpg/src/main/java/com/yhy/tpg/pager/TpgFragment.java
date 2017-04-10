@@ -45,7 +45,7 @@ public abstract class TpgFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle
             savedInstanceState) {
         //如果mDispatch为空，就创建，否则就不创建。
         //由于ViewPager的页面缓存特性，它只会缓存当前页面及其前后各一页（共3页）的页面。
@@ -55,22 +55,22 @@ public abstract class TpgFragment extends Fragment {
             mDispatch = new DispatchLoading(mActivity) {
                 @Override
                 public View getSuccessView() {
-                    return TpgFragment.this.getSuccessView();
+                    return TpgFragment.this.getSuccessView(inflater, container);
                 }
 
                 @Override
                 public View getLoadingView() {
-                    return TpgFragment.this.getLoadingView();
+                    return TpgFragment.this.getLoadingView(inflater, container);
                 }
 
                 @Override
                 public View getErrorView() {
-                    return TpgFragment.this.getErrorView();
+                    return TpgFragment.this.getErrorView(inflater, container);
                 }
 
                 @Override
                 public View getEmptyView() {
-                    return TpgFragment.this.getEmptyView();
+                    return TpgFragment.this.getEmptyView(inflater, container);
                 }
 
                 @Override
@@ -104,7 +104,7 @@ public abstract class TpgFragment extends Fragment {
      *
      * @return 加载成功页面
      */
-    protected abstract View getSuccessView();
+    protected abstract View getSuccessView(LayoutInflater inflater, ViewGroup container);
 
     /**
      * 获取加载中页面
@@ -112,15 +112,14 @@ public abstract class TpgFragment extends Fragment {
      *
      * @return 加载中页面
      */
-    protected View getLoadingView() {
+    protected View getLoadingView(LayoutInflater inflater, ViewGroup container) {
         if (null != mConfig) {
             int loadingViewResId = mConfig.getLoadingViewResId();
             if (loadingViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
-                return LayoutInflater.from(mConfig.getContext()).inflate(loadingViewResId, null);
+                return inflater.inflate(loadingViewResId, container, false);
             }
         }
-        View loadingView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_loading,
-                null);
+        View loadingView = inflater.inflate(R.layout.layout_def_loading, container, false);
         return loadingView;
     }
 
@@ -130,7 +129,7 @@ public abstract class TpgFragment extends Fragment {
      *
      * @return 错误页面
      */
-    protected View getErrorView() {
+    protected View getErrorView(LayoutInflater inflater, ViewGroup container) {
         View errorView = null;
         View retryView = null;
 
@@ -139,7 +138,7 @@ public abstract class TpgFragment extends Fragment {
             //获取界面View
             int errorViewResId = mConfig.getErrorViewResId();
             if (errorViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
-                errorView = LayoutInflater.from(mConfig.getContext()).inflate(errorViewResId, null);
+                errorView = inflater.inflate(errorViewResId, container, false);
             }
             //获取重试按钮View
             int retryResId = mConfig.getErrorViewRetryResId();
@@ -150,7 +149,7 @@ public abstract class TpgFragment extends Fragment {
 
         //如果没有设置过页面参数，就使用默认的页面
         if (null == errorView) {
-            errorView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_error, null);
+            errorView = inflater.inflate(R.layout.layout_def_error, container, false);
         }
         if (null == retryView) {
             //默认将整个默认页面设置为重试View
@@ -173,7 +172,7 @@ public abstract class TpgFragment extends Fragment {
      *
      * @return 空数据页面
      */
-    protected View getEmptyView() {
+    protected View getEmptyView(LayoutInflater inflater, ViewGroup container) {
         View emptyView = null;
         View retryView = null;
 
@@ -182,7 +181,7 @@ public abstract class TpgFragment extends Fragment {
             //获取界面View
             int emptyViewResId = mConfig.getEmptyViewResId();
             if (emptyViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
-                emptyView = LayoutInflater.from(mConfig.getContext()).inflate(emptyViewResId, null);
+                emptyView = inflater.inflate(emptyViewResId, container, false);
             }
             //获取重试按钮View
             int retryResId = mConfig.getErrorViewRetryResId();
@@ -193,7 +192,7 @@ public abstract class TpgFragment extends Fragment {
 
         //如果没有设置过页面参数，就使用默认的页面
         if (null == emptyView) {
-            emptyView = LayoutInflater.from(mActivity).inflate(R.layout.layout_def_empty, null);
+            emptyView = inflater.inflate(R.layout.layout_def_empty, container, false);
         }
         if (null == retryView) {
             //默认将整个默认页面设置为重试View

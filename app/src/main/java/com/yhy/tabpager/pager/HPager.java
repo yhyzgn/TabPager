@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yhy.tabpager.utils.ToastUtils;
@@ -18,7 +20,7 @@ public class HPager extends TpgFragment {
     private ResultHandler mResultHandler;
 
     @Override
-    protected View getSuccessView() {
+    protected View getSuccessView(LayoutInflater inflater, ViewGroup container) {
         TextView tv = new TextView(getContext());
         tv.setText("H页面加载成功");
         tv.setTextColor(Color.RED);

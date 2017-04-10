@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.pager.factory.PagerFactory;
@@ -21,7 +22,7 @@ public class NavPager extends TpgFragment {
     private PagersAdapter mAdapter;
 
     @Override
-    protected View getSuccessView() {
+    protected View getSuccessView(LayoutInflater inflater, ViewGroup container) {
         View view = LayoutInflater.from(mActivity).inflate(R.layout.activity_tpg, null);
         tpgView = (TpgView) view.findViewById(R.id.tv_content);
         return view;

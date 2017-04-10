@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
@@ -20,7 +22,7 @@ public class BPager extends TpgFragment {
     private ResultHandler mResultHandler;
 
     @Override
-    protected View getSuccessView() {
+    protected View getSuccessView(LayoutInflater inflater, ViewGroup container) {
         TextView tv = new TextView(getContext());
         tv.setText("B页面加载成功");
         tv.setTextColor(Color.RED);
@@ -30,7 +32,7 @@ public class BPager extends TpgFragment {
     }
 
     @Override
-    protected View getLoadingView() {
+    protected View getLoadingView(LayoutInflater inflater, ViewGroup container) {
         return View.inflate(getContext(), R.layout.layout_view_loading_b, null);
     }
 
