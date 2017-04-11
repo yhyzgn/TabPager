@@ -45,13 +45,8 @@ dependencies {
 publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy.widget'
-    artifactId = 'tpg'
-    publishVersion = '2.0.6'
-    desc = 'Encapsulate a component with TabLayout, ViewPager and BottomNavigationBar together, ' +
-            'and implement the function of switch provided default pagers, such as LoadingPager, ' +
-            'ErrorPager or EmptyPager. You only need return a SuccessView for SuccessPager by ' +
-            'overriding the method getSuccessView(), you can also custom LoadingPager, ErrorPager ' +
-            'or EmptyPager. Resolved some default event and provided interface accordingly. ' +
-            'Welcome the usage.'
+    artifactId = 'tabnav'
+    publishVersion = '1.0.0'
+    desc = 'TabLayout + ViewPager + Fragment, RadioGroup + ViewPager + Fragment. Display different pager according to internet status. And you could custom every pager layout.'
     website = 'https://github.com/SilentWolf1993/TabPager'
 }
