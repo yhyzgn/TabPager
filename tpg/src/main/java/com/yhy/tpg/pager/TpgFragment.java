@@ -102,6 +102,8 @@ public abstract class TpgFragment extends Fragment {
     /**
      * 获取加载成功页面
      *
+     * @param inflater  LayoutInflater
+     * @param container ViewGroup
      * @return 加载成功页面
      */
     protected abstract View getSuccessView(LayoutInflater inflater, ViewGroup container);
@@ -110,6 +112,8 @@ public abstract class TpgFragment extends Fragment {
      * 获取加载中页面
      * 先从全局配置中获取，如果未设置的话再使用默认页面
      *
+     * @param inflater  LayoutInflater
+     * @param container ViewGroup
      * @return 加载中页面
      */
     protected View getLoadingView(LayoutInflater inflater, ViewGroup container) {
@@ -127,6 +131,8 @@ public abstract class TpgFragment extends Fragment {
      * 获取加载错误页面
      * 先从全局配置中获取，如果未设置的话再使用默认页面
      *
+     * @param inflater  LayoutInflater
+     * @param container ViewGroup
      * @return 错误页面
      */
     protected View getErrorView(LayoutInflater inflater, ViewGroup container) {
@@ -170,6 +176,8 @@ public abstract class TpgFragment extends Fragment {
      * 获取空数据页面
      * 先从全局配置中获取，如果未设置的话再使用默认页面
      *
+     * @param inflater  LayoutInflater
+     * @param container ViewGroup
      * @return 空数据页面
      */
     protected View getEmptyView(LayoutInflater inflater, ViewGroup container) {
