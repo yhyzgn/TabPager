@@ -11,10 +11,17 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"/>
 
+    <View
+        android:id="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_above="@id/rg_tabs"
+        android:background="@color/nav_def_line_divider_color"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rg_tabs"/>
+        android:layout_above="@id/v_divider"/>
 
 </RelativeLayout>

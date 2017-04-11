@@ -32,6 +32,7 @@ import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
  */
 public class NavView extends RelativeLayout implements TpgInterface, BadgeInterface {
     private ViewPager vpContent;
+    private View vDivider;
     private RadioGroup rgTabs;
     //是否拖动过ViewPager（用于区分是ViewPager联动RadioGroup还是RadioGroup联动ViewPager）
     private boolean mDragScrolledFlag = false;
@@ -55,6 +56,8 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     private int mNavBgCheckedColor;
     //导航栏选中的背景图，默认为null
     private Drawable mNavBgCheckedImg;
+    //导航栏与页面之间的分割线颜色，默认为透明，此时分割线不显示
+    private int mNavDividerLineColor;
 
     public NavView(Context context) {
         this(context, null);
@@ -86,7 +89,8 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         mNavBgCheckedColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_checked_color,
                 Color.TRANSPARENT);
         mNavBgCheckedImg = ta.getDrawable(R.styleable.NavViewAttrs_nav_bg_checked_img);
-
+        mNavDividerLineColor = ta.getColor(R.styleable.NavViewAttrs_nav_divider_line_color, Color
+                .TRANSPARENT);
         ta.recycle();
     }
 
@@ -97,12 +101,22 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         //获取控件
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_nav, this);
         vpContent = (ViewPager) view.findViewById(R.id.vp_content);
+        vDivider = view.findViewById(R.id.v_divider);
         rgTabs = (RadioGroup) view.findViewById(R.id.rg_tabs);
 
         //设置整个导航栏的背景。如果同时设置了颜色和图片做背景，以图片为主
         rgTabs.setBackgroundColor(mNavBgColor);
         if (null != mNavBgImg) {
             rgTabs.setBackgroundDrawable(mNavBgImg);
+        }
+
+        if (mNavDividerLineColor == Color.TRANSPARENT) {
+            //如果颜色透明，就隐藏分割线
+            vDivider.setVisibility(View.GONE);
+        } else {
+            //否则就显示分割线，并设置相应颜色
+            vDivider.setBackgroundColor(mNavDividerLineColor);
+            vDivider.setVisibility(View.GONE);
         }
     }
 

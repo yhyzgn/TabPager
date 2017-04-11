@@ -48,6 +48,8 @@
         <attr name="nav_bg_checked_color" format="color"/>
         <!--导航栏选中时背景，默认为：null-->
         <attr name="nav_bg_checked_img" format="reference"/>
+        <!--导航栏选中时背景，默认为：null-->
+        <attr name="nav_divider_line_color" format="reference"/>
     </declare-styleable>
 
     <!--自定义进度条的自定义属性-->

@@ -4,4 +4,6 @@
     <color name="tab_def_selected_color">#ffff2200</color>
     <color name="tab_def_indicator_color">#ffff2200</color>
     <color name="tab_def_pager_text_color">#2f2459</color>
+
+    <color name="nav_def_line_divider_color">@android:color/transparent</color>
 </resources>
