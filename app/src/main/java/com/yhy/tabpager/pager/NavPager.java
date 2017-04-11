@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.pager.factory.PagerFactory;
 import com.yhy.tabpager.utils.ToastUtils;
-import com.yhy.tpg.adapter.TpgAdapter;
-import com.yhy.tpg.handler.ResultHandler;
-import com.yhy.tpg.listener.OnPageChangedListener;
-import com.yhy.tpg.pager.TpgFragment;
-import com.yhy.tpg.widget.TpgView;
+import com.yhy.tabnav.adapter.TpgAdapter;
+import com.yhy.tabnav.handler.ResultHandler;
+import com.yhy.tabnav.listener.OnPageChangedListener;
+import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabnav.widget.TpgView;
 
 public class NavPager extends TpgFragment {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C"};

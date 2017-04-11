@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yhy.tabpager.utils.ToastUtils;
-import com.yhy.tpg.handler.ResultHandler;
-import com.yhy.tpg.pager.TpgFragment;
+import com.yhy.tabnav.handler.ResultHandler;
+import com.yhy.tabnav.pager.TpgFragment;
 
 import java.util.Random;
 

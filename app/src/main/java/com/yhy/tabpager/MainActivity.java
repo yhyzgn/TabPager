@@ -8,12 +8,12 @@ import android.os.Bundle;
 import com.yhy.tabpager.pager.NavPager;
 import com.yhy.tabpager.pager.factory.PagerFactory;
 import com.yhy.tabpager.utils.ToastUtils;
-import com.yhy.tpg.adapter.NavAdapter;
-import com.yhy.tpg.config.PagerConfig;
-import com.yhy.tpg.entity.NavTab;
-import com.yhy.tpg.listener.OnPageChangedListener;
-import com.yhy.tpg.pager.TpgFragment;
-import com.yhy.tpg.widget.NavView;
+import com.yhy.tabnav.adapter.NavAdapter;
+import com.yhy.tabnav.config.PagerConfig;
+import com.yhy.tabnav.entity.NavTab;
+import com.yhy.tabnav.listener.OnPageChangedListener;
+import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabnav.widget.NavView;
 
 import java.util.ArrayList;
 import java.util.List;

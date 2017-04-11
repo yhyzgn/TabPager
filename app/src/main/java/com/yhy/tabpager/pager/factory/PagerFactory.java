@@ -8,7 +8,7 @@ import com.yhy.tabpager.pager.EPager;
 import com.yhy.tabpager.pager.FPager;
 import com.yhy.tabpager.pager.GPager;
 import com.yhy.tabpager.pager.HPager;
-import com.yhy.tpg.pager.TpgFragment;
+import com.yhy.tabnav.pager.TpgFragment;
 
 public class PagerFactory {
 

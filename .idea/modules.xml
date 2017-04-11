@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TabPager.iml" filepath="$PROJECT_DIR$/TabPager.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tpg/tpg.iml" filepath="$PROJECT_DIR$/tpg/tpg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tabnav/tabnav.iml" filepath="$PROJECT_DIR$/tabnav/tabnav.iml" />
     </modules>
   </component>
 </project>

@@ -1,1 +1,1 @@
-include ':app', ':tpg'
+include ':app', ':tabnav'

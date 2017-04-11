@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.yhy.tabpager.pager.factory.PagerFactory;
-import com.yhy.tpg.adapter.TpgAdapter;
-import com.yhy.tpg.listener.OnPageChangedListener;
-import com.yhy.tpg.pager.TpgFragment;
-import com.yhy.tpg.config.PagerConfig;
-import com.yhy.tpg.widget.TpgView;
+import com.yhy.tabnav.adapter.TpgAdapter;
+import com.yhy.tabnav.listener.OnPageChangedListener;
+import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabnav.config.PagerConfig;
+import com.yhy.tabnav.widget.TpgView;
 
 public class TpgActivity extends AppCompatActivity {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C", "菜单D", "菜单E", "菜单F", "菜单G", "菜单H"};
