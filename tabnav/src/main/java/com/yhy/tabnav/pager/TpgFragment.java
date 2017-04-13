@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.dispatch.DispatchLoading;
 import com.yhy.tabnav.config.PagerConfig;
@@ -28,6 +29,8 @@ public abstract class TpgFragment extends Fragment {
     private ResultHandler mHandler;
     //当前Activity对象
     public Activity mActivity;
+    //第一页是否加载过
+    private boolean mFirstPageIsLoaded = false;
 
     /**
      * 设置当前页面的一些参数，比如错误页面之类等
@@ -90,13 +93,20 @@ public abstract class TpgFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //如果需要首先加载该页面数据，就自动调用shouldLoadData()方法加载数据
-        if (shouldLoadDataAtFirst()) {
-            shouldLoadData();
-        }
 
         //初始化事件一些事件监听
         initListener();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //如果需要首先并且为加载过，就加载该页面数据，就自动调用shouldLoadData()方法加载数据
+        if (!mFirstPageIsLoaded && shouldLoadDataAtFirst()) {
+            shouldLoadData();
+            mFirstPageIsLoaded = true;
+        }
     }
 
     /**

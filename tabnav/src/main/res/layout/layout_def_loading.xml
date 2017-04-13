@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <!--如果设置ProgressView的背景颜色，请使用app:bg_color="..."，android:background="..."已无效-->
-    <com.yhy.tpg.widget.ProgressView
+    <com.yhy.tabnav.widget.ProgressView
         android:layout_width="80dp"
         android:layout_height="80dp" />
 
