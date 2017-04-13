@@ -91,14 +91,6 @@ public abstract class TpgFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //初始化事件一些事件监听
-        initListener();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -107,6 +99,8 @@ public abstract class TpgFragment extends Fragment {
             shouldLoadData();
             mFirstPageIsLoaded = true;
         }
+        //初始化事件一些事件监听
+        initListener();
     }
 
     /**
