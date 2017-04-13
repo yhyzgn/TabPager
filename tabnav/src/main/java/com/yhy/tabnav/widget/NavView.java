@@ -116,7 +116,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         } else {
             //否则就显示分割线，并设置相应颜色
             vDivider.setBackgroundColor(mNavDividerLineColor);
-            vDivider.setVisibility(View.GONE);
+            vDivider.setVisibility(View.VISIBLE);
         }
     }
 
