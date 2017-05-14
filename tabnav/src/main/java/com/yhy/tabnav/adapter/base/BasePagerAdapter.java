@@ -108,6 +108,11 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
     public void reloadDataForPager(int index, Bundle args) {
         TpgFragment pager = mCache.getPager(index);
         if (null != pager) {
+            if (null != pager.mRltHandler) {
+                //发送加载中消息
+                pager.mRltHandler.sendLoadingHandler();
+            }
+            //重新加载数据
             pager.reloadDate(args);
         }
     }

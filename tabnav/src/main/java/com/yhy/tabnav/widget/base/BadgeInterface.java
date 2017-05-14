@@ -2,6 +2,8 @@ package com.yhy.tabnav.widget.base;
 
 import android.graphics.Bitmap;
 
+import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
+
 /**
  * Created by HongYi Yan on 2017/3/13 12:55.
  */
@@ -27,7 +29,7 @@ public interface BadgeInterface {
      *
      * @param index Tab的索引
      */
-    void hiddenBadge(int index);
+    void dismissBadge(int index);
 
     /**
      * 显示图像徽章
@@ -44,4 +46,12 @@ public interface BadgeInterface {
      * @return 是否显示徽章
      */
     boolean isShowBadge(int index);
+
+    /**
+     * 徽章消失的回调方法
+     *
+     * @param index    Tab的索引
+     * @param delegate 回调事件
+     */
+    void setOnDismissListener(int index, BGADragDismissDelegate delegate);
 }

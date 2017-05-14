@@ -1,6 +1,5 @@
 package com.yhy.tabpager;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.widget.TpgView;
 
 public class TpgActivity extends AppCompatActivity {
-    private static final String[] TABS = {"菜单A", "菜单B", "菜单C", "菜单D", "菜单E", "菜单F", "菜单G", "菜单H"};
+    private static final String[] TABS = {"菜单A", "菜单B", "菜单C", "菜单D", "菜单E", "菜单F", "菜单G"};
 
     private TpgView tvContent;
     //页面配置，只在当前TpgView有效
@@ -26,9 +25,6 @@ public class TpgActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tpg);
 
-        //初始化ToastUtils，最后要在Application中初始化
-//        ToastUtils.init(this);
-
         setTpgEmptyPage();
 
         tvContent = (TpgView) findViewById(R.id.tv_content);
@@ -39,8 +35,8 @@ public class TpgActivity extends AppCompatActivity {
     }
 
     private void setTpgEmptyPage() {
-        mConfig = new PagerConfig(this);
-//        mConfig.setEmptyViewResId(R.layout.layout_view_empty);
+        mConfig = new PagerConfig();
+        mConfig.setEmptyViewLayoutId(R.layout.layout_view_empty, R.id.tv_retry);
     }
 
     private void initData() {
@@ -58,8 +54,6 @@ public class TpgActivity extends AppCompatActivity {
                     args.putString("args", TABS[tvContent.getCurrentPager()]);
                     mAdapter.reloadDataForCurrentPager(args);
                 }
-
-                startActivity(new Intent(TpgActivity.this, NavActivity.class));
             }
         });
 

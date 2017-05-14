@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <!--如果设置ProgressView的背景颜色，请使用app:bg_color="..."，android:background="..."已无效-->
-    <com.yhy.tabnav.widget.ProgressView
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+    <com.yhy.tabnav.widget.LoadingView
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginLeft="8dp"
         android:text="正在加载..."
         android:textColor="@color/tab_def_pager_text_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"/>
 </LinearLayout>

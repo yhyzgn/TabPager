@@ -1,78 +1,59 @@
 package com.yhy.tabnav.config;
 
-import android.content.Context;
-
-import com.yhy.tabnav.global.Const;
+import com.yhy.tabnav.global.TpgConst;
 
 public class PagerConfig {
-    private Context mCtx;
+    private int mLoadingViewLayoutId;
 
-    private int mLoadingViewResId;
-
-    private int mErrorViewResId;
+    private int mErrorViewLayoutId;
 
     private int mErrorViewRetryResId;
 
-    private int mEmptyViewResId;
+    private int mEmptyViewLayoutId;
 
     private int mEmptyViewRetryResId;
 
     /**
      * 创建页面配置对象
-     *
-     * @param ctx 上下文对象
      */
-    public PagerConfig(Context ctx) {
-        //初始值
-        mCtx = ctx;
+    public PagerConfig() {
         //默认值
-        mLoadingViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
-        mErrorViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
-        mEmptyViewResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
-        mErrorViewRetryResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
-        mEmptyViewRetryResId = Const.PagerResIdDef.PAGER_NO_RES_ID;
-    }
-
-    /**
-     * 获取上下文对象
-     *
-     * @return 上下文对象
-     */
-    public Context getContext() {
-        return mCtx;
+        mLoadingViewLayoutId = TpgConst.PagerResIdDef.PAGER_NO_RES_ID;
+        mErrorViewLayoutId = TpgConst.PagerResIdDef.PAGER_NO_RES_ID;
+        mEmptyViewLayoutId = TpgConst.PagerResIdDef.PAGER_NO_RES_ID;
+        mErrorViewRetryResId = TpgConst.PagerResIdDef.PAGER_NO_RES_ID;
+        mEmptyViewRetryResId = TpgConst.PagerResIdDef.PAGER_NO_RES_ID;
     }
 
     /**
      * 设置加载中页面
      *
-     * @param resId 页面资源id
+     * @param layoutId 页面资源id
      * @return 当前对象，便于链式编程
      */
-    public PagerConfig setLoadingViewResId(int resId) {
-        checkContext();
-        mLoadingViewResId = resId;
+    public PagerConfig setLoadingViewLayoutId(int layoutId) {
+        mLoadingViewLayoutId = layoutId;
         return this;
     }
 
     /**
      * 获取加载中页面资源id
      *
-     * @return resId
+     * @return layoutId
      */
-    public int getLoadingViewResId() {
-        return mLoadingViewResId;
+    public int getLoadingViewLayoutId() {
+        return mLoadingViewLayoutId;
     }
 
     /**
      * 设置错误页面
      *
-     * @param resId      页面资源id
+     * @param layoutId   页面资源id
      * @param retryResId 错误页面的重试按钮资源id
      * @return 当前对象，便于链式编程
      */
-    public PagerConfig setErrorViewResId(int resId, int retryResId) {
-        checkContext();
-        mErrorViewResId = resId;
+    public PagerConfig setErrorViewLayoutId(int layoutId, int retryResId) {
+        mErrorViewLayoutId = layoutId;
         mErrorViewRetryResId = retryResId;
         return this;
     }
@@ -80,10 +61,10 @@ public class PagerConfig {
     /**
      * 获取错误页面资源id
      *
-     * @return resId
+     * @return layoutId
      */
     public int getErrorViewResId() {
-        return mErrorViewResId;
+        return mErrorViewLayoutId;
     }
 
     /**
@@ -98,13 +79,12 @@ public class PagerConfig {
     /**
      * 设置空数据页面
      *
-     * @param resId      页面资源id
+     * @param layoutId   页面资源id
      * @param retryResId 空数据页面的重试按钮资源id
      * @return 当前对象，便于链式编程
      */
-    public PagerConfig setEmptyViewResId(int resId, int retryResId) {
-        checkContext();
-        mEmptyViewResId = resId;
+    public PagerConfig setEmptyViewLayoutId(int layoutId, int retryResId) {
+        mEmptyViewLayoutId = layoutId;
         mEmptyViewRetryResId = retryResId;
         return this;
     }
@@ -112,10 +92,10 @@ public class PagerConfig {
     /**
      * 获取空数据页面资源id
      *
-     * @return resId
+     * @return layoutId
      */
     public int getEmptyViewResId() {
-        return mEmptyViewResId;
+        return mEmptyViewLayoutId;
     }
 
     /**
@@ -125,14 +105,5 @@ public class PagerConfig {
      */
     public int getEmptyViewRetryResId() {
         return mEmptyViewRetryResId;
-    }
-
-    /**
-     * 检查是否已设置上下文对象
-     */
-    private void checkContext() {
-        if (null == mCtx) {
-            throw new RuntimeException("上下文对象为空，请在创建PagerConfig对象时设置上下文环境对象");
-        }
     }
 }

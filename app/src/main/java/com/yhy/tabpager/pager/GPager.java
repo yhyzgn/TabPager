@@ -17,10 +17,8 @@ import java.util.Random;
 
 public class GPager extends TpgFragment {
 
-    private ResultHandler mResultHandler;
-
     @Override
-    protected View getSuccessView(LayoutInflater inflater, ViewGroup container) {
+    protected View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView tv = new TextView(getContext());
         tv.setText("G页面加载成功");
         tv.setTextColor(Color.RED);
@@ -31,9 +29,7 @@ public class GPager extends TpgFragment {
 
 
     @Override
-    protected void initData(ResultHandler handler) {
-        mResultHandler = handler;
-
+    protected void initData() {
         getDataFromServer();
     }
 
@@ -57,13 +53,13 @@ public class GPager extends TpgFragment {
                 int temp = random.nextInt(3);
                 switch (temp) {
                     case 0:
-                        mResultHandler.sendSuccessHandler();
+                        mRltHandler.sendSuccessHandler();
                         break;
                     case 1:
-                        mResultHandler.sendErrorHandler();
+                        mRltHandler.sendErrorHandler();
                         break;
                     case 2:
-                        mResultHandler.sendEmptyHandler();
+                        mRltHandler.sendEmptyHandler();
                         break;
                     default:
                         break;

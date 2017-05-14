@@ -8,11 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.dispatch.DispatchLoading;
 import com.yhy.tabnav.config.PagerConfig;
-import com.yhy.tabnav.global.Const;
+import com.yhy.tabnav.global.TpgConst;
 import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.utils.ViewUtils;
 
@@ -26,7 +25,7 @@ public abstract class TpgFragment extends Fragment {
     //页面配置
     private PagerConfig mConfig;
     //结果集Handler对象
-    private ResultHandler mHandler;
+    public ResultHandler mRltHandler;
     //当前Activity对象
     public Activity mActivity;
     //第一页是否加载过
@@ -48,8 +47,7 @@ public abstract class TpgFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle
-            savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         //如果mDispatch为空，就创建，否则就不创建。
         //由于ViewPager的页面缓存特性，它只会缓存当前页面及其前后各一页（共3页）的页面。
         //当mDispatch不为空时，直接把mDispatc返回就能达到不重复创建mDispatch的效果。
@@ -58,28 +56,28 @@ public abstract class TpgFragment extends Fragment {
             mDispatch = new DispatchLoading(mActivity) {
                 @Override
                 public View getSuccessView() {
-                    return TpgFragment.this.getSuccessView(inflater, container);
+                    return TpgFragment.this.getSuccessView(inflater, container, savedInstanceState);
                 }
 
                 @Override
                 public View getLoadingView() {
-                    return TpgFragment.this.getLoadingView(inflater, container);
+                    return TpgFragment.this.getLoadingView(inflater, container, savedInstanceState);
                 }
 
                 @Override
                 public View getErrorView() {
-                    return TpgFragment.this.getErrorView(inflater, container);
+                    return TpgFragment.this.getErrorView(inflater, container, savedInstanceState);
                 }
 
                 @Override
                 public View getEmptyView() {
-                    return TpgFragment.this.getEmptyView(inflater, container);
+                    return TpgFragment.this.getEmptyView(inflater, container, savedInstanceState);
                 }
 
                 @Override
                 public void initData(ResultHandler handler) {
-                    mHandler = handler;
-                    TpgFragment.this.initData(mHandler);
+                    mRltHandler = handler;
+                    TpgFragment.this.initData();
                 }
             };
         } else {
@@ -106,24 +104,26 @@ public abstract class TpgFragment extends Fragment {
     /**
      * 获取加载成功页面
      *
-     * @param inflater  LayoutInflater
-     * @param container ViewGroup
+     * @param inflater           LayoutInflater
+     * @param container          ViewGroup
+     * @param savedInstanceState Bundle
      * @return 加载成功页面
      */
-    protected abstract View getSuccessView(LayoutInflater inflater, ViewGroup container);
+    protected abstract View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /**
      * 获取加载中页面
      * 先从全局配置中获取，如果未设置的话再使用默认页面
      *
-     * @param inflater  LayoutInflater
-     * @param container ViewGroup
+     * @param inflater           LayoutInflater
+     * @param container          ViewGroup
+     * @param savedInstanceState Bundle
      * @return 加载中页面
      */
-    protected View getLoadingView(LayoutInflater inflater, ViewGroup container) {
+    protected View getLoadingView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (null != mConfig) {
-            int loadingViewResId = mConfig.getLoadingViewResId();
-            if (loadingViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
+            int loadingViewResId = mConfig.getLoadingViewLayoutId();
+            if (loadingViewResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID) {
                 return inflater.inflate(loadingViewResId, container, false);
             }
         }
@@ -135,11 +135,12 @@ public abstract class TpgFragment extends Fragment {
      * 获取加载错误页面
      * 先从全局配置中获取，如果未设置的话再使用默认页面
      *
-     * @param inflater  LayoutInflater
-     * @param container ViewGroup
+     * @param inflater           LayoutInflater
+     * @param container          ViewGroup
+     * @param savedInstanceState Bundle
      * @return 错误页面
      */
-    protected View getErrorView(LayoutInflater inflater, ViewGroup container) {
+    protected View getErrorView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View errorView = null;
         View retryView = null;
 
@@ -147,12 +148,12 @@ public abstract class TpgFragment extends Fragment {
         if (null != mConfig) {
             //获取界面View
             int errorViewResId = mConfig.getErrorViewResId();
-            if (errorViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
+            if (errorViewResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID) {
                 errorView = inflater.inflate(errorViewResId, container, false);
             }
             //获取重试按钮View
             int retryResId = mConfig.getErrorViewRetryResId();
-            if (retryResId > Const.PagerResIdDef.PAGER_NO_RES_ID && null != errorView) {
+            if (retryResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID && null != errorView) {
                 retryView = errorView.findViewById(retryResId);
             }
         }
@@ -180,11 +181,12 @@ public abstract class TpgFragment extends Fragment {
      * 获取空数据页面
      * 先从全局配置中获取，如果未设置的话再使用默认页面
      *
-     * @param inflater  LayoutInflater
-     * @param container ViewGroup
+     * @param inflater           LayoutInflater
+     * @param container          ViewGroup
+     * @param savedInstanceState Bundle
      * @return 空数据页面
      */
-    protected View getEmptyView(LayoutInflater inflater, ViewGroup container) {
+    protected View getEmptyView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View emptyView = null;
         View retryView = null;
 
@@ -192,12 +194,12 @@ public abstract class TpgFragment extends Fragment {
         if (null != mConfig) {
             //获取界面View
             int emptyViewResId = mConfig.getEmptyViewResId();
-            if (emptyViewResId > Const.PagerResIdDef.PAGER_NO_RES_ID) {
+            if (emptyViewResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID) {
                 emptyView = inflater.inflate(emptyViewResId, container, false);
             }
             //获取重试按钮View
-            int retryResId = mConfig.getErrorViewRetryResId();
-            if (retryResId > Const.PagerResIdDef.PAGER_NO_RES_ID && null != emptyView) {
+            int retryResId = mConfig.getEmptyViewRetryResId();
+            if (retryResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID && null != emptyView) {
                 retryView = emptyView.findViewById(retryResId);
             }
         }
@@ -226,10 +228,8 @@ public abstract class TpgFragment extends Fragment {
      * 在子类中实现该方法。
      * 注意：必须在该方法中加载数据完成(无论成功与否)以后调用refresh(DispatchLoading.STATE state)
      * 方法刷新加载结果状态，否则不会自动更新UI。
-     *
-     * @param handler 子类用来发送结果状态的ResultHandler对象
      */
-    protected abstract void initData(ResultHandler handler);
+    protected abstract void initData();
 
     /**
      * 子类初始化一些事件监听
@@ -263,9 +263,5 @@ public abstract class TpgFragment extends Fragment {
      * @param args 重新加载数据时可能需要的参数
      */
     public void reloadDate(Bundle args) {
-        if (null != mHandler) {
-            //发送加载中消息
-            mHandler.sendLoadingHandler();
-        }
     }
 }

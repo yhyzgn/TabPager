@@ -26,6 +26,7 @@ import com.yhy.tabnav.widget.base.BadgeInterface;
 import com.yhy.tabnav.widget.base.TpgInterface;
 
 import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
+import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
 
 /**
  * Created by HongYi Yan on 2017/3/11 23:02.
@@ -80,7 +81,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     private void init(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.NavViewAttrs);
 
-        mNavBgColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_color, Color.WHITE);
+        mNavBgColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_color, Color.TRANSPARENT);
         mNavBgImg = ta.getDrawable(R.styleable.NavViewAttrs_nav_bg_img);
         mNavTextDefaultColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_default_color, Color
                 .BLACK);
@@ -289,7 +290,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     }
 
     @Override
-    public void hiddenBadge(int index) {
+    public void dismissBadge(int index) {
         getTabByIndex(index).hiddenBadge();
     }
 
@@ -301,6 +302,11 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     @Override
     public boolean isShowBadge(int index) {
         return getTabByIndex(index).isShowBadge();
+    }
+
+    @Override
+    public void setOnDismissListener(int index, BGADragDismissDelegate delegate) {
+        getTabByIndex(index).setDragDismissDelegage(delegate);
     }
 
     /**

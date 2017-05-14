@@ -8,8 +8,4 @@
 /captures
 .externalNativeBuild
 app/libs/
-freeline.py
-freeline/
-freeline_core/
-freeline_project_description.json
-tpg/libs/
+tabnav/libs/

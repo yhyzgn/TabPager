@@ -36,7 +36,7 @@
 
     <!--底部导航栏自定义属性-->
     <declare-styleable name="NavViewAttrs">
-        <!--导航栏背景色，默认为：#ffffff-->
+        <!--导航栏背景色，默认为：透明-->
         <attr name="nav_bg_color" format="color"/>
         <!--导航栏背景图片，默认为：null-->
         <attr name="nav_bg_img" format="reference"/>
@@ -48,13 +48,7 @@
         <attr name="nav_bg_checked_color" format="color"/>
         <!--导航栏选中时背景，默认为：null-->
         <attr name="nav_bg_checked_img" format="reference"/>
-        <!--导航栏选中时背景，默认为：null-->
+        <!--导航栏与内容页面之间的分割线颜色，默认为：透明，不显示-->
         <attr name="nav_divider_line_color" format="reference"/>
-    </declare-styleable>
-
-    <!--自定义进度条的自定义属性-->
-    <declare-styleable name="ProgressViewAttrs">
-        <!--背景颜色-->
-        <attr name="bg_color" format="color"/>
     </declare-styleable>
 </resources>

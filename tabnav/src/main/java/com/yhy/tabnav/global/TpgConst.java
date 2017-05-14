@@ -4,7 +4,7 @@ package com.yhy.tabnav.global;
  * 4种不同的页面状态
  * Created by 颜洪毅 on 2017/1/6 0006 10:19.
  */
-public interface Const {
+public interface TpgConst {
 
     /**
      * 页面加载状态常量
@@ -26,7 +26,7 @@ public interface Const {
      * 页面布局资源id默认值
      */
     interface PagerResIdDef {
-        //没有设置默认资源ID时默认都为-1
-        int PAGER_NO_RES_ID = -1;
+        //没有设置默认资源ID时默认都为0
+        int PAGER_NO_RES_ID = 0;
     }
 }

@@ -1,5 +1,6 @@
 package com.yhy.tabpager;
 
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +17,7 @@ import com.yhy.tabnav.widget.NavView;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.badgeview.BGABadgeable;
-import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
-
-public class NavActivity extends AppCompatActivity {
+public class HybridActivity extends AppCompatActivity {
 
     private static final List<NavTab> TAB_LIST = new ArrayList<>();
 
@@ -30,7 +28,7 @@ public class NavActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nav);
+        setContentView(R.layout.activity_hybrid);
 
         if (TAB_LIST.size() < 4) {
             TAB_LIST.add(new NavTab("首页", R.drawable.tab_home_selector));
@@ -52,13 +50,6 @@ public class NavActivity extends AppCompatActivity {
         //徽章测试
         bvContent.showCirclePointBadge(0);
         bvContent.showTextBadge(1, "2");
-        bvContent.setOnDismissListener(1, new BGADragDismissDelegate() {
-            @Override
-            public void onDismiss(BGABadgeable badgeable) {
-                ToastUtils.shortToast("消失了");
-            }
-        });
-//        bvContent.showDrawableBadge(2, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
 
         //页面切换事件测试
         bvContent.setOnPageChangedListener(new OnPageChangedListener() {
@@ -68,7 +59,6 @@ public class NavActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                ToastUtils.shortToast("第" + (position + 1) + "页");
             }
 
             @Override
@@ -88,7 +78,7 @@ public class NavActivity extends AppCompatActivity {
         @Override
         public TpgFragment getPager(int position) {
             Bundle args = new Bundle();
-            args.putBoolean("isHybrid", false);
+            args.putBoolean("isHybrid", true);
             args.putBoolean("firstPage", position == 0);
             TpgFragment fragment = new NavPager();
             fragment.setArguments(args);

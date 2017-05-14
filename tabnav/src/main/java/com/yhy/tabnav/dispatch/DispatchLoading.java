@@ -7,9 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.orhanobut.logger.Logger;
 import com.yhy.tabnav.handler.ResultHandler;
-import com.yhy.tabnav.global.Const;
+import com.yhy.tabnav.global.TpgConst;
 
 /**
  * 用于控制分发页面，根据不同的状态确定该显示的页面
@@ -93,7 +92,7 @@ public abstract class DispatchLoading extends FrameLayout {
         }
 
         //当前状态为默认状态
-        mCurrentState = Const.LoadingStatus.STATE_DEFAULT;
+        mCurrentState = TpgConst.LoadingStatus.STATE_DEFAULT;
     }
 
     /**
@@ -135,7 +134,7 @@ public abstract class DispatchLoading extends FrameLayout {
      * 判断是否应该加载数据，应该（当前状态不是成功）的话就加载
      */
     public void shouldLoadData() {
-        if (mCurrentState != Const.LoadingStatus.STATE_SUCCESS && mCurrentState != Const
+        if (mCurrentState != TpgConst.LoadingStatus.STATE_SUCCESS && mCurrentState != TpgConst
                 .LoadingStatus.STATE_LOADING) {
             //如果当前状态不是成功状态或者加载中状态，就把当前状态改为加载中状态，请求数据并更新UI
             mResultHandler.sendLoadingHandler();
@@ -150,19 +149,19 @@ public abstract class DispatchLoading extends FrameLayout {
      */
     private void updateUI() {
         if (null != mLoadingView) {
-            mLoadingView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_LOADING ?
+            mLoadingView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_LOADING ?
                     VISIBLE : GONE);
         }
         if (null != mErrorView) {
-            mErrorView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_ERROR ? VISIBLE :
+            mErrorView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_ERROR ? VISIBLE :
                     GONE);
         }
         if (null != mEmptyView) {
-            mEmptyView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_EMPTY ? VISIBLE :
+            mEmptyView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_EMPTY ? VISIBLE :
                     GONE);
         }
         if (null != mSuccessView) {
-            mSuccessView.setVisibility(mCurrentState == Const.LoadingStatus.STATE_SUCCESS ?
+            mSuccessView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_SUCCESS ?
                     VISIBLE : GONE);
         }
     }

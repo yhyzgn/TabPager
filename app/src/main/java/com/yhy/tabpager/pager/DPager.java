@@ -9,19 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.yhy.tabpager.utils.ToastUtils;
-import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.pager.TpgFragment;
 
 import java.util.Random;
 
 public class DPager extends TpgFragment {
 
-    private ResultHandler mResultHandler;
-
     @Override
-    protected View getSuccessView(LayoutInflater inflater, ViewGroup container) {
+    protected View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView tv = new TextView(getContext());
         tv.setText("D页面加载成功");
         tv.setTextColor(Color.RED);
@@ -32,9 +28,7 @@ public class DPager extends TpgFragment {
 
 
     @Override
-    protected void initData(ResultHandler handler) {
-        mResultHandler = handler;
-
+    protected void initData() {
         getDataFromServer();
     }
 
@@ -56,16 +50,15 @@ public class DPager extends TpgFragment {
 
                 //数据加载结束后，需要手动刷新页面状态
                 int temp = random.nextInt(3);
-                Logger.i(temp + "");
                 switch (temp) {
                     case 0:
-                        mResultHandler.sendSuccessHandler();
+                        mRltHandler.sendSuccessHandler();
                         break;
                     case 1:
-                        mResultHandler.sendErrorHandler();
+                        mRltHandler.sendErrorHandler();
                         break;
                     case 2:
-                        mResultHandler.sendEmptyHandler();
+                        mRltHandler.sendEmptyHandler();
                         break;
                     default:
                         break;

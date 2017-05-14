@@ -7,7 +7,6 @@ import com.yhy.tabpager.pager.DPager;
 import com.yhy.tabpager.pager.EPager;
 import com.yhy.tabpager.pager.FPager;
 import com.yhy.tabpager.pager.GPager;
-import com.yhy.tabpager.pager.HPager;
 import com.yhy.tabnav.pager.TpgFragment;
 
 public class PagerFactory {
@@ -36,9 +35,6 @@ public class PagerFactory {
                 break;
             case 6:
                 pager = new GPager();
-                break;
-            case 7:
-                pager = new HPager();
                 break;
             default:
                 break;
