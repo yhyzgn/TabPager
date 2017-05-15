@@ -26,6 +26,7 @@ import com.yhy.tabnav.widget.base.BadgeInterface;
 import com.yhy.tabnav.widget.base.TpgInterface;
 
 import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
+import cn.bingoogolapple.badgeview.BGABadgeable;
 import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
 
 /**
@@ -305,8 +306,15 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     }
 
     @Override
-    public void setOnDismissListener(int index, BGADragDismissDelegate delegate) {
-        getTabByIndex(index).setDragDismissDelegage(delegate);
+    public void setOnDismissListener(int index, final OnDismissBadgeListener listener) {
+        getTabByIndex(index).setDragDismissDelegage(new BGADragDismissDelegate() {
+            @Override
+            public void onDismiss(BGABadgeable badgeable) {
+                if(null != listener){
+                    listener.onDismiss();
+                }
+            }
+        });
     }
 
     /**

@@ -51,7 +51,14 @@ public interface BadgeInterface {
      * 徽章消失的回调方法
      *
      * @param index    Tab的索引
-     * @param delegate 回调事件
+     * @param listener 回调事件
      */
-    void setOnDismissListener(int index, BGADragDismissDelegate delegate);
+    void setOnDismissListener(int index, OnDismissBadgeListener listener);
+
+    /**
+     * 徽章消失事件回调接口
+     */
+    interface OnDismissBadgeListener {
+        void onDismiss();
+    }
 }

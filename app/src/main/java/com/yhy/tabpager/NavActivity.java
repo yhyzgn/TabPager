@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.yhy.tabnav.widget.base.BadgeInterface;
 import com.yhy.tabpager.pager.NavPager;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.adapter.NavAdapter;
@@ -15,9 +16,6 @@ import com.yhy.tabnav.widget.NavView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bingoogolapple.badgeview.BGABadgeable;
-import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
 
 public class NavActivity extends AppCompatActivity {
 
@@ -52,9 +50,9 @@ public class NavActivity extends AppCompatActivity {
         //徽章测试
         bvContent.showCirclePointBadge(0);
         bvContent.showTextBadge(1, "2");
-        bvContent.setOnDismissListener(1, new BGADragDismissDelegate() {
+        bvContent.setOnDismissListener(1, new BadgeInterface.OnDismissBadgeListener() {
             @Override
-            public void onDismiss(BGABadgeable badgeable) {
+            public void onDismiss() {
                 ToastUtils.shortToast("消失了");
             }
         });
