@@ -29,7 +29,7 @@ dependencies {
 
 ### 3. 使用说明
 
-* 顶部选项卡页面控件[<font size=22>TpgView</font>](./doc/TpgView.md)
+* 顶部选项卡页面控件[<font color="#ff4400" size=22>TpgView</font>](./doc/TpgView.md)
 * 底部导航栏页面控件[`NavView`](./doc/NavView.md)
 
 ### 4. 嵌套使用
