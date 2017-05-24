@@ -119,7 +119,7 @@
 
   ```java
   @Override
-  protected void initData(ResultHandler handler) {
+  protected void initData() {
     //请求服务器数据
     getDataFromServer();
   }

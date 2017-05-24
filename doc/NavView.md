@@ -83,7 +83,7 @@
 
   ```java
   @Override
-  protected void initData(ResultHandler handler) {
+  protected void initData() {
     //请求服务器数据
     getDataFromServer();
   }
@@ -195,9 +195,9 @@
   ```java
   bvContent.showCirclePointBadge(0);
   bvContent.showTextBadge(1, "2");
-  bvContent.setOnDismissListener(1, new BGADragDismissDelegate() {
+  bvContent.setOnDismissListener(1, new BadgeInterface.OnDismissBadgeListener() {
     @Override
-    public void onDismiss(BGABadgeable badgeable) {
+    public void onDismiss() {
       ToastUtils.shortToast("消失了");
     }
   });
@@ -334,9 +334,16 @@
        * 徽章消失的回调方法
        *
        * @param index    Tab的索引
-       * @param delegate 回调事件
+       * @param listener 回调事件
        */
-      void setOnDismissListener(int index, BGADragDismissDelegate delegate);
+      void setOnDismissListener(int index, OnDismissBadgeListener listener);
+
+      /**
+       * 徽章消失事件回调接口
+       */
+      interface OnDismissBadgeListener {
+          void onDismiss();
+      }
   }
   ```
 
