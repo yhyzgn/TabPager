@@ -44,7 +44,7 @@ publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy.widget'
     artifactId = 'tabnav'
-    publishVersion = '1.0.5'
+    publishVersion = '1.0.6'
     desc = 'TabLayout + ViewPager + Fragment, RadioGroup + ViewPager + Fragment. Display different pager according to internet status. And you could custom every pager layout.'
     website = 'https://github.com/SilentWolf1993/TabPager'
 }

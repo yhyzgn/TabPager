@@ -6,16 +6,17 @@ import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.TpgAdapter;
-import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.listener.OnPageChangedListener;
 import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.cache.PagerCache;
@@ -30,6 +31,8 @@ public class TpgView extends LinearLayout implements TpgInterface {
     private RelativeLayout rlTab;
     //TabLayout控件
     private TabLayout tlTabs;
+    //TabLayout左边的TextView控件
+    private TextView tvText;
     //可扩展的ImageView控件
     private ImageView ivExpand;
     //ViewPager控件
@@ -51,11 +54,22 @@ public class TpgView extends LinearLayout implements TpgInterface {
     private int mTabMode;
     //RabGravity，默认GRAVITY_FILL
     private int mTabGravity;
+    //是否显示左侧TextView控件
+    private int mTextVisible;
+    //左侧TextView内容
+    private String mText;
+    //左侧TextView字体颜色，默认#aaff4400
+    private int mTextColor;
+    //左侧TextView字体大小，默认14sp
+    private float mTextSize;
+    //左侧TextView左侧边距，默认8dp
+    private int mTextMarginLeft;
+    //左侧TextView右侧边距，默认8dp
+    private int mTextMarginRight;
     //可扩展的图标是否显示，默认VISIBLE
     private int mExpandVisible;
     //可扩展图标资源
     private int mExpandIcon;
-
     //页面缓存
     private PagerCache mCache;
 
@@ -87,18 +101,20 @@ public class TpgView extends LinearLayout implements TpgInterface {
 
         //获取自定义属性值
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.TpgViewAttrs);
-        mTabHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_height, 48f);
+        mTabHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
         mTabBgColor = ta.getColor(R.styleable.TpgViewAttrs_tab_bg_color, Color.TRANSPARENT);
-        mTabTextNormalColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_normal_color,
-                getResources().getColor(R.color.tab_def_normal_color));
-        mTabTextSelectedColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_selected_color,
-                getResources().getColor(R.color.tab_def_selected_color));
-        mTabIndicatorColor = ta.getColor(R.styleable.TpgViewAttrs_tab_indicator_color,
-                getResources().getColor(R.color.tab_def_indicator_color));
-        mTabIndicatorHeight = (int) ta.getDimension(R.styleable
-                .TpgViewAttrs_tab_indicator_height, 3f);
+        mTabTextNormalColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_normal_color, getResources().getColor(R.color.tab_def_normal_color));
+        mTabTextSelectedColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_selected_color, getResources().getColor(R.color.tab_def_selected_color));
+        mTabIndicatorColor = ta.getColor(R.styleable.TpgViewAttrs_tab_indicator_color, getResources().getColor(R.color.tab_def_indicator_color));
+        mTabIndicatorHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_indicator_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()));
         mTabMode = ta.getInt(R.styleable.TpgViewAttrs_tab_mode, TabLayout.MODE_SCROLLABLE);
         mTabGravity = ta.getInt(R.styleable.TpgViewAttrs_tab_gravity, TabLayout.GRAVITY_FILL);
+        mTextVisible = ta.getInt(R.styleable.TpgViewAttrs_text_visible, GONE);
+        mText = ta.getString(R.styleable.TpgViewAttrs_text_text);
+        mTextColor = ta.getColor(R.styleable.TpgViewAttrs_text_color, getResources().getColor(R.color.tab_def_normal_color));
+        mTextSize = ta.getDimension(R.styleable.TpgViewAttrs_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, getResources().getDisplayMetrics()));
+        mTextMarginLeft = (int) ta.getDimension(R.styleable.TpgViewAttrs_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
+        mTextMarginRight = (int) ta.getDimension(R.styleable.TpgViewAttrs_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
         mExpandVisible = ta.getInt(R.styleable.TpgViewAttrs_expand_visible, VISIBLE);
         mExpandIcon = ta.getResourceId(R.styleable.TpgViewAttrs_expand_icon, R.mipmap.ic_expand);
 
@@ -114,21 +130,35 @@ public class TpgView extends LinearLayout implements TpgInterface {
         super.onFinishInflate();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_tpg, this);
         rlTab = (RelativeLayout) view.findViewById(R.id.rl_tab);
+        tvText = (TextView) view.findViewById(R.id.tv_text);
         tlTabs = (TabLayout) view.findViewById(R.id.tl_tabs);
         ivExpand = (ImageView) view.findViewById(R.id.iv_expand);
         vpContent = (ViewPager) view.findViewById(R.id.vp_content);
 
         //设置自定义属性值到相应控件上
         //设置整个Tab栏的高度和背景颜色
+//        mTabHeight = (int) DensityUtils.px2dp(getContext(), mTabHeight);
         setTabHeight(mTabHeight);
         setTabBgColor(mTabBgColor);
 
         //设置TabLayout的字体颜色、TabMode和TabGravity
+//        mTabIndicatorHeight = (int) DensityUtils.px2dp(getContext(), mTabIndicatorHeight);
         setTabTextColor(mTabTextNormalColor, mTabTextSelectedColor);
         setTabIndicatorColor(mTabIndicatorColor);
         setTabIndicatorHeight(mTabIndicatorHeight);
         setTabMode(mTabMode);
         setTabGravity(mTabGravity);
+
+        //设置TabLayout左边的TextView
+        mTextSize = DensityUtils.px2sp(getContext(), mTextSize);
+        mTextMarginLeft = (int) DensityUtils.px2dp(getContext(), mTextMarginLeft);
+        mTextMarginRight = (int) DensityUtils.px2dp(getContext(), mTextMarginRight);
+        setText(mText);
+        setTextColor(mTextColor);
+        setTextSize(mTextSize);
+        setTextVisible(mTextVisible);
+        setTextMarginLeft(mTextMarginLeft);
+        setTextMarginRight(mTextMarginRight);
 
         //设置是否显示可扩展图标
         setExpandVisible(mExpandVisible);
@@ -142,8 +172,9 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param dpHeight Tab栏高度
      */
     public void setTabHeight(int dpHeight) {
+        mTabHeight = dpHeight;
         ViewGroup.LayoutParams params = rlTab.getLayoutParams();
-        params.height = DensityUtils.dp2px(getContext(), dpHeight);
+        params.height = dpHeight;
         rlTab.setLayoutParams(params);
     }
 
@@ -153,6 +184,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param color Tab栏背景颜色值
      */
     public void setTabBgColor(int color) {
+        mTabBgColor = color;
         rlTab.setBackgroundColor(color);
     }
 
@@ -172,6 +204,8 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param selectedColor 选中字体颜色值
      */
     public void setTabTextColor(int normalColor, int selectedColor) {
+        mTabTextNormalColor = normalColor;
+        mTabTextSelectedColor = selectedColor;
         tlTabs.setTabTextColors(normalColor, selectedColor);
     }
 
@@ -192,7 +226,8 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param dpHeight 选项指示条高度
      */
     public void setTabIndicatorHeight(int dpHeight) {
-        tlTabs.setSelectedTabIndicatorHeight(DensityUtils.dp2px(getContext(), dpHeight));
+        mTabIndicatorHeight = dpHeight;
+        tlTabs.setSelectedTabIndicatorHeight(dpHeight);
     }
 
     /**
@@ -201,6 +236,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param color 指示条颜色值
      */
     public void setTabIndicatorColor(int color) {
+        mTabIndicatorColor = color;
         tlTabs.setSelectedTabIndicatorColor(color);
     }
 
@@ -219,6 +255,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param tabMode TabMode值
      */
     public void setTabMode(int tabMode) {
+        mTabMode = tabMode;
         tlTabs.setTabMode(tabMode);
     }
 
@@ -228,7 +265,68 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param tabGravity TabGravity值
      */
     public void setTabGravity(int tabGravity) {
+        mTabGravity = tabGravity;
         tlTabs.setTabGravity(tabGravity);
+    }
+
+    /**
+     * 设置TabLayout左侧TextView内容
+     *
+     * @param text 内容
+     */
+    public void setText(String text) {
+        mText = text;
+        tvText.setText(text);
+    }
+
+    /**
+     * 设置TabLayout左侧TextView字体颜色
+     *
+     * @param color 字体颜色
+     */
+    public void setTextColor(int color) {
+        mTextColor = color;
+        tvText.setTextColor(color);
+    }
+
+    /**
+     * 设置TabLayout左侧TextView 字体大小
+     *
+     * @param sp 字体大小
+     */
+    public void setTextSize(float sp) {
+        mTextSize = sp;
+        tvText.setTextSize(sp);
+    }
+
+    /**
+     * 设置TabLayout左侧TextView是否显示
+     *
+     * @param visible 是否显示
+     */
+    public void setTextVisible(int visible) {
+        mTextVisible = visible;
+        tvText.setVisibility(visible);
+    }
+
+    /**
+     * 设置TabLayout左侧TextView左侧边距
+     *
+     * @param dp 左侧边距
+     */
+    public void setTextMarginLeft(int dp) {
+        mTextMarginLeft = dp;
+        ((RelativeLayout.LayoutParams) tvText.getLayoutParams()).leftMargin = dp;
+    }
+
+    /**
+     * 设置TabLayout左侧TextView右侧边距
+     *
+     * @param dp 右侧边距
+     */
+    public void setTextMarginRight(int dp) {
+        mTextMarginRight = dp;
+        ((RelativeLayout.LayoutParams) tvText.getLayoutParams()).rightMargin = dp;
     }
 
     /**
@@ -237,6 +335,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param visible 是否显示扩展图标
      */
     public void setExpandVisible(int visible) {
+        mExpandVisible = visible;
         ivExpand.setVisibility(visible);
     }
 
@@ -246,6 +345,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param resId 扩展图标资源id
      */
     public void setExpandIcon(int resId) {
+        mExpandIcon = resId;
         ivExpand.setImageResource(resId);
     }
 

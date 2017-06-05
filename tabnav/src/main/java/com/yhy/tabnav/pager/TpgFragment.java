@@ -1,6 +1,7 @@
 package com.yhy.tabnav.pager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +20,8 @@ import com.yhy.tabnav.utils.ViewUtils;
  * 所有页面的父类
  * Created by 颜洪毅 on 2016/12/22 00:22.
  */
-public abstract class TpgFragment extends Fragment {
+public abstract class TpgFragment<RT> extends Fragment {
+    protected RT mRoot;
     //每个页面中分发页面的对象
     private DispatchLoading mDispatch;
     //页面配置
@@ -43,7 +45,18 @@ public abstract class TpgFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity = getActivity();
+        if (null == mActivity) {
+            mActivity = getActivity();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (null == mActivity) {
+            mActivity = (Activity) context;
+        }
     }
 
     @Override
@@ -263,5 +276,14 @@ public abstract class TpgFragment extends Fragment {
      * @param args 重新加载数据时可能需要的参数
      */
     public void reloadDate(Bundle args) {
+    }
+
+    /**
+     * 设置TpgFragment的Root
+     *
+     * @param root Root
+     */
+    public void setRoot(RT root) {
+        mRoot = root;
     }
 }
