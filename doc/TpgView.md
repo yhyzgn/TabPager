@@ -182,6 +182,12 @@
   | `tab_indicator_height`    | 选项指示条的高度                 | `3dp`             |
   | `tab_mode`                | `TabLayout`的`TabMode`    | `MODE_SCROLLABLE` |
   | `tab_gravity`             | `TabLayout`的`TabGravity` | `GRAVITY_FILL`    |
+  | `text_visible`            | 是否显示`Tab`栏`TextView`     | `GONE`            |
+  | `text_text`               | `Tab`栏`TextView`内容       | ——                |
+  | `text_color`              | `Tab`栏`TextView`字体颜色     | `#aaff4400`       |
+  | `text_size`               | `Tab`栏`TextView`字体大小     | `14sp`            |
+  | `text_margin_left`        | `Tab`栏`TextView`左侧边距     | `8dp`             |
+  | `text_margin_right`       | `Tab`栏`TextView`右侧边距     | `8dp`             |
   | `expand_visible`          | 是否显示可扩展图标                | `VISIBLE`         |
   | `expand_icon`             | 可扩展图标资源                  | ——                |
 
