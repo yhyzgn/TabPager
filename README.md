@@ -68,13 +68,14 @@ tpgView.setAdapter(mAdapter);
     @Override
     public TpgFragment<TpgActivity> getPager(int position) {
       //创建页面
-      TpgFragment<TpgFragment> pager = new PagerA<>();
+      TpgFragment<TpgActivity> pager = new PagerA<>();
       //设置根页面
       pager.setRoot(TpgActivity.this);
       return pager;
     }
 
     //然后，你就可以在PagerA页面中直接调用TpgActivity中的方法了，哈哈~
+    mRoot.xxx();
     ```
 
   - 在`TpgView`的选项卡栏左边添加说明文字
