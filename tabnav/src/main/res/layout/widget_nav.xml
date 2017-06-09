@@ -19,7 +19,7 @@
         android:layout_above="@id/rg_tabs"
         android:background="@color/nav_def_line_divider_color"/>
 
-    <android.support.v4.view.ViewPager
+    <com.yhy.tabnav.widget.CtrlAbleViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

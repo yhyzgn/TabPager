@@ -36,7 +36,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
     //可扩展的ImageView控件
     private ImageView ivExpand;
     //ViewPager控件
-    private ViewPager vpContent;
+    private CtrlAbleViewPager vpContent;
 
     //整个Tab栏的高度，默认48dp
     private int mTabHeight;
@@ -70,6 +70,8 @@ public class TpgView extends LinearLayout implements TpgInterface {
     private int mExpandVisible;
     //可扩展图标资源
     private int mExpandIcon;
+    //是否可滑动
+    private boolean mScrollAble;
     //页面缓存
     private PagerCache mCache;
 
@@ -117,6 +119,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
         mTextMarginRight = (int) ta.getDimension(R.styleable.TpgViewAttrs_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
         mExpandVisible = ta.getInt(R.styleable.TpgViewAttrs_expand_visible, VISIBLE);
         mExpandIcon = ta.getResourceId(R.styleable.TpgViewAttrs_expand_icon, R.mipmap.ic_expand);
+        mScrollAble = ta.getBoolean(R.styleable.TpgViewAttrs_tab_scroll_able, true);
 
         ta.recycle();
     }
@@ -133,19 +136,19 @@ public class TpgView extends LinearLayout implements TpgInterface {
         tvText = (TextView) view.findViewById(R.id.tv_text);
         tlTabs = (TabLayout) view.findViewById(R.id.tl_tabs);
         ivExpand = (ImageView) view.findViewById(R.id.iv_expand);
-        vpContent = (ViewPager) view.findViewById(R.id.vp_content);
+        vpContent = (CtrlAbleViewPager) view.findViewById(R.id.vp_content);
 
         //设置自定义属性值到相应控件上
         //设置整个Tab栏的高度和背景颜色
 //        mTabHeight = (int) DensityUtils.px2dp(getContext(), mTabHeight);
-        setTabHeight(mTabHeight);
+        setTabHeight((int) DensityUtils.px2dp(getContext(), mTabHeight));
         setTabBgColor(mTabBgColor);
 
         //设置TabLayout的字体颜色、TabMode和TabGravity
 //        mTabIndicatorHeight = (int) DensityUtils.px2dp(getContext(), mTabIndicatorHeight);
         setTabTextColor(mTabTextNormalColor, mTabTextSelectedColor);
         setTabIndicatorColor(mTabIndicatorColor);
-        setTabIndicatorHeight(mTabIndicatorHeight);
+        setTabIndicatorHeight((int) DensityUtils.px2dp(getContext(), mTabIndicatorHeight));
         setTabMode(mTabMode);
         setTabGravity(mTabGravity);
 
@@ -164,6 +167,8 @@ public class TpgView extends LinearLayout implements TpgInterface {
         setExpandVisible(mExpandVisible);
         //设置图标资源
         setExpandIcon(mExpandIcon);
+        //设置是否可滑动
+        setScrollAble(mScrollAble);
     }
 
     /**
@@ -172,9 +177,9 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param dpHeight Tab栏高度
      */
     public void setTabHeight(int dpHeight) {
-        mTabHeight = dpHeight;
+        mTabHeight = DensityUtils.dp2px(getContext(), dpHeight);
         ViewGroup.LayoutParams params = rlTab.getLayoutParams();
-        params.height = dpHeight;
+        params.height = mTabHeight;
         rlTab.setLayoutParams(params);
     }
 
@@ -226,8 +231,8 @@ public class TpgView extends LinearLayout implements TpgInterface {
      * @param dpHeight 选项指示条高度
      */
     public void setTabIndicatorHeight(int dpHeight) {
-        mTabIndicatorHeight = dpHeight;
-        tlTabs.setSelectedTabIndicatorHeight(dpHeight);
+        mTabIndicatorHeight = DensityUtils.dp2px(getContext(), dpHeight);
+        tlTabs.setSelectedTabIndicatorHeight(mTabIndicatorHeight);
     }
 
     /**
@@ -347,6 +352,16 @@ public class TpgView extends LinearLayout implements TpgInterface {
     public void setExpandIcon(int resId) {
         mExpandIcon = resId;
         ivExpand.setImageResource(resId);
+    }
+
+    /**
+     * 设置是否可滑动，默认可滑动
+     *
+     * @param scrollAble 是否可滑动
+     */
+    public void setScrollAble(boolean scrollAble) {
+        mScrollAble = scrollAble;
+        vpContent.setScrollAble(scrollAble);
     }
 
     /**

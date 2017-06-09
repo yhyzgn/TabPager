@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
 import com.yhy.tabnav.pager.TpgFragment;
-import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.widget.base.BadgeInterface;
 import com.yhy.tabnav.widget.base.TpgInterface;
 
@@ -33,7 +31,7 @@ import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
  * Created by HongYi Yan on 2017/3/11 23:02.
  */
 public class NavView extends RelativeLayout implements TpgInterface, BadgeInterface {
-    private ViewPager vpContent;
+    private CtrlAbleViewPager vpContent;
     private View vDivider;
     private RadioGroup rgTabs;
     //是否拖动过ViewPager（用于区分是ViewPager联动RadioGroup还是RadioGroup联动ViewPager）
@@ -60,6 +58,8 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     private Drawable mNavBgCheckedImg;
     //导航栏与页面之间的分割线颜色，默认为透明，此时分割线不显示
     private int mNavDividerLineColor;
+    //是否可滑动，默认可滑动
+    private boolean mScrollAble;
 
     public NavView(Context context) {
         this(context, null);
@@ -84,15 +84,13 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
 
         mNavBgColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_color, Color.TRANSPARENT);
         mNavBgImg = ta.getDrawable(R.styleable.NavViewAttrs_nav_bg_img);
-        mNavTextDefaultColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_default_color, Color
-                .BLACK);
-        mNavTextCheckedColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_checked_color, Color
-                .BLACK);
-        mNavBgCheckedColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_checked_color,
-                Color.TRANSPARENT);
+        mNavTextDefaultColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_default_color, Color.BLACK);
+        mNavTextCheckedColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_checked_color, Color.BLACK);
+        mNavBgCheckedColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_checked_color, Color.TRANSPARENT);
         mNavBgCheckedImg = ta.getDrawable(R.styleable.NavViewAttrs_nav_bg_checked_img);
-        mNavDividerLineColor = ta.getColor(R.styleable.NavViewAttrs_nav_divider_line_color, Color
-                .TRANSPARENT);
+        mNavDividerLineColor = ta.getColor(R.styleable.NavViewAttrs_nav_divider_line_color, Color.TRANSPARENT);
+        mScrollAble = ta.getBoolean(R.styleable.NavViewAttrs_nav_scroll_able, true);
+
         ta.recycle();
     }
 
@@ -102,7 +100,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
 
         //获取控件
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_nav, this);
-        vpContent = (ViewPager) view.findViewById(R.id.vp_content);
+        vpContent = (CtrlAbleViewPager) view.findViewById(R.id.vp_content);
         vDivider = view.findViewById(R.id.v_divider);
         rgTabs = (RadioGroup) view.findViewById(R.id.rg_tabs);
 
@@ -120,6 +118,19 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
             vDivider.setBackgroundColor(mNavDividerLineColor);
             vDivider.setVisibility(View.VISIBLE);
         }
+
+        //设置是否可滑动
+        setScrollAble(mScrollAble);
+    }
+
+    /**
+     * 设置是否可滑动，默认可滑动
+     *
+     * @param scrollAble 是否可滑动
+     */
+    public void setScrollAble(boolean scrollAble) {
+        mScrollAble = scrollAble;
+        vpContent.setScrollAble(mScrollAble);
     }
 
     /**
@@ -310,7 +321,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         getTabByIndex(index).setDragDismissDelegage(new BGADragDismissDelegate() {
             @Override
             public void onDismiss(BGABadgeable badgeable) {
-                if(null != listener){
+                if (null != listener) {
                     listener.onDismiss();
                 }
             }

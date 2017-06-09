@@ -66,6 +66,15 @@ public class TpgActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                //第二页不可滑动
+                tvContent.setScrollAble(position != 1);
+
+                //第三页选项卡栏高度为0
+                if (position == 2) {
+                    tvContent.setTabHeight(0);
+                } else {
+                    tvContent.setTabHeight(48);
+                }
             }
 
             @Override

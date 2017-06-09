@@ -145,6 +145,7 @@
   | `nav_bg_checked_color`   | 选中状态下选项背景颜色      | 透明        |
   | `nav_bg_checked_img`     | 选中状态下选项背景图片      | 无         |
   | `nav_divider_line_color` | 导航栏与内容页面之间的分割线颜色 | 透明，不显示    |
+  | `nav_scroll_able`        | 是否可滑动            | `true`    |
 
 - 如果第一页数据未自动加载
 

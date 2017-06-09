@@ -190,6 +190,7 @@
   | `text_margin_right`       | `Tab`栏`TextView`右侧边距     | `8dp`             |
   | `expand_visible`          | 是否显示可扩展图标                | `VISIBLE`         |
   | `expand_icon`             | 可扩展图标资源                  | ——                |
+  | `tab_scroll_able`         | 是否可滑动                    | `true`            |
 
 - 如果第一页数据未自动加载
 
