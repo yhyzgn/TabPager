@@ -67,6 +67,8 @@ public class NavActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 ToastUtils.shortToast("第" + (position + 1) + "页");
+
+                bvContent.setNavHeight(position == 1 ? 0 : 48);
             }
 
             @Override

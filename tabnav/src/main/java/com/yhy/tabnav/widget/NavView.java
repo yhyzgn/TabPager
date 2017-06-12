@@ -8,9 +8,11 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -20,6 +22,7 @@ import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
 import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.widget.base.BadgeInterface;
 import com.yhy.tabnav.widget.base.TpgInterface;
 
@@ -44,6 +47,8 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     private PagerCache mCache;
     //页面切换事件
     private OnPageChangedListener mPageChangedListener;
+    //导航栏高度，默认为48dp
+    private int mNavHeight;
     //整个导航栏背景色，默认为#ffffff
     private int mNavBgColor;
     //整个导航栏背景图，默认为null
@@ -82,6 +87,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     private void init(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.NavViewAttrs);
 
+        mNavHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
         mNavBgColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_color, Color.TRANSPARENT);
         mNavBgImg = ta.getDrawable(R.styleable.NavViewAttrs_nav_bg_img);
         mNavTextDefaultColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_default_color, Color.BLACK);
@@ -104,6 +110,8 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
         vDivider = view.findViewById(R.id.v_divider);
         rgTabs = (RadioGroup) view.findViewById(R.id.rg_tabs);
 
+        setNavHeight((int) DensityUtils.px2dp(getContext(), mNavHeight));
+
         //设置整个导航栏的背景。如果同时设置了颜色和图片做背景，以图片为主
         rgTabs.setBackgroundColor(mNavBgColor);
         if (null != mNavBgImg) {
@@ -121,6 +129,18 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
 
         //设置是否可滑动
         setScrollAble(mScrollAble);
+    }
+
+    /**
+     * 设置整个导航栏高度
+     *
+     * @param dpHeight 导航栏高度
+     */
+    public void setNavHeight(int dpHeight) {
+        mNavHeight = DensityUtils.dp2px(getContext(), dpHeight);
+        ViewGroup.LayoutParams params = rgTabs.getLayoutParams();
+        params.height = mNavHeight;
+        rgTabs.setLayoutParams(params);
     }
 
     /**

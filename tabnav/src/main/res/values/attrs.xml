@@ -54,6 +54,8 @@
 
     <!--底部导航栏自定义属性-->
     <declare-styleable name="NavViewAttrs">
+        <!--导航栏高度，默认为：48dp-->
+        <attr name="nav_height" format="reference|dimension"/>
         <!--导航栏背景色，默认为：透明-->
         <attr name="nav_bg_color" format="reference|color"/>
         <!--导航栏背景图片，默认为：null-->
