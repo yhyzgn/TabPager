@@ -1,7 +1,11 @@
 package com.yhy.tabnav.entity;
 
 /**
- * Created by HongYi Yan on 2017/3/11 23:14.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:07
+ * version: 1.0.0
+ * desc   :
  */
 public class NavTab {
     public String tabText;

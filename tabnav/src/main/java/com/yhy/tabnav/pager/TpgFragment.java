@@ -17,8 +17,11 @@ import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.utils.ViewUtils;
 
 /**
- * 所有页面的父类
- * Created by 颜洪毅 on 2016/12/22 00:22.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:08
+ * version: 1.0.0
+ * desc   : 所有页面的父类
  */
 public abstract class TpgFragment<RT> extends Fragment {
     protected RT mRoot;
@@ -57,6 +60,11 @@ public abstract class TpgFragment<RT> extends Fragment {
         if (null == mActivity) {
             mActivity = (Activity) context;
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override

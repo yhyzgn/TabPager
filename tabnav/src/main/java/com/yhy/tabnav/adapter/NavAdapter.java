@@ -10,7 +10,11 @@ import com.yhy.tabnav.widget.NavView;
 import java.util.List;
 
 /**
- * Created by HongYi Yan on 2017/3/11 23:10.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:06
+ * version: 1.0.0
+ * desc   :
  */
 public abstract class NavAdapter extends BasePagerAdapter<NavView> {
     private List<NavTab> mTabList;

@@ -5,7 +5,11 @@ import android.os.Handler;
 import com.yhy.tabnav.global.TpgConst;
 
 /**
- * Created by 颜洪毅 on 2017/1/6 0006 10:09.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:07
+ * version: 1.0.0
+ * desc   :
  */
 public class ResultHandler {
     private Handler mHandler;

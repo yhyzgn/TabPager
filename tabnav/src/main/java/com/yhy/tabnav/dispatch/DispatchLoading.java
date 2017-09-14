@@ -11,8 +11,11 @@ import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.global.TpgConst;
 
 /**
- * 用于控制分发页面，根据不同的状态确定该显示的页面
- * Created by 颜洪毅 on 2016/12/22 0022.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:06
+ * version: 1.0.0
+ * desc   : 用于控制分发页面，根据不同的状态确定该显示的页面
  */
 public abstract class DispatchLoading extends FrameLayout {
     private static final String TAG = "DispatchLoading";
@@ -134,8 +137,7 @@ public abstract class DispatchLoading extends FrameLayout {
      * 判断是否应该加载数据，应该（当前状态不是成功）的话就加载
      */
     public void shouldLoadData() {
-        if (mCurrentState != TpgConst.LoadingStatus.STATE_SUCCESS && mCurrentState != TpgConst
-                .LoadingStatus.STATE_LOADING) {
+        if (mCurrentState != TpgConst.LoadingStatus.STATE_SUCCESS && mCurrentState != TpgConst.LoadingStatus.STATE_LOADING) {
             //如果当前状态不是成功状态或者加载中状态，就把当前状态改为加载中状态，请求数据并更新UI
             mResultHandler.sendLoadingHandler();
 

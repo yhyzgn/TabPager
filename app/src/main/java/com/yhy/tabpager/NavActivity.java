@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.widget.base.BadgeInterface;
 import com.yhy.tabpager.pager.NavPager;
 import com.yhy.tabpager.utils.ToastUtils;
@@ -86,12 +87,12 @@ public class NavActivity extends AppCompatActivity {
         }
 
         @Override
-        public TpgFragment getPager(int position) {
+        public PagerFace getPager(int position) {
             Bundle args = new Bundle();
             args.putBoolean("isHybrid", false);
             args.putBoolean("firstPage", position == 0);
-            TpgFragment fragment = new NavPager();
-            fragment.setArguments(args);
+            PagerFace fragment = new NavPager();
+            fragment.getFragment().setArguments(args);
             return fragment;
         }
 

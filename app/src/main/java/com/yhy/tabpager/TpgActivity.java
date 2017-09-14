@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabpager.pager.factory.PagerFactory;
 import com.yhy.tabnav.adapter.TpgAdapter;
 import com.yhy.tabnav.listener.OnPageChangedListener;
@@ -60,8 +61,7 @@ public class TpgActivity extends AppCompatActivity {
         //页面滑动事件
         tvContent.setOnPageChangedListener(new OnPageChangedListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int
-                    positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
@@ -100,7 +100,7 @@ public class TpgActivity extends AppCompatActivity {
         }
 
         @Override
-        public TpgFragment getPager(int position) {
+        public PagerFace getPager(int position) {
             return PagerFactory.create(position);
         }
     }

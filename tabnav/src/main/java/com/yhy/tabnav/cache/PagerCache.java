@@ -3,12 +3,17 @@ package com.yhy.tabnav.cache;
 import android.util.SparseArray;
 
 import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabnav.tpg.PagerFace;
 
 /**
- * Created by 颜洪毅 on 2016/12/22 0022.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:06
+ * version: 1.0.0
+ * desc   :
  */
 public class PagerCache {
-    private SparseArray<TpgFragment> mCache;
+    private SparseArray<PagerFace> mCache;
 
     public PagerCache() {
         mCache = new SparseArray<>();
@@ -20,7 +25,7 @@ public class PagerCache {
      * @param index 页面索引
      * @param page  页面
      */
-    public void savePager(int index, TpgFragment page) {
+    public void savePager(int index, PagerFace page) {
         if (null != mCache) {
             mCache.put(index, page);
         }
@@ -32,7 +37,7 @@ public class PagerCache {
      * @param index 页面索引
      * @return 页面
      */
-    public TpgFragment getPager(int index) {
+    public PagerFace getPager(int index) {
         if (null != mCache) {
             return mCache.get(index);
         }

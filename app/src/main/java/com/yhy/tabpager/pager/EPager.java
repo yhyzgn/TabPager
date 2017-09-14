@@ -9,15 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yhy.tabnav.pager.TpgFragmentTest;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.pager.TpgFragment;
 
 import java.util.Random;
 
-public class EPager extends TpgFragment {
+public class EPager extends TpgFragmentTest {
 
     @Override
-    protected View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView tv = new TextView(getContext());
         tv.setText("E页面加载成功");
         tv.setTextColor(Color.RED);
@@ -28,12 +29,12 @@ public class EPager extends TpgFragment {
 
 
     @Override
-    protected void initData() {
+    public void initData() {
         getDataFromServer();
     }
 
     @Override
-    public void reloadDate(Bundle args) {
+    public void reloadData(Bundle args) {
         String temp = args.getString("args");
         ToastUtils.shortToast(temp + "页面重新加载数据");
 

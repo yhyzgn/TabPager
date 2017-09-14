@@ -2,6 +2,13 @@ package com.yhy.tabnav.config;
 
 import com.yhy.tabnav.global.TpgConst;
 
+/**
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:06
+ * version: 1.0.0
+ * desc   :
+ */
 public class PagerConfig {
     private int mLoadingViewLayoutId;
 

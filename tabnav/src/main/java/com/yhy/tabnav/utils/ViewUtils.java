@@ -5,7 +5,11 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 /**
- * Created by 颜洪毅 on 2016/12/23 0023.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:08
+ * version: 1.0.0
+ * desc   :
  */
 public class ViewUtils {
 

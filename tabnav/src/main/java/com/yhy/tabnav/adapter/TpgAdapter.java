@@ -10,7 +10,11 @@ import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.widget.TpgView;
 
 /**
- * Created by 颜洪毅 on 2016/12/22 0022.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:06
+ * version: 1.0.0
+ * desc   :
  */
 public abstract class TpgAdapter extends BasePagerAdapter<TpgView> {
 

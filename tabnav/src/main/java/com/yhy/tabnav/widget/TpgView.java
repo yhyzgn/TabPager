@@ -17,14 +17,18 @@ import android.widget.TextView;
 
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.TpgAdapter;
-import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.cache.PagerCache;
+import com.yhy.tabnav.listener.OnPageChangedListener;
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.widget.base.TpgInterface;
 
 /**
- * Created by 颜洪毅 on 2016/12/22 00:22.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:08
+ * version: 1.0.0
+ * desc   :
  */
 public class TpgView extends LinearLayout implements TpgInterface {
     //包含了TabLayout和ImageView的布局
@@ -36,7 +40,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
     //可扩展的ImageView控件
     private ImageView ivExpand;
     //ViewPager控件
-    private CtrlAbleViewPager vpContent;
+    private TpgViewPager vpContent;
 
     //整个Tab栏的高度，默认48dp
     private int mTabHeight;
@@ -136,7 +140,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
         tvText = (TextView) view.findViewById(R.id.tv_text);
         tlTabs = (TabLayout) view.findViewById(R.id.tl_tabs);
         ivExpand = (ImageView) view.findViewById(R.id.iv_expand);
-        vpContent = (CtrlAbleViewPager) view.findViewById(R.id.vp_content);
+        vpContent = (TpgViewPager) view.findViewById(R.id.vp_content);
 
         //设置自定义属性值到相应控件上
         //设置整个Tab栏的高度和背景颜色
@@ -434,9 +438,9 @@ public class TpgView extends LinearLayout implements TpgInterface {
 
             @Override
             public void onPageSelected(int position) {
-                TpgFragment page = mCache.getPager(position);
-                if (null != page) {
-                    page.shouldLoadData();
+                PagerFace pager = mCache.getPager(position);
+                if (null != pager) {
+                    pager.shouldLoadData();
                 }
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageSelected(position);

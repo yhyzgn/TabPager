@@ -3,6 +3,13 @@ package com.yhy.tabnav.utils;
 import android.content.Context;
 import android.util.TypedValue;
 
+/**
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:08
+ * version: 1.0.0
+ * desc   :
+ */
 public class DensityUtils {
     private DensityUtils() {
         /* cannot be instantiated */

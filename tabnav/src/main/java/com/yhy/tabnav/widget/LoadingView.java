@@ -10,7 +10,11 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by HongYi Yan on 2017/5/14 15:49.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:09
+ * version: 1.0.0
+ * desc   :
  */
 public class LoadingView extends View {
     //默认颜色

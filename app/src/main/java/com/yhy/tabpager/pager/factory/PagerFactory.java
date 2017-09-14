@@ -1,5 +1,6 @@
 package com.yhy.tabpager.pager.factory;
 
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabpager.pager.APager;
 import com.yhy.tabpager.pager.BPager;
 import com.yhy.tabpager.pager.CPager;
@@ -11,8 +12,8 @@ import com.yhy.tabnav.pager.TpgFragment;
 
 public class PagerFactory {
 
-    public static TpgFragment create(int position) {
-        TpgFragment pager = null;
+    public static PagerFace create(int position) {
+        PagerFace pager = null;
 
         switch (position) {
             case 0:

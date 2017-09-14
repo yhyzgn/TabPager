@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yhy.tabnav.pager.TpgFragmentTest;
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.adapter.TpgAdapter;
@@ -19,7 +21,7 @@ import com.yhy.tabnav.widget.TpgView;
 
 import java.util.Random;
 
-public class NavPager extends TpgFragment {
+public class NavPager extends TpgFragmentTest {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C"};
     private TpgView tpgView;
     private PagersAdapter mAdapter;
@@ -27,7 +29,7 @@ public class NavPager extends TpgFragment {
     private boolean mIsHybrid;
 
     @Override
-    protected View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mArgs = getArguments();
         mIsHybrid = mArgs.getBoolean("isHybrid");
         if (mIsHybrid) {
@@ -45,13 +47,7 @@ public class NavPager extends TpgFragment {
     }
 
     @Override
-    public boolean shouldLoadDataAtFirst() {
-        boolean firstPage = mArgs.getBoolean("firstPage");
-        return firstPage;
-    }
-
-    @Override
-    protected void initData() {
+    public void initData() {
         final Random random = new Random();
         new Thread() {
             @Override
@@ -100,7 +96,7 @@ public class NavPager extends TpgFragment {
     }
 
     @Override
-    protected void initListener() {
+    public void initListener() {
         if (mIsHybrid) {
             tpgView.setOnPageChangedListener(new OnPageChangedListener() {
                 @Override
@@ -137,11 +133,11 @@ public class NavPager extends TpgFragment {
         }
 
         @Override
-        public TpgFragment getPager(int position) {
+        public PagerFace getPager(int position) {
             Bundle args = new Bundle();
             args.putBoolean("firstPage", position == 0);
-            TpgFragment fragment = new HybridPager();
-            fragment.setArguments(args);
+            PagerFace fragment = new HybridPager();
+            fragment.getFragment().setArguments(args);
             return fragment;
         }
     }

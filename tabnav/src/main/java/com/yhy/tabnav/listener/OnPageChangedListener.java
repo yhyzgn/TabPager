@@ -1,8 +1,11 @@
 package com.yhy.tabnav.listener;
 
 /**
- * ViewPager页面切换事件监听器
- * Created by HongYi Yan on 2017/3/12 1:22.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:07
+ * version: 1.0.0
+ * desc   : ViewPager页面切换事件监听器
  */
 public interface OnPageChangedListener {
 

@@ -22,6 +22,7 @@ import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
 import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.widget.base.BadgeInterface;
 import com.yhy.tabnav.widget.base.TpgInterface;
@@ -31,10 +32,14 @@ import cn.bingoogolapple.badgeview.BGABadgeable;
 import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
 
 /**
- * Created by HongYi Yan on 2017/3/11 23:02.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:08
+ * version: 1.0.0
+ * desc   :
  */
 public class NavView extends RelativeLayout implements TpgInterface, BadgeInterface {
-    private CtrlAbleViewPager vpContent;
+    private TpgViewPager vpContent;
     private View vDivider;
     private RadioGroup rgTabs;
     //是否拖动过ViewPager（用于区分是ViewPager联动RadioGroup还是RadioGroup联动ViewPager）
@@ -106,7 +111,7 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
 
         //获取控件
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_nav, this);
-        vpContent = (CtrlAbleViewPager) view.findViewById(R.id.vp_content);
+        vpContent = (TpgViewPager) view.findViewById(R.id.vp_content);
         vDivider = view.findViewById(R.id.v_divider);
         rgTabs = (RadioGroup) view.findViewById(R.id.rg_tabs);
 
@@ -230,9 +235,9 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
                     rgTabs.check(rgTabs.getChildAt(position).getId());
                 }
 
-                TpgFragment page = mCache.getPager(position);
-                if (null != page) {
-                    page.shouldLoadData();
+                PagerFace pager = mCache.getPager(position);
+                if (null != pager) {
+                    pager.shouldLoadData();
                 }
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageSelected(position);

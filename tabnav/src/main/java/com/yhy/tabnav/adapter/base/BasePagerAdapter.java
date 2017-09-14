@@ -1,16 +1,22 @@
 package com.yhy.tabnav.adapter.base;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.widget.base.TpgInterface;
 
 /**
- * Created by HongYi Yan on 2017/3/12 23:11.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:06
+ * version: 1.0.0
+ * desc   :
  */
 public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentPagerAdapter {
     private PagerConfig mConfig;
@@ -48,7 +54,7 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
     public void retryLoadDataForCurrentPager() {
         if (null != mCache && null != view) {
             //取得当前页面
-            TpgFragment pager = mCache.getPager(view.getCurrentPager());
+            PagerFace pager = mCache.getPager(view.getCurrentPager());
             if (null != pager) {
                 //重新判断是否加载数据并加载
                 pager.shouldLoadData();
@@ -57,14 +63,14 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
     }
 
     @Override
-    public TpgFragment getItem(int position) {
-        TpgFragment pager = null;
+    public Fragment getItem(int position) {
+        PagerFace pager = null;
         //先从缓存中获取页面
         if (null != mCache) {
             pager = mCache.getPager(position);
             //如果获取到页面，就直接返回
             if (null != pager) {
-                return pager;
+                return pager.getFragment();
             }
         }
         //如果没获取到缓存页面的话，就从子类获取
@@ -73,7 +79,7 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
         pager.setPagerConfig(mConfig);
         //将页面缓存起来
         mCache.savePager(position, pager);
-        return pager;
+        return pager.getFragment();
     }
 
     @Override
@@ -88,7 +94,7 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
      * @param position 页面索引
      * @return 一个页面
      */
-    public abstract TpgFragment getPager(int position);
+    public abstract PagerFace getPager(int position);
 
     /**
      * 获取页面的缓存
@@ -106,14 +112,14 @@ public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentP
      * @param args  可能需要的参数
      */
     public void reloadDataForPager(int index, Bundle args) {
-        TpgFragment pager = mCache.getPager(index);
+        PagerFace pager = mCache.getPager(index);
         if (null != pager) {
-            if (null != pager.mRltHandler) {
+            if (null != pager.getRltHandler()) {
                 //发送加载中消息
-                pager.mRltHandler.sendLoadingHandler();
+                pager.getRltHandler().sendLoadingHandler();
             }
             //重新加载数据
-            pager.reloadDate(args);
+            pager.reloadData(args);
         }
     }
 

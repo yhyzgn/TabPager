@@ -9,17 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yhy.tabnav.pager.TpgFragmentTest;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.pager.TpgFragment;
 
 import java.util.Random;
 
-public class APager extends TpgFragment {
+public class APager extends TpgFragmentTest {
 
     private boolean isLoaded;
 
     @Override
-    protected View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView tv = new TextView(getContext());
         tv.setText("A页面加载成功");
         tv.setTextColor(Color.RED);
@@ -28,25 +29,15 @@ public class APager extends TpgFragment {
         return tv;
     }
 
-    /**
-     * 由于该页面是第一页，所以需要重写该方法，并返回true
-     *
-     * @return 是否首先加载
-     */
     @Override
-    public boolean shouldLoadDataAtFirst() {
-        return !isLoaded;
-    }
-
-    @Override
-    protected void initData() {
+    public void initData() {
         isLoaded = true;
 
         getDataFromServer();
     }
 
     @Override
-    public void reloadDate(Bundle args) {
+    public void reloadData(Bundle args) {
         //子类的具体操作...
         String temp = args.getString("args");
         ToastUtils.shortToast(temp + "页面重新加载数据");

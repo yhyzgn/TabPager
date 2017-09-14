@@ -39,7 +39,7 @@
             app:tabSelectedTextColor="#f20"/>
     </RelativeLayout>
 
-    <com.yhy.tabnav.widget.CtrlAbleViewPager
+    <com.yhy.tabnav.widget.TpgViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -10,18 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yhy.tabnav.pager.TpgFragmentTest;
 import com.yhy.tabpager.TpgActivity;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.pager.TpgFragment;
 
 import java.util.Random;
 
-public class HybridPager extends TpgFragment {
+public class HybridPager extends TpgFragmentTest {
 
     private boolean isLoaded;
 
     @Override
-    protected View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView tv = new TextView(getContext());
         tv.setText("嵌套页面加载成功");
         tv.setTextColor(Color.RED);
@@ -39,29 +40,17 @@ public class HybridPager extends TpgFragment {
         return tv;
     }
 
-    /**
-     * 由于该页面是第一页，所以需要重写该方法，并返回true
-     *
-     * @return 是否首先加载
-     */
     @Override
-    public boolean shouldLoadDataAtFirst() {
-        Bundle args = getArguments();
-        boolean firstPage = args.getBoolean("firstPage");
-        return !isLoaded && firstPage;
-    }
-
-    @Override
-    protected void initData() {
+    public void initData() {
         isLoaded = true;
 
         getDataFromServer();
     }
 
     @Override
-    public void reloadDate(Bundle args) {
+    public void reloadData(Bundle args) {
         //调用父类方法才会重新显示加载中页面，否则只是执行重新加载操作，不会显示加载中页面
-        super.reloadDate(args);
+        super.reloadData(args);
 
         //子类的具体操作...
         String temp = args.getString("args");

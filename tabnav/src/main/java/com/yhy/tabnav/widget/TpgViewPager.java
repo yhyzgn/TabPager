@@ -6,17 +6,21 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * Created by HongYi Yan on 2017/6/9 14:25.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-14 21:09
+ * version: 1.0.0
+ * desc   :
  */
-public class CtrlAbleViewPager extends ViewPager {
+public class TpgViewPager extends ViewPager {
     //默认是可滑动的
     private boolean mScrollAble = true;
 
-    public CtrlAbleViewPager(Context context) {
+    public TpgViewPager(Context context) {
         super(context);
     }
 
-    public CtrlAbleViewPager(Context context, AttributeSet attrs) {
+    public TpgViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

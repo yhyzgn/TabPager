@@ -9,16 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yhy.tabnav.pager.TpgFragmentTest;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.pager.TpgFragment;
 
 import java.util.Random;
 
-public class BPager extends TpgFragment {
+public class BPager extends TpgFragmentTest {
 
     @Override
-    protected View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView tv = new TextView(getContext());
         tv.setText("B页面加载成功");
         tv.setTextColor(Color.RED);
@@ -28,17 +29,17 @@ public class BPager extends TpgFragment {
     }
 
     @Override
-    protected View getLoadingView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getLoadingView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.layout_view_loading_b, container, false);
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         getDataFromServer();
     }
 
     @Override
-    public void reloadDate(Bundle args) {
+    public void reloadData(Bundle args) {
         String temp = args.getString("args");
         ToastUtils.shortToast(temp + "页面重新加载数据");
 
