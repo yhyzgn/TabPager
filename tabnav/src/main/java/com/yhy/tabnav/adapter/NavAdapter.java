@@ -32,6 +32,11 @@ public abstract class NavAdapter extends BasePagerAdapter<NavView> {
     }
 
     @Override
+    public int getCount() {
+        return null == mTabList ? 0 : mTabList.size();
+    }
+
+    @Override
     public CharSequence getPageTitle(int position) {
         return mTabList.get(position).tabText;
     }

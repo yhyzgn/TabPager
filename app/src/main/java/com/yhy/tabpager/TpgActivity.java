@@ -9,9 +9,10 @@ import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabpager.pager.factory.PagerFactory;
 import com.yhy.tabnav.adapter.TpgAdapter;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.widget.TpgView;
+
+import java.util.Arrays;
 
 public class TpgActivity extends AppCompatActivity {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C", "菜单D", "菜单E", "菜单F", "菜单G"};
@@ -86,17 +87,7 @@ public class TpgActivity extends AppCompatActivity {
     private class PagersAdapter extends TpgAdapter {
 
         public PagersAdapter(FragmentManager fm, PagerConfig config) {
-            super(fm, config);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return TABS[position];
-        }
-
-        @Override
-        public int getCount() {
-            return TABS.length;
+            super(fm, Arrays.asList(TABS),  config);
         }
 
         @Override

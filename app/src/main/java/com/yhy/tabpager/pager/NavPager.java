@@ -10,18 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.yhy.tabnav.pager.TpgFragmentTest;
+import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.adapter.TpgAdapter;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.widget.TpgView;
 
+import java.util.Arrays;
 import java.util.Random;
 
-public class NavPager extends TpgFragmentTest {
+public class NavPager extends TpgFragment {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C"};
     private TpgView tpgView;
     private PagersAdapter mAdapter;
@@ -119,17 +119,7 @@ public class NavPager extends TpgFragmentTest {
     private class PagersAdapter extends TpgAdapter {
 
         public PagersAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return TABS[position];
-        }
-
-        @Override
-        public int getCount() {
-            return TABS.length;
+            super(fm, Arrays.asList(TABS));
         }
 
         @Override

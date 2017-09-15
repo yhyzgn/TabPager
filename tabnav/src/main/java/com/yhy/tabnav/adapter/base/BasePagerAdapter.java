@@ -7,9 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.config.PagerConfig;
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.tpg.PagerFace;
-import com.yhy.tabnav.widget.base.TpgInterface;
+import com.yhy.tabnav.tpg.Tpg;
 
 /**
  * author : 颜洪毅
@@ -18,7 +17,7 @@ import com.yhy.tabnav.widget.base.TpgInterface;
  * version: 1.0.0
  * desc   :
  */
-public abstract class BasePagerAdapter<T extends TpgInterface> extends FragmentPagerAdapter {
+public abstract class BasePagerAdapter<T extends Tpg> extends FragmentPagerAdapter {
     private PagerConfig mConfig;
     private PagerCache mCache;
     private T view;

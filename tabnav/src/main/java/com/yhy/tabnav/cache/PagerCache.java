@@ -2,7 +2,6 @@ package com.yhy.tabnav.cache;
 
 import android.util.SparseArray;
 
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.tpg.PagerFace;
 
 /**

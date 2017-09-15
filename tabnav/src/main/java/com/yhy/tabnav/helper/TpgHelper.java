@@ -1,15 +1,11 @@
-package com.yhy.tabnav.pager;
+package com.yhy.tabnav.helper;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.config.PagerConfig;
@@ -22,11 +18,11 @@ import com.yhy.tabnav.utils.ViewUtils;
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
- * time   : 2017-09-14 21:08
+ * time   : 2017-09-15 14:55
  * version: 1.0.0
- * desc   : 所有页面的父类
+ * desc   :
  */
-public abstract class TpgFragmentTest<RT> extends Fragment implements PagerFace<RT> {
+public class TpgHelper<RT> {
     protected RT mRoot;
     //每个页面中分发页面的对象
     private DispatchLoading mDispatch;
@@ -34,84 +30,61 @@ public abstract class TpgFragmentTest<RT> extends Fragment implements PagerFace<
     private PagerConfig mConfig;
     //当前Activity对象
     public Activity mActivity;
-    //结果集Handler对象
-    public ResultHandler mRltHandler;
+    //记录页面显示或隐藏的状态
+    private boolean mIsVisible;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getPagerActivity(null);
+    public Activity getPagerActivity(Context ctx) {
+        mActivity = null == ctx ? null : (Activity) ctx;
+        return mActivity;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        getPagerActivity(context);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return onCreatePagerView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        onPagerVisible(isVisibleToUser);
-    }
-
-    @Override
-    public Fragment getFragment() {
-        return this;
-    }
-
-    @Override
     public void setRoot(RT root) {
         mRoot = root;
     }
 
-    @Override
     public void setPagerConfig(PagerConfig config) {
         mConfig = config;
     }
 
-    @Override
-    public void getPagerActivity(Context context) {
-        if (null == mActivity) {
-            mActivity = null == context ? getActivity() : (Activity) context;
-        }
+    public void onPagerVisible(PagerFace face, boolean isVisible) {
+        mIsVisible = isVisible;
+        face.onPagerVisible(mIsVisible);
     }
 
-    @Override
-    public View onCreatePagerView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+    public boolean getIsVisible() {
+        return mIsVisible;
+    }
+
+    public View onCreatePagerView(final PagerFace face, final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         if (null == mDispatch) {
             //创建mDispatch对象，实现其抽象方法，并回调页面中相应的抽象方法
             mDispatch = new DispatchLoading(mActivity) {
                 @Override
                 public View getSuccessView() {
-                    return TpgFragmentTest.this.getSuccessView(inflater, container, savedInstanceState);
+                    return face.getSuccessView(inflater, container, savedInstanceState);
                 }
 
                 @Override
                 public View getLoadingView() {
-                    return TpgFragmentTest.this.getLoadingView(inflater, container, savedInstanceState);
+                    return face.getLoadingView(inflater, container, savedInstanceState);
                 }
 
                 @Override
                 public View getErrorView() {
-                    return TpgFragmentTest.this.getErrorView(inflater, container, savedInstanceState);
+                    return face.getErrorView(inflater, container, savedInstanceState);
                 }
 
                 @Override
                 public View getEmptyView() {
-                    return TpgFragmentTest.this.getEmptyView(inflater, container, savedInstanceState);
+                    return face.getEmptyView(inflater, container, savedInstanceState);
                 }
 
                 @Override
-                public void initData(ResultHandler handler) {
-                    mRltHandler = handler;
-                    TpgFragmentTest.this.initData();
+                public void initData() {
+                    // 初始化数据
+                    face.initData();
+                    // 初始化事件一些事件监听
+                    face.initListener();
                 }
             };
         } else {
@@ -122,17 +95,6 @@ public abstract class TpgFragmentTest<RT> extends Fragment implements PagerFace<
         return mDispatch;
     }
 
-    @Override
-    public void onPagerVisible(boolean isVisible) {
-        //自动调用shouldLoadData()方法加载数据
-        if (isVisible) {
-            shouldLoadData();
-            //初始化事件一些事件监听
-            initListener();
-        }
-    }
-
-    @Override
     public View getLoadingView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (null != mConfig) {
             int loadingViewResId = mConfig.getLoadingViewLayoutId();
@@ -144,8 +106,7 @@ public abstract class TpgFragmentTest<RT> extends Fragment implements PagerFace<
         return loadingView;
     }
 
-    @Override
-    public View getEmptyView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getEmptyView(final PagerFace face, LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View emptyView = null;
         View retryView = null;
 
@@ -176,14 +137,13 @@ public abstract class TpgFragmentTest<RT> extends Fragment implements PagerFace<
         retryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shouldLoadData();
+                face.shouldLoadData();
             }
         });
         return emptyView;
     }
 
-    @Override
-    public View getErrorView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View getErrorView(final PagerFace face, LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View errorView = null;
         View retryView = null;
 
@@ -214,29 +174,19 @@ public abstract class TpgFragmentTest<RT> extends Fragment implements PagerFace<
         retryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shouldLoadData();
+                face.shouldLoadData();
             }
         });
         return errorView;
     }
 
-    @Override
-    public void initListener() {
-    }
-
-    @Override
     public void shouldLoadData() {
-        if (null != mDispatch) {
+        if (null != mDispatch && mIsVisible) {
             mDispatch.shouldLoadData();
         }
     }
 
-    @Override
-    public void reloadData(Bundle args) {
-    }
-
-    @Override
     public ResultHandler getRltHandler() {
-        return mRltHandler;
+        return null != mDispatch ? mDispatch.getRltHandler() : null;
     }
 }

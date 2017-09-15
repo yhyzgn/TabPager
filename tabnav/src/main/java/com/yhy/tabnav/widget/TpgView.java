@@ -17,11 +17,9 @@ import android.widget.TextView;
 
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.TpgAdapter;
-import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.tpg.PagerFace;
+import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
-import com.yhy.tabnav.widget.base.TpgInterface;
 
 /**
  * author : 颜洪毅
@@ -30,7 +28,7 @@ import com.yhy.tabnav.widget.base.TpgInterface;
  * version: 1.0.0
  * desc   :
  */
-public class TpgView extends LinearLayout implements TpgInterface {
+public class TpgView extends LinearLayout implements Tpg {
     //包含了TabLayout和ImageView的布局
     private RelativeLayout rlTab;
     //TabLayout控件
@@ -76,8 +74,6 @@ public class TpgView extends LinearLayout implements TpgInterface {
     private int mExpandIcon;
     //是否可滑动
     private boolean mScrollAble;
-    //页面缓存
-    private PagerCache mCache;
 
     //扩展图标点击监听事件
     private OnExpandListener mExpandListener;
@@ -407,8 +403,6 @@ public class TpgView extends LinearLayout implements TpgInterface {
         if (null == adapter) {
             throw new RuntimeException("The adapter of TpgView can not be null");
         }
-        //从适配器获取页面缓存
-        mCache = adapter.getPagerCache();
 
         // 设置适配器
         vpContent.setAdapter(adapter);
@@ -428,8 +422,7 @@ public class TpgView extends LinearLayout implements TpgInterface {
         //ViewPager的页面变化事件，设置具体的回调方法
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int
-                    positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageScrolled(position, positionOffset,
                             positionOffsetPixels);
@@ -438,10 +431,6 @@ public class TpgView extends LinearLayout implements TpgInterface {
 
             @Override
             public void onPageSelected(int position) {
-                PagerFace pager = mCache.getPager(position);
-                if (null != pager) {
-                    pager.shouldLoadData();
-                }
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageSelected(position);
                 }

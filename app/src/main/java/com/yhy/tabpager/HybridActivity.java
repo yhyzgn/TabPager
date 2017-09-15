@@ -1,18 +1,15 @@
 package com.yhy.tabpager;
 
-import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabpager.pager.NavPager;
-import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.entity.NavTab;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.widget.NavView;
 
 import java.util.ArrayList;
@@ -84,11 +81,6 @@ public class HybridActivity extends AppCompatActivity {
             PagerFace fragment = new NavPager();
             fragment.getFragment().setArguments(args);
             return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            return TAB_LIST.size();
         }
     }
 }

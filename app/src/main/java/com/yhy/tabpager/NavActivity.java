@@ -12,7 +12,6 @@ import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.entity.NavTab;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.widget.NavView;
 
 import java.util.ArrayList;

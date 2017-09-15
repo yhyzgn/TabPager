@@ -9,14 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.yhy.tabnav.pager.TpgFragmentTest;
-import com.yhy.tabpager.utils.ToastUtils;
-import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.pager.TpgFragment;
+import com.yhy.tabpager.utils.ToastUtils;
 
 import java.util.Random;
 
-public class GPager extends TpgFragmentTest {
+public class GPager extends TpgFragment {
 
     @Override
     public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

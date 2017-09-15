@@ -128,10 +128,8 @@ public abstract class DispatchLoading extends FrameLayout {
 
     /**
      * 初始化数据，用来回调具体页面的初始化数据方法
-     *
-     * @param handler 用来回调发送结果状态的ResultHandler对象
      */
-    protected abstract void initData(ResultHandler handler);
+    protected abstract void initData();
 
     /**
      * 判断是否应该加载数据，应该（当前状态不是成功）的话就加载
@@ -142,7 +140,7 @@ public abstract class DispatchLoading extends FrameLayout {
             mResultHandler.sendLoadingHandler();
 
             //回调页面中的加载数据方法
-            initData(mResultHandler);
+            initData();
         }
     }
 
@@ -151,20 +149,25 @@ public abstract class DispatchLoading extends FrameLayout {
      */
     private void updateUI() {
         if (null != mLoadingView) {
-            mLoadingView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_LOADING ?
-                    VISIBLE : GONE);
+            mLoadingView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_LOADING ? VISIBLE : GONE);
         }
         if (null != mErrorView) {
-            mErrorView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_ERROR ? VISIBLE :
-                    GONE);
+            mErrorView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_ERROR ? VISIBLE : GONE);
         }
         if (null != mEmptyView) {
-            mEmptyView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_EMPTY ? VISIBLE :
-                    GONE);
+            mEmptyView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_EMPTY ? VISIBLE : GONE);
         }
         if (null != mSuccessView) {
-            mSuccessView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_SUCCESS ?
-                    VISIBLE : GONE);
+            mSuccessView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_SUCCESS ? VISIBLE : GONE);
         }
+    }
+
+    /**
+     * 获取用来回调发送结果状态的ResultHandler对象
+     *
+     * @return 用来回调发送结果状态的ResultHandler对象
+     */
+    public ResultHandler getRltHandler() {
+        return mResultHandler;
     }
 }

@@ -21,11 +21,10 @@ import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.tpg.PagerFace;
+import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.widget.base.BadgeInterface;
-import com.yhy.tabnav.widget.base.TpgInterface;
 
 import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
 import cn.bingoogolapple.badgeview.BGABadgeable;
@@ -38,7 +37,7 @@ import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
  * version: 1.0.0
  * desc   :
  */
-public class NavView extends RelativeLayout implements TpgInterface, BadgeInterface {
+public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
     private TpgViewPager vpContent;
     private View vDivider;
     private RadioGroup rgTabs;
@@ -202,17 +201,11 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
     }
 
     private void initListener() {
-        //触摸事件，便于获取到是否是拖动的标识
-        vpContent.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mDragScrolledFlag = true;
-                return false;
-            }
-        });
-
         //页面切换事件
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            private int mPreviousState;
+            private int mCurrentStat;
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int
                     positionOffsetPixels) {
@@ -222,10 +215,9 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
                 }
             }
 
+
             @Override
             public void onPageSelected(int position) {
-                mPageChangedFlag = true;
-
                 //页面切换后设置按钮选中状态
                 int currentTab = getTabIndexByResId(rgTabs.getCheckedRadioButtonId());
 
@@ -235,10 +227,6 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
                     rgTabs.check(rgTabs.getChildAt(position).getId());
                 }
 
-                PagerFace pager = mCache.getPager(position);
-                if (null != pager) {
-                    pager.shouldLoadData();
-                }
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageSelected(position);
                 }
@@ -246,6 +234,9 @@ public class NavView extends RelativeLayout implements TpgInterface, BadgeInterf
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                mPreviousState = mCurrentStat;
+                mCurrentStat = state;
+
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageScrollStateChanged(state);
                 }
