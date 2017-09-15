@@ -8,9 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -21,10 +21,9 @@ import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.tpg.PagerFace;
+import com.yhy.tabnav.tpg.Badge;
 import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
-import com.yhy.tabnav.widget.base.BadgeInterface;
 
 import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
 import cn.bingoogolapple.badgeview.BGABadgeable;
@@ -37,16 +36,10 @@ import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
  * version: 1.0.0
  * desc   :
  */
-public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
+public class NavView extends RelativeLayout implements Tpg, Badge {
     private TpgViewPager vpContent;
     private View vDivider;
     private RadioGroup rgTabs;
-    //是否拖动过ViewPager（用于区分是ViewPager联动RadioGroup还是RadioGroup联动ViewPager）
-    private boolean mDragScrolledFlag = false;
-    //是否是直接设置ViewPager页面
-    private boolean isSetCurrentPagerFlag = false;
-    //页面是否切换过的标识
-    private boolean mPageChangedFlag = false;
     //页面缓存
     private PagerCache mCache;
     //页面切换事件
@@ -170,7 +163,6 @@ public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
         //先移除所有的菜单项
         rgTabs.removeAllViews();
         for (int i = 0; i < pageCount; i++) {
-
             BGABadgeRadioButton tab = (BGABadgeRadioButton) LayoutInflater.from(getContext())
                     .inflate(R.layout.view_nav_tab, null);
             tab.setLayoutParams(params);
@@ -178,6 +170,7 @@ public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
                     .getTabIconId(i)), null, null);
             tab.setText(adapter.getPageTitle(i));
             tab.setTextColor(mNavTextDefaultColor);
+            tab.setTag(i);
 
             rgTabs.addView(tab, i);
         }
@@ -210,20 +203,14 @@ public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
             public void onPageScrolled(int position, float positionOffset, int
                     positionOffsetPixels) {
                 if (null != mPageChangedListener) {
-                    mPageChangedListener.onPageScrolled(position, positionOffset,
-                            positionOffsetPixels);
+                    mPageChangedListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 }
             }
 
-
             @Override
             public void onPageSelected(int position) {
-                //页面切换后设置按钮选中状态
-                int currentTab = getTabIndexByResId(rgTabs.getCheckedRadioButtonId());
-
-                //如果是拖动ViewPager，就需要联动RadioGroup，并在联动后将该标识设置为初始值
-                if ((mDragScrolledFlag && currentTab != position) || isSetCurrentPagerFlag) {
-                    //联动RadioGroup
+                if (mPreviousState == ViewPager.SCROLL_STATE_DRAGGING && mCurrentStat == ViewPager.SCROLL_STATE_SETTLING) {
+                    mPreviousState = mCurrentStat = ViewPager.SCROLL_STATE_IDLE;
                     rgTabs.check(rgTabs.getChildAt(position).getId());
                 }
 
@@ -248,32 +235,13 @@ public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 //底部菜单点击改变时设置页面选中状态
-                int currentIndex = getTabIndexByResId(checkedId);
+                int currentIndex = (int) group.findViewById(checkedId).getTag();
 
                 for (int i = 0; i < rgTabs.getChildCount(); i++) {
                     //设置相关值
                     setTabStyle(((BGABadgeRadioButton) rgTabs.getChildAt(i)), i == currentIndex);
                 }
-
-                if (mDragScrolledFlag && !mPageChangedFlag) {
-                    //如果触摸过ViewPager，但是页面没有发生改变的话，则将mDragScrolledFlag关闭
-                    mDragScrolledFlag = false;
-                }
-
-                //如果不是拖动ViewPager并且当前选中项与ViewPager页面不对应时，说明是直接点击导航跳转的页面，此时才联动ViewPager
-                //由于mDragScrolledFlag是在ViewPager的触摸事件中开启的，所以如果只判断mDragScrolledFlag的话，不能解决问题，会导致联动错乱
-                if (!mDragScrolledFlag && currentIndex != vpContent.getCurrentItem()) {
-                    vpContent.setCurrentItem(currentIndex, true);
-                }
-
-                //将拖动的标识关闭
-                mDragScrolledFlag = false;
-
-                //将设置当前页面的标识关闭
-                isSetCurrentPagerFlag = false;
-
-                //将页面切换过的标识关闭
-                mPageChangedFlag = false;
+                vpContent.setCurrentItem(currentIndex, true);
             }
         });
     }
@@ -295,7 +263,6 @@ public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
     @Override
     public void setCurrentPager(int index) {
         //设置页面标识设为true
-        isSetCurrentPagerFlag = true;
         rgTabs.check(rgTabs.getChildAt(index).getId());
     }
 
@@ -307,31 +274,65 @@ public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
         return vpContent.getCurrentItem();
     }
 
+    /**
+     * 显示圆点徽章
+     *
+     * @param index Tab的索引
+     */
     @Override
     public void showCirclePointBadge(int index) {
         getTabByIndex(index).showCirclePointBadge();
     }
 
+    /**
+     * 显示文本徽章
+     *
+     * @param index     Tab的索引
+     * @param badgeText 显示的文字
+     */
     @Override
     public void showTextBadge(int index, String badgeText) {
         getTabByIndex(index).showTextBadge(badgeText);
     }
 
+    /**
+     * 隐藏徽章
+     *
+     * @param index Tab的索引
+     */
     @Override
     public void dismissBadge(int index) {
         getTabByIndex(index).hiddenBadge();
     }
 
+    /**
+     * 显示图片徽章
+     *
+     * @param index  Tab的索引
+     * @param bitmap 图标
+     */
     @Override
     public void showDrawableBadge(int index, Bitmap bitmap) {
         getTabByIndex(index).showDrawableBadge(bitmap);
     }
 
+    /**
+     * 徽章是否显示
+     *
+     * @param index Tab的索引
+     * @return 是否显示
+     */
     @Override
     public boolean isShowBadge(int index) {
         return getTabByIndex(index).isShowBadge();
     }
 
+    /**
+     * 设置徽章销毁时的回调事件
+     *
+     * @param index    Tab的索引
+     * @param listener 回调事件
+     */
     @Override
     public void setOnDismissListener(int index, final OnDismissBadgeListener listener) {
         getTabByIndex(index).setDragDismissDelegage(new BGADragDismissDelegate() {
@@ -363,21 +364,6 @@ public class NavView extends RelativeLayout implements Tpg, BadgeInterface {
             rb.setBackgroundColor(Color.TRANSPARENT);
             rb.setBackgroundDrawable(null);
         }
-    }
-
-    /**
-     * 通过资源ID获取Tab索引
-     *
-     * @param resId 资源ID
-     * @return 索引
-     */
-    private int getTabIndexByResId(int resId) {
-        for (int i = 0; i < rgTabs.getChildCount(); i++) {
-            if (resId == rgTabs.getChildAt(i).getId()) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     /**

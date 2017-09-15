@@ -26,28 +26,28 @@ public class ResultHandler {
     /**
      * 发送加载中消息
      */
-    public void sendLoadingHandler() {
+    public void onLoading() {
         mHandler.sendEmptyMessage(TpgConst.LoadingStatus.STATE_LOADING);
     }
 
     /**
      * 发送错误消息
      */
-    public void sendErrorHandler() {
+    public void onError() {
         mHandler.sendEmptyMessage(TpgConst.LoadingStatus.STATE_ERROR);
     }
 
     /**
      * 发送空数据消息
      */
-    public void sendEmptyHandler() {
+    public void onEmpty() {
         mHandler.sendEmptyMessage(TpgConst.LoadingStatus.STATE_EMPTY);
     }
 
     /**
      * 发送成功消息
      */
-    public void sendSuccessHandler() {
+    public void onSuccess() {
         mHandler.sendEmptyMessage(TpgConst.LoadingStatus.STATE_SUCCESS);
     }
 }

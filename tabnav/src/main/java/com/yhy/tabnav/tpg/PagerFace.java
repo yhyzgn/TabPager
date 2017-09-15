@@ -46,5 +46,11 @@ public interface PagerFace<RT> {
 
     void reloadData(Bundle args);
 
-    ResultHandler getRltHandler();
+    void onLoading();
+
+    void onSuccess();
+
+    void onEmpty();
+
+    void onError();
 }

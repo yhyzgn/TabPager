@@ -46,19 +46,22 @@ public class FPager extends TpgFragment {
             @Override
             public void run() {
                 //模拟网络加载延迟
-                SystemClock.sleep(3000);
+                SystemClock.sleep(2000);
 
                 //数据加载结束后，需要手动刷新页面状态
                 int temp = random.nextInt(3);
                 switch (temp) {
                     case 0:
-                        mRltHandler.sendSuccessHandler();
+//                        mRltHandler.onSuccess();
+                        onSuccess();
                         break;
                     case 1:
-                        mRltHandler.sendErrorHandler();
+//                        mRltHandler.onError();
+                        onError();
                         break;
                     case 2:
-                        mRltHandler.sendEmptyHandler();
+//                        mRltHandler.onEmpty();
+                        onEmpty();
                         break;
                     default:
                         break;

@@ -9,11 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yhy.tabnav.R;
 import com.yhy.tabnav.config.PagerConfig;
-import com.yhy.tabnav.dispatch.DispatchLoading;
-import com.yhy.tabnav.global.TpgConst;
-import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.helper.TpgHelper;
 import com.yhy.tabnav.tpg.PagerFace;
 
@@ -27,19 +23,27 @@ import com.yhy.tabnav.tpg.PagerFace;
 public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> {
     //当前Activity对象
     public Activity mActivity;
-    //结果集Handler对象
-    public ResultHandler mRltHandler;
-    //页面助手，用于创建各种View，比如错误页面等
+    //页面助手，用于创建各种View，比如错误页面等（必要）
     private TpgHelper<RT> mHelper = new TpgHelper<>();
 
+    /**
+     * Fragment生命周期方法--创建
+     *
+     * @param savedInstanceState 保存的参数
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // 获取Activity
-        getPagerActivity(null);
+        getPagerActivity(getActivity());
     }
 
+    /**
+     * Fragment生命周期方法--依附到Activity
+     *
+     * @param context 上下文对象
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -47,95 +51,99 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
         getPagerActivity(context);
     }
 
+    /**
+     * Fragment生命周期方法--View创建
+     *
+     * @param inflater           布局映射器
+     * @param container          容器
+     * @param savedInstanceState 保存的参数
+     * @return 真正显示的View
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = onCreatePagerView(inflater, container, savedInstanceState);
-        mRltHandler = getRltHandler();
+        // 由于setUserVisibleHint方法再onCreateView之前执行，所以要实现懒加载的话，就再onCreateView方法中手动调用加载数据方法，并在setUserVisibleHint方法中判断是否显示
         shouldLoadData();
         return view;
     }
 
+    /**
+     * Fragment的显示或者隐藏
+     * <p>
+     * 必须在切换页面时手动调用
+     * 这里的页面都用在ViewPager中，在FragmentPagerAdapter中已经主动触发
+     *
+     * @param isVisibleToUser 是否显示
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        // 记录下当前状态（由于setUserVisibleHint方法再onCreateView之前执行，所以要实现懒加载的话，就再onCreateView方法中手动调用加载数据方法，并在其中判断是否显示）
-//        mIsVisible = isVisibleToUser;
+        // 记录下当前状态（由于setUserVisibleHint方法再onCreateView之前执行，所以要实现懒加载的话，就再onCreateView方法中手动调用加载数据方法，并在setUserVisibleHint方法中判断是否显示）
         mHelper.onPagerVisible(this, isVisibleToUser);
-
-        // 出发页面切换方法
-//        onPagerVisible(mIsVisible);
     }
 
+    /**
+     * PagerFace接口方法--适配器中获取Fragment使用
+     *
+     * @return 当前Fragment
+     */
     @Override
     public Fragment getFragment() {
         return this;
     }
 
+    /**
+     * PagerFace接口方法--设置根页面
+     *
+     * @param root 根页面
+     */
     @Override
     public void setRoot(RT root) {
-//        mRoot = root;
         mHelper.setRoot(root);
     }
 
+    /**
+     * PagerFace接口方法--设置页面参数
+     *
+     * @param config 页面参数
+     */
     @Override
     public void setPagerConfig(PagerConfig config) {
-//        mConfig = config;
         mHelper.setPagerConfig(config);
     }
 
+    /**
+     * PagerFace接口方法--获取当前Activity
+     *
+     * @param context 上下文对象
+     */
     @Override
     public void getPagerActivity(Context context) {
         if (null == mActivity) {
-//            mActivity = null == context ? getActivity() : (Activity) context;
             mActivity = mHelper.getPagerActivity(context);
         }
     }
 
+    /**
+     * PagerFace接口方法--创建Fragment真正显示的View
+     *
+     * @param inflater           布局映射器
+     * @param container          容器
+     * @param savedInstanceState 保存的参数
+     * @return 真正显示的View
+     */
     @Override
     public View onCreatePagerView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-//        if (null == mDispatch) {
-//            //创建mDispatch对象，实现其抽象方法，并回调页面中相应的抽象方法
-//            mDispatch = new DispatchLoading(mActivity) {
-//                @Override
-//                public View getSuccessView() {
-//                    return TpgFragment.this.getSuccessView(inflater, container, savedInstanceState);
-//                }
-//
-//                @Override
-//                public View getLoadingView() {
-//                    return TpgFragment.this.getLoadingView(inflater, container, savedInstanceState);
-//                }
-//
-//                @Override
-//                public View getErrorView() {
-//                    return TpgFragment.this.getErrorView(inflater, container, savedInstanceState);
-//                }
-//
-//                @Override
-//                public View getEmptyView() {
-//                    return TpgFragment.this.getEmptyView(inflater, container, savedInstanceState);
-//                }
-//
-//                @Override
-//                public void initData(ResultHandler handler) {
-//                    mRltHandler = handler;
-//                    // 初始化数据
-//                    TpgFragment.this.initData();
-//                    // 初始化事件一些事件监听
-//                    TpgFragment.this.initListener();
-//                }
-//            };
-//        } else {
-//            //由于一个View不能同时有两个parent，而当mDispatch不为空时说明当前页面（View）已经添加过给其他parent了，
-//            //所以这里需要把mDispatch从原来的parent中移除
-//            ViewUtils.removeFromParent(mDispatch);
-//        }
-//        return mDispatch;
         return mHelper.onCreatePagerView(this, inflater, container, savedInstanceState);
     }
 
+    /**
+     * PagerFace接口方法--页面显示或隐藏时触发
+     *
+     * @param isVisible 是否显示
+     */
     @Override
     public void onPagerVisible(boolean isVisible) {
         //页面显示时自动调用shouldLoadData()方法加载数据
@@ -144,116 +152,98 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
         }
     }
 
+    /**
+     * PagerFace接口方法--获取加载中状态时的View
+     *
+     * @param inflater           布局映射器
+     * @param container          容器
+     * @param savedInstanceState 保存的参数
+     * @return 加载中状态时的View
+     */
     @Override
     public View getLoadingView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        if (null != mConfig) {
-//            int loadingViewResId = mConfig.getLoadingViewLayoutId();
-//            if (loadingViewResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID) {
-//                return inflater.inflate(loadingViewResId, container, false);
-//            }
-//        }
-//        View loadingView = inflater.inflate(R.layout.layout_def_loading, container, false);
-//        return loadingView;
         return mHelper.getLoadingView(inflater, container, savedInstanceState);
     }
 
+    /**
+     * PagerFace接口方法--获取空数据状态时显示的View
+     *
+     * @param inflater           布局映射器
+     * @param container          容器
+     * @param savedInstanceState 保存的参数
+     * @return 空数据状态时显示的View
+     */
     @Override
     public View getEmptyView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View emptyView = null;
-//        View retryView = null;
-//
-//        //如果设置过页面参数，就以该参数为主
-//        if (null != mConfig) {
-//            //获取界面View
-//            int emptyViewResId = mConfig.getEmptyViewResId();
-//            if (emptyViewResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID) {
-//                emptyView = inflater.inflate(emptyViewResId, container, false);
-//            }
-//            //获取重试按钮View
-//            int retryResId = mConfig.getEmptyViewRetryResId();
-//            if (retryResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID && null != emptyView) {
-//                retryView = emptyView.findViewById(retryResId);
-//            }
-//        }
-//
-//        //如果没有设置过页面参数，就使用默认的页面
-//        if (null == emptyView) {
-//            emptyView = inflater.inflate(R.layout.layout_def_empty, container, false);
-//        }
-//        if (null == retryView) {
-//            //默认将整个默认页面设置为重试View
-//            retryView = emptyView;
-//        }
-//
-//        //设置重试加载事件
-//        retryView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                shouldLoadData();
-//            }
-//        });
-//        return emptyView;
         return mHelper.getEmptyView(this, inflater, container, savedInstanceState);
     }
 
+    /**
+     * PagerFace接口方法--获取错误状态时显示的View
+     *
+     * @param inflater           布局映射器
+     * @param container          容器
+     * @param savedInstanceState 保存的参数
+     * @return 错误状态时显示的View
+     */
     @Override
     public View getErrorView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View errorView = null;
-//        View retryView = null;
-//
-//        //如果设置过页面参数，就以该参数为主
-//        if (null != mConfig) {
-//            //获取界面View
-//            int errorViewResId = mConfig.getErrorViewResId();
-//            if (errorViewResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID) {
-//                errorView = inflater.inflate(errorViewResId, container, false);
-//            }
-//            //获取重试按钮View
-//            int retryResId = mConfig.getErrorViewRetryResId();
-//            if (retryResId > TpgConst.PagerResIdDef.PAGER_NO_RES_ID && null != errorView) {
-//                retryView = errorView.findViewById(retryResId);
-//            }
-//        }
-//
-//        //如果没有设置过页面参数，就使用默认的页面
-//        if (null == errorView) {
-//            errorView = inflater.inflate(R.layout.layout_def_error, container, false);
-//        }
-//        if (null == retryView) {
-//            //默认将整个默认页面设置为重试View
-//            retryView = errorView;
-//        }
-//
-//        //设置重试加载事件
-//        retryView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                shouldLoadData();
-//            }
-//        });
-//        return errorView;
         return mHelper.getErrorView(this, inflater, container, savedInstanceState);
     }
 
+    /**
+     * PagerFace接口方法--初始化事件
+     */
     @Override
     public void initListener() {
     }
 
+    /**
+     * PagerFace接口方法--主动加载数据
+     */
     @Override
     public void shouldLoadData() {
-//        if (null != mDispatch && mHelper.getIsVisible()) {
-//            mDispatch.shouldLoadData();
-//        }
         mHelper.shouldLoadData();
     }
 
+    /**
+     * PagerFace接口方法--重新重新加载数据
+     *
+     * @param args 携带的参数
+     */
     @Override
     public void reloadData(Bundle args) {
     }
 
+    /**
+     * PagerFace接口方法--将页面切换为加载中状态
+     */
     @Override
-    public ResultHandler getRltHandler() {
-//        return mRltHandler;
-        return mHelper.getRltHandler();
+    public void onLoading() {
+        mHelper.onLoading();
+    }
+
+    /**
+     * PagerFace接口方法--将页面切换为成功状态
+     */
+    @Override
+    public void onSuccess() {
+        mHelper.onSuccess();
+    }
+
+    /**
+     * PagerFace接口方法--将页面切换为空数据状态
+     */
+    @Override
+    public void onEmpty() {
+        mHelper.onEmpty();
+    }
+
+    /**
+     * PagerFace接口方法--将页面切换为错误状态
+     */
+    @Override
+    public void onError() {
+        mHelper.onError();
     }
 }

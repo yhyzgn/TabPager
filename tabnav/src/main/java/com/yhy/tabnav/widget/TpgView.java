@@ -39,7 +39,6 @@ public class TpgView extends LinearLayout implements Tpg {
     private ImageView ivExpand;
     //ViewPager控件
     private TpgViewPager vpContent;
-
     //整个Tab栏的高度，默认48dp
     private int mTabHeight;
     //整个Tab栏的背景颜色，默认透明

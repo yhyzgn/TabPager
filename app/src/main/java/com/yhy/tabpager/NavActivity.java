@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.yhy.tabnav.tpg.PagerFace;
-import com.yhy.tabnav.widget.base.BadgeInterface;
+import com.yhy.tabnav.tpg.Badge;
 import com.yhy.tabpager.pager.NavPager;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.adapter.NavAdapter;
@@ -50,7 +50,7 @@ public class NavActivity extends AppCompatActivity {
         //徽章测试
         bvContent.showCirclePointBadge(0);
         bvContent.showTextBadge(1, "2");
-        bvContent.setOnDismissListener(1, new BadgeInterface.OnDismissBadgeListener() {
+        bvContent.setOnDismissListener(1, new Badge.OnDismissBadgeListener() {
             @Override
             public void onDismiss() {
                 ToastUtils.shortToast("消失了");

@@ -137,7 +137,7 @@ public abstract class DispatchLoading extends FrameLayout {
     public void shouldLoadData() {
         if (mCurrentState != TpgConst.LoadingStatus.STATE_SUCCESS && mCurrentState != TpgConst.LoadingStatus.STATE_LOADING) {
             //如果当前状态不是成功状态或者加载中状态，就把当前状态改为加载中状态，请求数据并更新UI
-            mResultHandler.sendLoadingHandler();
+            mResultHandler.onLoading();
 
             //回调页面中的加载数据方法
             initData();
