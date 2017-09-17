@@ -1,5 +1,9 @@
 # `TpgView`
 
+> 顶部选项卡布局控件
+>
+> 声明：下文中的`TpgFragment`一律指框架提供的`TpgFragment`或者自定义实现`PagerFace<RT>`接口的`Fragment`。
+
 ### 1. 简单用法
 
 - 第一步，再布局文件中使用控件
@@ -37,17 +41,7 @@
     public PagersAdapter(FragmentManager fm, PagerConfig config) {
       super(fm, config);
     }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-      return TABS[position];
-    }
-
-    @Override
-    public int getCount() {
-      return TABS.length;
-    }
-
+    
     @Override
     public TpgFragment getPager(int position) {
       return PagerFactory.create(position);

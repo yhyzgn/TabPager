@@ -18,12 +18,12 @@ import com.yhy.tabnav.tpg.PagerFace;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:08
  * version: 1.0.0
- * desc   : 所有页面的父类
+ * desc   : 所有页面的父类，如果自定义的话请参照此处自行实现PagerFace接口
  */
 public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> {
     //当前Activity对象
     public Activity mActivity;
-    //页面助手，用于创建各种View，比如错误页面等（必要）
+    //页面助手，用于创建各种View，比如错误页面等（必要）。便于自定义该页面时直接使用。
     private TpgHelper<RT> mHelper = new TpgHelper<>();
 
     /**
@@ -34,7 +34,6 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // 获取Activity
         getPagerActivity(getActivity());
     }

@@ -5,7 +5,7 @@ package com.yhy.tabnav.tpg;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:10
  * version: 1.0.0
- * desc   :
+ * desc   : 整个框架的接口，在TpgView和NavView中实现
  */
 public interface Tpg {
 

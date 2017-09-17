@@ -21,7 +21,7 @@ public interface OnPageChangedListener {
     /**
      * 页面切换成功
      *
-     * @param position 当前页面序号
+     * @param position 当前页面索引
      */
     void onPageSelected(int position);
 

@@ -5,7 +5,11 @@ import android.graphics.Bitmap;
 import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
 
 /**
- * Created by HongYi Yan on 2017/3/13 12:55.
+ * author : 颜洪毅
+ * e-mail : yhyzgn@gmail.com
+ * time   : 2017-09-17 12:10
+ * version: 1.0.0
+ * desc   : 徽章控件相关的接口
  */
 public interface Badge {
 

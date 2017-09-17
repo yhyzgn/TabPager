@@ -5,7 +5,7 @@ package com.yhy.tabnav.global;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:07
  * version: 1.0.0
- * desc   : 4种不同的页面状态
+ * desc   : 一些常量
  */
 public interface TpgConst {
 

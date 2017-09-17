@@ -94,10 +94,5 @@ public class NavActivity extends AppCompatActivity {
             fragment.getFragment().setArguments(args);
             return fragment;
         }
-
-        @Override
-        public int getCount() {
-            return TAB_LIST.size();
-        }
     }
 }

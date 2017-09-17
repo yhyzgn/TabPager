@@ -10,10 +10,10 @@ import android.view.MotionEvent;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:09
  * version: 1.0.0
- * desc   :
+ * desc   : 可控制是否可滑动的ViewPager
  */
 public class TpgViewPager extends ViewPager {
-    //默认是可滑动的
+    // 默认是可滑动的
     private boolean mScrollAble = true;
 
     public TpgViewPager(Context context) {
@@ -38,12 +38,18 @@ public class TpgViewPager extends ViewPager {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        //如果不允许滑动，就直接拦截事件
-        if (!mScrollAble) {
-            // 彻底解决滑动冲突(将事件都交于子View处理)
-            return false;
+        // 处理缩放滑动异常
+        try {
+            //如果不允许滑动，就直接拦截事件
+            if (!mScrollAble) {
+                // 彻底解决滑动冲突(将事件都交于子View处理)
+                return false;
+            }
+            return super.onInterceptTouchEvent(ev);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
         }
-        return super.onInterceptTouchEvent(ev);
+        return false;
     }
 
     /**
@@ -51,9 +57,15 @@ public class TpgViewPager extends ViewPager {
      */
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (!mScrollAble) {
-            return false;//禁止滑动
+        // 处理缩放滑动异常
+        try {
+            if (!mScrollAble) {
+                return false;//禁止滑动
+            }
+            return super.onTouchEvent(ev);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
         }
-        return super.onTouchEvent(ev);
+        return false;
     }
 }

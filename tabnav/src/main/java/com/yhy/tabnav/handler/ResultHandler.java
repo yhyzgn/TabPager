@@ -9,10 +9,10 @@ import com.yhy.tabnav.global.TpgConst;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:07
  * version: 1.0.0
- * desc   :
+ * desc   : 用来发送页面消息的Handler
  */
 public class ResultHandler {
-    private Handler mHandler;
+    private final Handler mHandler;
 
     /**
      * 创建结果Handler对象

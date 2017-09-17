@@ -9,7 +9,7 @@ import com.yhy.tabnav.tpg.PagerFace;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:06
  * version: 1.0.0
- * desc   :
+ * desc   : 页面缓存
  */
 public class PagerCache {
     private SparseArray<PagerFace> mCache;

@@ -1,5 +1,9 @@
 # `NavView`
 
+> 底部导航栏布局控件
+>
+> 声明：下文中的`TpgFragment`一律指框架提供的`TpgFragment`或者自定义实现`PagerFace<RT>`接口的`Fragment`。
+
 ### 1. 简单用法
 
 - 第一步，再布局文件中使用控件
@@ -49,11 +53,6 @@
       TpgFragment fragment = new NavPager();
       fragment.setArguments(args);
       return fragment;
-    }
-
-    @Override
-    public int getCount() {
-      return TAB_LIST.size();
     }
   }
   ```
@@ -147,17 +146,6 @@
   | `nav_bg_checked_img`     | 选中状态下选项背景图片      | 无         |
   | `nav_divider_line_color` | 导航栏与内容页面之间的分割线颜色 | 透明，不显示    |
   | `nav_scroll_able`        | 是否可滑动            | `true`    |
-
-- 如果第一页数据未自动加载
-
-  > 由于数据加载方法时在`ViewPager`页面切换后才被回调的，而控件第一次加载时不会触发页面切换，所以只能手动加载第一页数据。通过封装后，只需要重写父类的`shouldLoadDataAtFirst()`方法，并返回`true`即可自动加载该页数据。
-
-  ```java
-  @Override
-  public boolean shouldLoadDataAtFirst() {
-    return true;
-  }
-  ```
 
 - 页面配置参数（上文提到过）
 

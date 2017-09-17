@@ -15,7 +15,7 @@ import com.yhy.tabnav.tpg.Tpg;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:06
  * version: 1.0.0
- * desc   :
+ * desc   : 抽象适配器，实现一些基础方法，定义一些抽象方法让子类适配器实现
  */
 public abstract class BasePagerAdapter<T extends Tpg> extends FragmentPagerAdapter {
     private PagerConfig mConfig;

@@ -26,7 +26,7 @@ import com.yhy.tabnav.utils.DensityUtils;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:08
  * version: 1.0.0
- * desc   :
+ * desc   : 用于顶部选项卡布局类型页面
  */
 public class TpgView extends LinearLayout implements Tpg {
     //包含了TabLayout和ImageView的布局
@@ -131,20 +131,18 @@ public class TpgView extends LinearLayout implements Tpg {
     protected void onFinishInflate() {
         super.onFinishInflate();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_tpg, this);
-        rlTab = (RelativeLayout) view.findViewById(R.id.rl_tab);
-        tvText = (TextView) view.findViewById(R.id.tv_text);
-        tlTabs = (TabLayout) view.findViewById(R.id.tl_tabs);
-        ivExpand = (ImageView) view.findViewById(R.id.iv_expand);
-        vpContent = (TpgViewPager) view.findViewById(R.id.vp_content);
+        rlTab = view.findViewById(R.id.rl_tab);
+        tvText = view.findViewById(R.id.tv_text);
+        tlTabs = view.findViewById(R.id.tl_tabs);
+        ivExpand = view.findViewById(R.id.iv_expand);
+        vpContent = view.findViewById(R.id.vp_content);
 
         //设置自定义属性值到相应控件上
         //设置整个Tab栏的高度和背景颜色
-//        mTabHeight = (int) DensityUtils.px2dp(getContext(), mTabHeight);
         setTabHeight((int) DensityUtils.px2dp(getContext(), mTabHeight));
         setTabBgColor(mTabBgColor);
 
         //设置TabLayout的字体颜色、TabMode和TabGravity
-//        mTabIndicatorHeight = (int) DensityUtils.px2dp(getContext(), mTabIndicatorHeight);
         setTabTextColor(mTabTextNormalColor, mTabTextSelectedColor);
         setTabIndicatorColor(mTabIndicatorColor);
         setTabIndicatorHeight((int) DensityUtils.px2dp(getContext(), mTabIndicatorHeight));

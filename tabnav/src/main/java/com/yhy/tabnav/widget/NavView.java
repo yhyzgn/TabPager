@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,7 @@ import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:08
  * version: 1.0.0
- * desc   :
+ * desc   : 用于底部导航栏布局页面
  */
 public class NavView extends RelativeLayout implements Tpg, Badge {
     private TpgViewPager vpContent;
@@ -103,9 +102,9 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
 
         //获取控件
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_nav, this);
-        vpContent = (TpgViewPager) view.findViewById(R.id.vp_content);
+        vpContent = view.findViewById(R.id.vp_content);
         vDivider = view.findViewById(R.id.v_divider);
-        rgTabs = (RadioGroup) view.findViewById(R.id.rg_tabs);
+        rgTabs = view.findViewById(R.id.rg_tabs);
 
         setNavHeight((int) DensityUtils.px2dp(getContext(), mNavHeight));
 
@@ -182,9 +181,9 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
         vpContent.setAdapter(adapter);
 
         //设置默认选中的菜单选项
-        rgTabs.check(rgTabs.getChildAt(vpContent.getCurrentItem()).getId());
+        ((RadioButton) rgTabs.getChildAt(vpContent.getCurrentItem())).setChecked(true);
         //设置选中项样式
-        setTabStyle((BGABadgeRadioButton) rgTabs.getChildAt(vpContent.getCurrentItem()), true);
+        setTabStyle((RadioButton) rgTabs.getChildAt(vpContent.getCurrentItem()), true);
 
         //初始化事件
         initListener();
@@ -200,8 +199,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
             private int mCurrentStat;
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int
-                    positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 }
@@ -209,10 +207,9 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
 
             @Override
             public void onPageSelected(int position) {
-                if (mPreviousState == ViewPager.SCROLL_STATE_DRAGGING && mCurrentStat == ViewPager.SCROLL_STATE_SETTLING) {
-                    mPreviousState = mCurrentStat = ViewPager.SCROLL_STATE_IDLE;
-                    rgTabs.check(rgTabs.getChildAt(position).getId());
-                }
+//                rgTabs.check(rgTabs.getChildAt(position).getId());
+                // 上述方法会导致其onCheckedChanged回调方法多次执行，只能用一下方法来设置选中，使onCheckedChanged方法只执行一次
+                ((RadioButton) rgTabs.getChildAt(position)).setChecked(true);
 
                 if (null != mPageChangedListener) {
                     mPageChangedListener.onPageSelected(position);
@@ -239,7 +236,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
 
                 for (int i = 0; i < rgTabs.getChildCount(); i++) {
                     //设置相关值
-                    setTabStyle(((BGABadgeRadioButton) rgTabs.getChildAt(i)), i == currentIndex);
+                    setTabStyle(((RadioButton) rgTabs.getChildAt(i)), i == currentIndex);
                 }
                 vpContent.setCurrentItem(currentIndex, true);
             }
@@ -375,8 +372,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
     private BGABadgeRadioButton getTabByIndex(int index) {
         int count = rgTabs.getChildCount();
         if (index < 0 || index > count) {
-            throw new IllegalArgumentException("The argument index must between 0 and " +
-                    "RadioGroup's childCount");
+            throw new IllegalArgumentException("The argument index must between 0 and RadioGroup's childCount");
         }
         return (BGABadgeRadioButton) rgTabs.getChildAt(index);
     }
