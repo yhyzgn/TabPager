@@ -158,6 +158,16 @@ tpgView.setAdapter(mAdapter);
         }
 
         /**
+         * 获取根页面
+         *
+         * @return 根页面
+         */
+        @Override
+        public RT getRoot() {
+            return mHelper.getRoot();
+        }
+
+        /**
          * PagerFace接口方法--设置页面参数
          *
          * @param config 页面参数
