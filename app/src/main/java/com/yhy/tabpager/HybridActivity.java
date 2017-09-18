@@ -76,7 +76,6 @@ public class HybridActivity extends AppCompatActivity {
         @Override
         public PagerFace getPager(int position) {
             Bundle args = new Bundle();
-            args.putBoolean("isHybrid", true);
             args.putBoolean("firstPage", position == 0);
             PagerFace fragment = new NavPager();
             fragment.getFragment().setArguments(args);

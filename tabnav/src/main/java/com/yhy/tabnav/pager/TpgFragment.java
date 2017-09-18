@@ -24,7 +24,7 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
     //当前Activity对象
     public Activity mActivity;
     //页面助手，用于创建各种View，比如错误页面等（必要）。便于自定义该页面时直接使用。
-    private TpgHelper<RT> mHelper = new TpgHelper<>();
+    public TpgHelper<RT> mHelper = new TpgHelper<>();
 
     /**
      * Fragment生命周期方法--创建
@@ -101,6 +101,16 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
     @Override
     public void setRoot(RT root) {
         mHelper.setRoot(root);
+    }
+
+    /**
+     * 获取根页面
+     *
+     * @return 根页面
+     */
+    @Override
+    public RT getRoot() {
+        return mHelper.getRoot();
     }
 
     /**

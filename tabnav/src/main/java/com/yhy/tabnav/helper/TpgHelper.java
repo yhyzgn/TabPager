@@ -54,6 +54,15 @@ public class TpgHelper<RT> {
     }
 
     /**
+     * 获取根页面
+     *
+     * @return 根页面
+     */
+    public RT getRoot() {
+        return mRoot;
+    }
+
+    /**
      * 设置页面配置参数
      *
      * @param config 页面配置参数

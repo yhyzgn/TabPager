@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.tpg.PagerFace;
+import com.yhy.tabpager.MainActivity;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.adapter.TpgAdapter;
@@ -21,7 +22,7 @@ import com.yhy.tabnav.widget.TpgView;
 import java.util.Arrays;
 import java.util.Random;
 
-public class NavPager extends TpgFragment {
+public class NavPager extends TpgFragment<MainActivity> {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C"};
     private TpgView tpgView;
     private PagersAdapter mAdapter;

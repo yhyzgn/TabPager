@@ -28,11 +28,18 @@ public interface PagerFace<RT> {
     Fragment getFragment();
 
     /**
-     * 设置跟布局
+     * 设置根页面
      *
      * @param root 跟布局
      */
     void setRoot(RT root);
+
+    /**
+     * 获取根页面
+     *
+     * @return 根页面
+     */
+    RT getRoot();
 
     /**
      * 设置页面配置参数
