@@ -58,10 +58,13 @@ tpgView.setAdapter(mAdapter);
 * 1.1.1
 
   * 修复子页面获取不到根页面的bug。
-  > 子页面调用根页面的xxx方法。
-  ```java
-  getRoot().xxx(); // 不再是之前的mRoot.xxx();
-  ```
+
+    > 子页面调用根页面的xxx方法。
+
+    ```java
+    getRoot().xxx(); // 不再是之前的mRoot.xxx();  
+    ```
+
 
 * 1.1.0
 
