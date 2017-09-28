@@ -1,6 +1,6 @@
 # `TabPager`
 
-![jCenter](https://img.shields.io/badge/jCenter-1.1.1-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
+![jCenter](https://img.shields.io/badge/jCenter-1.1.2-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
 
 > `TabPager`不仅集成了`TabLayout`和`ViewPager`为顶部选项卡页面，也集成了`RadioGroup`和`ViewPager`为底部导航栏页面，还封装了根据具体页面根据不同的加载状态而显示不同页面的功能，也可以自定义这些页面和其他一些属性。如果某个页面加载数据不成功，切换到其他页面再回来时，框架会自动调用重试加载功能；如果加载成功了，则不再重试加载。
 
@@ -54,6 +54,58 @@ tpgView.setAdapter(mAdapter);
 ---
 
 ### 5. 更新日志
+
+* 1.1.2
+
+  * 修改四个修改页面状态的方法
+
+    > 以下是上一个版本中的方法
+
+    ```java
+    /**
+     * 将页面状态改为[加载中]
+     */
+    void onLoading();
+
+    /**
+     * 将页面状态改为[成功]
+     */
+    void onSuccess();
+
+    /**
+     * 将页面状态改为[空数据]
+     */
+    void onEmpty();
+
+    /**
+     * 将页面状态改为[错误]
+     */
+    void onError();
+    ```
+
+    > 分别修改为
+
+    ```java
+    /**
+     * 将页面状态改为[加载中]
+     */
+    void tpgLoading();
+
+    /**
+     * 将页面状态改为[成功]
+     */
+    void tpgSuccess();
+
+    /**
+     * 将页面状态改为[空数据]
+     */
+    void tpgEmpty();
+
+    /**
+     * 将页面状态改为[错误]
+     */
+    void tpgError();
+    ```
 
 * 1.1.1
 

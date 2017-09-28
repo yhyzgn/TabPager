@@ -15,7 +15,7 @@ import com.yhy.tabnav.handler.ResultHandler;
  * e-mail : yhyzgn@gmail.com
  * time   : 2017-09-14 21:11
  * version: 1.0.0
- * desc   : 每个子页面必须实现的接口，请参照参照TpgFragment
+ * desc   : 每个子页面必须实现的接口，请参照TpgFragment
  */
 public interface PagerFace<RT> {
     /**
@@ -30,7 +30,7 @@ public interface PagerFace<RT> {
     /**
      * 设置根页面
      *
-     * @param root 跟布局
+     * @param root 根页面
      */
     void setRoot(RT root);
 
@@ -137,20 +137,20 @@ public interface PagerFace<RT> {
     /**
      * 将页面状态改为[加载中]
      */
-    void onLoading();
+    void tpgLoading();
 
     /**
      * 将页面状态改为[成功]
      */
-    void onSuccess();
+    void tpgSuccess();
 
     /**
      * 将页面状态改为[空数据]
      */
-    void onEmpty();
+    void tpgEmpty();
 
     /**
      * 将页面状态改为[错误]
      */
-    void onError();
+    void tpgError();
 }

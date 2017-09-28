@@ -137,16 +137,16 @@
         int temp = random.nextInt(3);
         switch (temp) {
           case 0:
-            //如果加载成功，就发送成功的Handler
-            mRltHandler.sendSuccessHandler();
+            //如果加载成功
+            tpgSuccess();
             break;
           case 1:
-            //加载失败，发送错误Handler
-            mRltHandler.sendErrorHandler();
+            //加载失败
+            tpgError();
             break;
           case 2:
-            //数据为空，发送空数据Handler
-            mRltHandler.sendEmptyHandler();
+            //数据为空
+            tpgEmpty();
             break;
           default:
             break;
@@ -185,17 +185,6 @@
   | `expand_visible`          | 是否显示可扩展图标                | `VISIBLE`         |
   | `expand_icon`             | 可扩展图标资源                  | ——                |
   | `tab_scroll_able`         | 是否可滑动                    | `true`            |
-
-- 如果第一页数据未自动加载
-
-  > 由于数据加载方法时在`ViewPager`页面切换后才被回调的，而控件第一次加载时不会触发页面切换，所以只能手动加载第一页数据。通过封装后，只需要重写父类的`shouldLoadDataAtFirst()`方法，并返回`true`即可自动加载该页数据。
-
-  ```java
-  @Override
-  public boolean shouldLoadDataAtFirst() {
-    return true;
-  }
-  ```
 
 - 页面配置参数（上文提到过）
 

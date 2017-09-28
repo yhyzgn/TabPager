@@ -51,16 +51,16 @@ public class CPager extends TpgFragment {
                 int temp = random.nextInt(3);
                 switch (temp) {
                     case 0:
-//                        mRltHandler.onSuccess();
-                        onSuccess();
+//                        mRltHandler.tpgSuccess();
+                        tpgSuccess();
                         break;
                     case 1:
-//                        mRltHandler.onError();
-                        onError();
+//                        mRltHandler.tpgError();
+                        tpgError();
                         break;
                     case 2:
-//                        mRltHandler.onEmpty();
-                        onEmpty();
+//                        mRltHandler.tpgEmpty();
+                        tpgEmpty();
                         break;
                     default:
                         break;

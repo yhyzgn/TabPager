@@ -228,7 +228,7 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
      * PagerFace接口方法--将页面切换为加载中状态
      */
     @Override
-    public void onLoading() {
+    public void tpgLoading() {
         mHelper.onLoading();
     }
 
@@ -236,7 +236,7 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
      * PagerFace接口方法--将页面切换为成功状态
      */
     @Override
-    public void onSuccess() {
+    public void tpgSuccess() {
         mHelper.onSuccess();
     }
 
@@ -244,7 +244,7 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
      * PagerFace接口方法--将页面切换为空数据状态
      */
     @Override
-    public void onEmpty() {
+    public void tpgEmpty() {
         mHelper.onEmpty();
     }
 
@@ -252,7 +252,7 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
      * PagerFace接口方法--将页面切换为错误状态
      */
     @Override
-    public void onError() {
+    public void tpgError() {
         mHelper.onError();
     }
 }

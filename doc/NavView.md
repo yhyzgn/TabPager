@@ -106,16 +106,16 @@
         int temp = random.nextInt(3);
         switch (temp) {
           case 0:
-            //如果加载成功，就发送成功的Handler
-            mRltHandler.sendSuccessHandler();
+            //如果加载成功
+            tpgSuccess();
             break;
           case 1:
-            //加载失败，发送错误Handler
-            mRltHandler.sendErrorHandler();
+            //加载失败
+            tpgError();
             break;
           case 2:
-            //数据为空，发送空数据Handler
-            mRltHandler.sendEmptyHandler();
+            //数据为空
+            tpgEmpty();
             break;
           default:
             break;
