@@ -1,6 +1,6 @@
 # `TabPager`
 
-![jCenter](https://img.shields.io/badge/jCenter-1.1.2-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
+![jCenter](https://img.shields.io/badge/jCenter-1.1.3-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
 
 > `TabPager`不仅集成了`TabLayout`和`ViewPager`为顶部选项卡页面，也集成了`RadioGroup`和`ViewPager`为底部导航栏页面，还封装了根据具体页面根据不同的加载状态而显示不同页面的功能，也可以自定义这些页面和其他一些属性。如果某个页面加载数据不成功，切换到其他页面再回来时，框架会自动调用重试加载功能；如果加载成功了，则不再重试加载。
 
@@ -54,6 +54,92 @@ tpgView.setAdapter(mAdapter);
 ---
 
 ### 5. 更新日志
+
+* 1.1.3
+  * 提供自定义`ViewPager`功能，只需要在`TpgView`或者`NavView`代码块中设置自定义好的`ViewPager`即可，不过必须实现`Pager`接口
+
+    > 这是一个自适应高度的`ViewPager`，实现`Pager`接口
+
+    ```java
+    public class MostHeightViewPager extends ViewPager implements Pager {
+
+      // 定义辅助类对象
+      private PagerHelper mHelper;
+
+      public MostHeightViewPager(Context context) {
+        this(context, null);
+      }
+
+      public MostHeightViewPager(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mHelper = new PagerHelper(this);
+      }
+
+      @Override
+      public ViewPager getViewPager() {
+        return this;
+      }
+
+      @Override
+      public void setScrollAble(boolean scrollAble) {
+        mHelper.setScrollAble(scrollAble);
+      }
+
+      @Override
+      public boolean onSuperInterceptTouchEvent(MotionEvent ev) {
+        return super.onInterceptTouchEvent(ev);
+      }
+
+      @Override
+      public boolean onSuperTouchEvent(MotionEvent ev) {
+        return super.onTouchEvent(ev);
+      }
+
+      @Override
+      protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // ...
+      }
+
+      private int measureHeight(int measureSpec, View view) {
+        // ...
+      }
+    }
+    ```
+
+    > 使用该自定义的`ViewPager`
+
+    ```xml
+    <com.yhy.tabnav.widget.TpgView
+      android:id="@+id/tv_content"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:expand_visible="gone"
+      app:tab_mode="fixed"
+      app:text_color="#666"
+      app:text_size="16sp"
+      app:text_visible="visible">
+
+      <!--在这里将定义好的ViewPager设置进来即可-->
+      <com.yhy.tabnav.widget.pager.MostHeightViewPager
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+    </com.yhy.tabnav.widget.TpgView>
+    ```
+
+  * 将`TpgAdapter`改为接收泛型数据，更加便捷实现获取页面标题的功能
+
+    > 设置适配器时
+
+    ```java
+    public class PagersAdapter extends TpgAdapter<User> {
+      // ...
+      @Override
+      public CharSequence getTitle(int position, User data) {
+        return data.name;
+      }
+    }
+    ```
+
 
 * 1.1.2
 

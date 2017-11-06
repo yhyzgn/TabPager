@@ -37,6 +37,9 @@ public class PagerHelper {
 
     /**
      * 触发拦截触摸事件
+     *
+     * @param ev 事件
+     * @return 拦截结果
      */
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         // 处理缩放滑动异常
@@ -55,6 +58,9 @@ public class PagerHelper {
 
     /**
      * 设置禁止滑动 触发触摸事件
+     *
+     * @param ev 事件
+     * @return 处理结果
      */
     public boolean onTouchEvent(MotionEvent ev) {
         // 处理缩放滑动异常

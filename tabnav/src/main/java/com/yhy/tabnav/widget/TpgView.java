@@ -101,7 +101,7 @@ public class TpgView extends LinearLayout implements Tpg {
     /**
      * 初始化控件
      *
-     * @param attrs
+     * @param attrs 属性集
      */
     private void init(AttributeSet attrs) {
         //获取自定义属性值
@@ -442,6 +442,7 @@ public class TpgView extends LinearLayout implements Tpg {
         initPagerListener();
 
         //绑定适配器与TpgView，为了在适配器中能获取到TpgView中的某些数据，比如当前页面
+        //noinspection unchecked
         adapter.bindTpgView(this);
     }
 
