@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_tab"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="48dp"
+        android:background="#f20">
 
         <TextView
             android:id="@+id/tv_text"
@@ -17,7 +18,7 @@
             android:gravity="center_vertical"
             android:textColor="#f20"
             android:textSize="14sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_expand"
@@ -25,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_expand"/>
+            android:src="@mipmap/ic_expand" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tl_tabs"
@@ -36,12 +37,11 @@
             app:tabGravity="center"
             app:tabIndicatorColor="#f20"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="#f20"/>
+            app:tabSelectedTextColor="#f20" />
     </RelativeLayout>
 
-    <com.yhy.tabnav.widget.TpgViewPager
-        android:id="@+id/vp_content"
+    <FrameLayout
+        android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent" />
 </LinearLayout>

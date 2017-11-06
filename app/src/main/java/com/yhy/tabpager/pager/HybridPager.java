@@ -18,8 +18,6 @@ import java.util.Random;
 
 public class HybridPager extends TpgFragment {
 
-    private boolean isLoaded;
-
     @Override
     public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView tv = new TextView(getContext());
@@ -41,8 +39,6 @@ public class HybridPager extends TpgFragment {
 
     @Override
     public void initData() {
-        isLoaded = true;
-
         getDataFromServer();
     }
 

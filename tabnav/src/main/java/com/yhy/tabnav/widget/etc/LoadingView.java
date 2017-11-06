@@ -1,4 +1,4 @@
-package com.yhy.tabnav.widget;
+package com.yhy.tabnav.widget.etc;
 
 import android.content.Context;
 import android.graphics.Canvas;

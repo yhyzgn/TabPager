@@ -1,27 +1,29 @@
-package com.yhy.tabnav.widget;
+package com.yhy.tabnav.helper;
 
-import android.content.Context;
-import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import com.yhy.tabnav.tpg.Pager;
 
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
- * time   : 2017-09-14 21:09
+ * time   : 2017-11-06 8:27
  * version: 1.0.0
- * desc   : 可控制是否可滑动的ViewPager
+ * desc   : ViewPager辅助类
  */
-public class TpgViewPager extends ViewPager {
-    // 默认是可滑动的
-    private boolean mScrollAble = true;
+public class PagerHelper {
+    // ViewPager接口
+    private Pager mPager;
+    // 是否可滑动
+    private boolean mScrollAble;
 
-    public TpgViewPager(Context context) {
-        super(context);
-    }
-
-    public TpgViewPager(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    /**
+     * 构造函数
+     *
+     * @param pager 当前实现的Pager接口
+     */
+    public PagerHelper(Pager pager) {
+        mPager = pager;
     }
 
     /**
@@ -36,7 +38,6 @@ public class TpgViewPager extends ViewPager {
     /**
      * 触发拦截触摸事件
      */
-    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         // 处理缩放滑动异常
         try {
@@ -45,7 +46,7 @@ public class TpgViewPager extends ViewPager {
                 // 彻底解决滑动冲突(将事件都交于子View处理)
                 return false;
             }
-            return super.onInterceptTouchEvent(ev);
+            return mPager.onSuperInterceptTouchEvent(ev);
         } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
         }
@@ -55,14 +56,13 @@ public class TpgViewPager extends ViewPager {
     /**
      * 设置禁止滑动 触发触摸事件
      */
-    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         // 处理缩放滑动异常
         try {
             if (!mScrollAble) {
                 return false;//禁止滑动
             }
-            return super.onTouchEvent(ev);
+            return mPager.onSuperTouchEvent(ev);
         } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
         }

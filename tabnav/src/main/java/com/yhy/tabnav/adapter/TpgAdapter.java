@@ -15,9 +15,9 @@ import java.util.List;
  * version: 1.0.0
  * desc   : TpgView适配器
  */
-public abstract class TpgAdapter extends BasePagerAdapter<TpgView> {
+public abstract class TpgAdapter<T> extends BasePagerAdapter<TpgView> {
     // Tab标题名称集合
-    private List<String> mTabList;
+    private List<T> mTabList;
 
     /**
      * 创建适配器
@@ -25,7 +25,7 @@ public abstract class TpgAdapter extends BasePagerAdapter<TpgView> {
      * @param fm      FragmentManager
      * @param tabList Tab标题名称集合
      */
-    public TpgAdapter(FragmentManager fm, List<String> tabList) {
+    public TpgAdapter(FragmentManager fm, List<T> tabList) {
         this(fm, tabList, null);
     }
 
@@ -36,21 +36,30 @@ public abstract class TpgAdapter extends BasePagerAdapter<TpgView> {
      * @param tabList Tab标题名称集合
      * @param config  页面配置参数
      */
-    public TpgAdapter(FragmentManager fm, List<String> tabList, PagerConfig config) {
+    public TpgAdapter(FragmentManager fm, List<T> tabList, PagerConfig config) {
         super(fm, config);
         mTabList = tabList;
     }
 
     /**
-     * 获取页面标题
+     * 获取标题
      *
-     * @param position 页面索引
-     * @return 页面标题
+     * @param position 当前索引
+     * @return 标题
      */
     @Override
     public CharSequence getPageTitle(int position) {
-        return null == mTabList ? null : mTabList.get(position);
+        return getTitle(position, mTabList.get(position));
     }
+
+    /**
+     * 从子类中获取标题
+     *
+     * @param position 当前索引
+     * @param data     tab项对象
+     * @return 标题
+     */
+    public abstract CharSequence getTitle(int position, T data);
 
     /**
      * 获取页面数量

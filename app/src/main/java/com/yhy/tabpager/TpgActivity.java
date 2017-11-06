@@ -15,7 +15,7 @@ import com.yhy.tabnav.widget.TpgView;
 import java.util.Arrays;
 
 public class TpgActivity extends AppCompatActivity {
-    private static final String[] TABS = {"菜单A", "菜单B", "菜单C", "菜单D", "菜单E", "菜单F", "菜单G"};
+    private static final String[] TABS = {"菜单A", "菜单B菜单B菜单B", "菜单C"};
 
     private TpgView tvContent;
     //页面配置，只在当前TpgView有效
@@ -29,7 +29,7 @@ public class TpgActivity extends AppCompatActivity {
 
         setTpgEmptyPage();
 
-        tvContent = (TpgView) findViewById(R.id.tv_content);
+        tvContent = findViewById(R.id.tv_content);
 
         initData();
 
@@ -84,15 +84,20 @@ public class TpgActivity extends AppCompatActivity {
         });
     }
 
-    private class PagersAdapter extends TpgAdapter {
+    private class PagersAdapter extends TpgAdapter<String> {
 
         public PagersAdapter(FragmentManager fm, PagerConfig config) {
-            super(fm, Arrays.asList(TABS),  config);
+            super(fm, Arrays.asList(TABS), config);
         }
 
         @Override
         public PagerFace getPager(int position) {
             return PagerFactory.create(position);
+        }
+
+        @Override
+        public CharSequence getTitle(int position, String data) {
+            return data;
         }
     }
 }

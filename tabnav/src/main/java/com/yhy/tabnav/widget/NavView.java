@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -21,8 +22,11 @@ import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
 import com.yhy.tabnav.tpg.Badge;
+import com.yhy.tabnav.tpg.Pager;
 import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
+import com.yhy.tabnav.utils.ViewUtils;
+import com.yhy.tabnav.widget.pager.TpgViewPager;
 
 import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
 import cn.bingoogolapple.badgeview.BGABadgeable;
@@ -36,8 +40,13 @@ import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
  * desc   : 用于底部导航栏布局页面
  */
 public class NavView extends RelativeLayout implements Tpg, Badge {
-    private TpgViewPager vpContent;
+    // ViewPager的显示区域
+    private FrameLayout flContent;
+    // 显示内容的ViewPager
+    private ViewPager vpContent;
+    // 分割线
     private View vDivider;
+    // 导航栏
     private RadioGroup rgTabs;
     //页面缓存
     private PagerCache mCache;
@@ -81,17 +90,16 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      * @param attrs 属性集
      */
     private void init(AttributeSet attrs) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.NavViewAttrs);
-
-        mNavHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
-        mNavBgColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_color, Color.TRANSPARENT);
-        mNavBgImg = ta.getDrawable(R.styleable.NavViewAttrs_nav_bg_img);
-        mNavTextDefaultColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_default_color, Color.BLACK);
-        mNavTextCheckedColor = ta.getColor(R.styleable.NavViewAttrs_nav_text_checked_color, Color.BLACK);
-        mNavBgCheckedColor = ta.getColor(R.styleable.NavViewAttrs_nav_bg_checked_color, Color.TRANSPARENT);
-        mNavBgCheckedImg = ta.getDrawable(R.styleable.NavViewAttrs_nav_bg_checked_img);
-        mNavDividerLineColor = ta.getColor(R.styleable.NavViewAttrs_nav_divider_line_color, Color.TRANSPARENT);
-        mScrollAble = ta.getBoolean(R.styleable.NavViewAttrs_nav_scroll_able, true);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.NavView);
+        mNavHeight = (int) ta.getDimension(R.styleable.TpgView_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
+        mNavBgColor = ta.getColor(R.styleable.NavView_nav_bg_color, Color.TRANSPARENT);
+        mNavBgImg = ta.getDrawable(R.styleable.NavView_nav_bg_img);
+        mNavTextDefaultColor = ta.getColor(R.styleable.NavView_nav_text_default_color, Color.BLACK);
+        mNavTextCheckedColor = ta.getColor(R.styleable.NavView_nav_text_checked_color, Color.BLACK);
+        mNavBgCheckedColor = ta.getColor(R.styleable.NavView_nav_bg_checked_color, Color.TRANSPARENT);
+        mNavBgCheckedImg = ta.getDrawable(R.styleable.NavView_nav_bg_checked_img);
+        mNavDividerLineColor = ta.getColor(R.styleable.NavView_nav_divider_line_color, Color.TRANSPARENT);
+        mScrollAble = ta.getBoolean(R.styleable.NavView_nav_scroll_able, true);
 
         ta.recycle();
     }
@@ -100,11 +108,35 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        // 动态配置ViewPager
+        if (getChildCount() == 1) {
+            // 如果有一个子控件，就尝试把它当作ViewPager
+            View child = getChildAt(0);
+            if (child instanceof ViewPager && child instanceof Pager) {
+                vpContent = (ViewPager) child;
+            } else {
+                throw new IllegalStateException("NavView must has 0 or 1 child that implement 'Pager' interface and exptend 'ViewPager' class at same time.");
+            }
+        } else {
+            // 否则默认创建
+            vpContent = new TpgViewPager(getContext());
+        }
+        // 设置默认Id
+        if (vpContent.getId() == View.NO_ID) {
+            vpContent.setId(vpContent.hashCode());
+        }
+
         //获取控件
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_nav, this);
-        vpContent = view.findViewById(R.id.vp_content);
         vDivider = view.findViewById(R.id.v_divider);
         rgTabs = view.findViewById(R.id.rg_tabs);
+        flContent = view.findViewById(R.id.fl_content);
+
+        // 将ViewPager添加到界面
+        if (null != vpContent) {
+            ViewUtils.removeFromParent(vpContent);
+            flContent.addView(vpContent);
+        }
 
         setNavHeight((int) DensityUtils.px2dp(getContext(), mNavHeight));
 
@@ -146,7 +178,11 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      */
     public void setScrollAble(boolean scrollAble) {
         mScrollAble = scrollAble;
-        vpContent.setScrollAble(mScrollAble);
+        if (vpContent instanceof Pager) {
+            ((Pager) vpContent).setScrollAble(mScrollAble);
+        } else {
+            throw new UnsupportedOperationException("Not support setScrollAble unless implement 'Pager' interface.");
+        }
     }
 
     /**
@@ -340,6 +376,15 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
                 }
             }
         });
+    }
+
+    /**
+     * 获取当前ViewPager
+     *
+     * @return 当前ViewPager
+     */
+    public ViewPager getViewPager() {
+        return vpContent;
     }
 
     /**

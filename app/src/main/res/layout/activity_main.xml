@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee"
@@ -16,7 +15,7 @@
         android:layout_marginTop="2dp"
         android:background="#fff"
         android:gravity="center"
-        android:text="TpgView使用"/>
+        android:text="TpgView使用" />
 
     <TextView
         android:id="@+id/tv_nav"
@@ -26,7 +25,7 @@
         android:layout_marginTop="2dp"
         android:background="#fff"
         android:gravity="center"
-        android:text="NavView使用"/>
+        android:text="NavView使用" />
 
     <TextView
         android:id="@+id/tv_hybrid"
@@ -36,6 +35,16 @@
         android:layout_marginTop="2dp"
         android:background="#fff"
         android:gravity="center"
-        android:text="嵌套使用"/>
+        android:text="嵌套使用" />
+
+    <TextView
+        android:id="@+id/tv_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:text="和Recycler使用" />
 
 </LinearLayout>

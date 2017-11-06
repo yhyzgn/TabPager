@@ -1,8 +1,8 @@
 package com.yhy.tabpager;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tv_tpg).setOnClickListener(this);
         findViewById(R.id.tv_nav).setOnClickListener(this);
         findViewById(R.id.tv_hybrid).setOnClickListener(this);
+        findViewById(R.id.tv_recycler).setOnClickListener(this);
     }
 
     @Override
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_hybrid:
                 startActivity(new Intent(this, HybridActivity.class));
+                break;
+            case R.id.tv_recycler:
+                startActivity(new Intent(this, RecyclerActivity.class));
                 break;
             default:
                 break;

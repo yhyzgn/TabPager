@@ -120,7 +120,7 @@ public class NavPager extends TpgFragment<MainActivity> {
         }
     }
 
-    private class PagersAdapter extends TpgAdapter {
+    private class PagersAdapter extends TpgAdapter<String> {
 
         public PagersAdapter(FragmentManager fm) {
             super(fm, Arrays.asList(TABS));
@@ -133,6 +133,11 @@ public class NavPager extends TpgFragment<MainActivity> {
             PagerFace fragment = new HybridPager();
             fragment.getFragment().setArguments(args);
             return fragment;
+        }
+
+        @Override
+        public CharSequence getTitle(int position, String data) {
+            return data;
         }
     }
 }

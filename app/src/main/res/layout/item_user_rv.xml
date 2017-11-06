@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="84dp"
+        android:layout_height="72dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textColor="#444"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_introduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:letterSpacing="0.1"
+            android:lineSpacingExtra="2dp"
+            android:lines="2"
+            android:text="简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介"
+            android:textColor="#ccc"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

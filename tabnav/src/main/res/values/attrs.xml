@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--顶部控件的自定义属性-->
-    <declare-styleable name="TpgViewAttrs">
+    <declare-styleable name="TpgView">
         <!--整个Tab栏的高度，默认为：48dp-->
         <attr name="tab_height" format="reference|dimension"/>
         <!--整个Tab栏的背景颜色，默认为：透明-->
@@ -53,7 +53,7 @@
     </declare-styleable>
 
     <!--底部导航栏自定义属性-->
-    <declare-styleable name="NavViewAttrs">
+    <declare-styleable name="NavView">
         <!--导航栏高度，默认为：48dp-->
         <attr name="nav_height" format="reference|dimension"/>
         <!--导航栏背景色，默认为：透明-->

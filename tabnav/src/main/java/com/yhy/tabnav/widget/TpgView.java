@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,8 +19,11 @@ import android.widget.TextView;
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.TpgAdapter;
 import com.yhy.tabnav.listener.OnPageChangedListener;
+import com.yhy.tabnav.tpg.Pager;
 import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
+import com.yhy.tabnav.utils.ViewUtils;
+import com.yhy.tabnav.widget.pager.TpgViewPager;
 
 /**
  * author : 颜洪毅
@@ -37,8 +41,10 @@ public class TpgView extends LinearLayout implements Tpg {
     private TextView tvText;
     //可扩展的ImageView控件
     private ImageView ivExpand;
+    // ViewPager显示区域
+    private FrameLayout flContent;
     //ViewPager控件
-    private TpgViewPager vpContent;
+    private ViewPager vpContent;
     //整个Tab栏的高度，默认48dp
     private int mTabHeight;
     //整个Tab栏的背景颜色，默认透明
@@ -98,27 +104,25 @@ public class TpgView extends LinearLayout implements Tpg {
      * @param attrs
      */
     private void init(AttributeSet attrs) {
-        View.inflate(getContext(), R.layout.widget_tpg, this);
-
         //获取自定义属性值
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.TpgViewAttrs);
-        mTabHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
-        mTabBgColor = ta.getColor(R.styleable.TpgViewAttrs_tab_bg_color, Color.TRANSPARENT);
-        mTabTextNormalColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_normal_color, getResources().getColor(R.color.tab_def_normal_color));
-        mTabTextSelectedColor = ta.getColor(R.styleable.TpgViewAttrs_tab_text_selected_color, getResources().getColor(R.color.tab_def_selected_color));
-        mTabIndicatorColor = ta.getColor(R.styleable.TpgViewAttrs_tab_indicator_color, getResources().getColor(R.color.tab_def_indicator_color));
-        mTabIndicatorHeight = (int) ta.getDimension(R.styleable.TpgViewAttrs_tab_indicator_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()));
-        mTabMode = ta.getInt(R.styleable.TpgViewAttrs_tab_mode, TabLayout.MODE_SCROLLABLE);
-        mTabGravity = ta.getInt(R.styleable.TpgViewAttrs_tab_gravity, TabLayout.GRAVITY_FILL);
-        mTextVisible = ta.getInt(R.styleable.TpgViewAttrs_text_visible, GONE);
-        mText = ta.getString(R.styleable.TpgViewAttrs_text_text);
-        mTextColor = ta.getColor(R.styleable.TpgViewAttrs_text_color, getResources().getColor(R.color.tab_def_normal_color));
-        mTextSize = ta.getDimension(R.styleable.TpgViewAttrs_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, getResources().getDisplayMetrics()));
-        mTextMarginLeft = (int) ta.getDimension(R.styleable.TpgViewAttrs_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
-        mTextMarginRight = (int) ta.getDimension(R.styleable.TpgViewAttrs_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
-        mExpandVisible = ta.getInt(R.styleable.TpgViewAttrs_expand_visible, VISIBLE);
-        mExpandIcon = ta.getResourceId(R.styleable.TpgViewAttrs_expand_icon, R.mipmap.ic_expand);
-        mScrollAble = ta.getBoolean(R.styleable.TpgViewAttrs_tab_scroll_able, true);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.TpgView);
+        mTabHeight = (int) ta.getDimension(R.styleable.TpgView_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
+        mTabBgColor = ta.getColor(R.styleable.TpgView_tab_bg_color, Color.TRANSPARENT);
+        mTabTextNormalColor = ta.getColor(R.styleable.TpgView_tab_text_normal_color, getResources().getColor(R.color.tab_def_normal_color));
+        mTabTextSelectedColor = ta.getColor(R.styleable.TpgView_tab_text_selected_color, getResources().getColor(R.color.tab_def_selected_color));
+        mTabIndicatorColor = ta.getColor(R.styleable.TpgView_tab_indicator_color, getResources().getColor(R.color.tab_def_indicator_color));
+        mTabIndicatorHeight = (int) ta.getDimension(R.styleable.TpgView_tab_indicator_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()));
+        mTabMode = ta.getInt(R.styleable.TpgView_tab_mode, TabLayout.MODE_SCROLLABLE);
+        mTabGravity = ta.getInt(R.styleable.TpgView_tab_gravity, TabLayout.GRAVITY_FILL);
+        mTextVisible = ta.getInt(R.styleable.TpgView_text_visible, GONE);
+        mText = ta.getString(R.styleable.TpgView_text_text);
+        mTextColor = ta.getColor(R.styleable.TpgView_text_color, getResources().getColor(R.color.tab_def_normal_color));
+        mTextSize = ta.getDimension(R.styleable.TpgView_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, getResources().getDisplayMetrics()));
+        mTextMarginLeft = (int) ta.getDimension(R.styleable.TpgView_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
+        mTextMarginRight = (int) ta.getDimension(R.styleable.TpgView_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
+        mExpandVisible = ta.getInt(R.styleable.TpgView_expand_visible, VISIBLE);
+        mExpandIcon = ta.getResourceId(R.styleable.TpgView_expand_icon, R.mipmap.ic_expand);
+        mScrollAble = ta.getBoolean(R.styleable.TpgView_tab_scroll_able, true);
 
         ta.recycle();
     }
@@ -130,12 +134,37 @@ public class TpgView extends LinearLayout implements Tpg {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        // 动态配置ViewPager
+        if (getChildCount() == 1) {
+            // 如果有一个子控件，就尝试把它当作ViewPager
+            View child = getChildAt(0);
+            if (child instanceof ViewPager && child instanceof Pager) {
+                vpContent = (ViewPager) child;
+            } else {
+                throw new IllegalStateException("TpgView must has 0 or 1 child that implement 'Pager' interface and exptend 'ViewPager' class at same time.");
+            }
+        } else {
+            // 否则默认创建
+            vpContent = new TpgViewPager(getContext());
+        }
+        // 设置默认Id
+        if (vpContent.getId() == View.NO_ID) {
+            vpContent.setId(vpContent.hashCode());
+        }
+
         View view = LayoutInflater.from(getContext()).inflate(R.layout.widget_tpg, this);
         rlTab = view.findViewById(R.id.rl_tab);
         tvText = view.findViewById(R.id.tv_text);
         tlTabs = view.findViewById(R.id.tl_tabs);
         ivExpand = view.findViewById(R.id.iv_expand);
-        vpContent = view.findViewById(R.id.vp_content);
+        flContent = view.findViewById(R.id.fl_content);
+
+        // 将ViewPager添加到界面
+        if (null != vpContent) {
+            ViewUtils.removeFromParent(vpContent);
+            flContent.addView(vpContent);
+        }
 
         //设置自定义属性值到相应控件上
         //设置整个Tab栏的高度和背景颜色
@@ -358,7 +387,11 @@ public class TpgView extends LinearLayout implements Tpg {
      */
     public void setScrollAble(boolean scrollAble) {
         mScrollAble = scrollAble;
-        vpContent.setScrollAble(scrollAble);
+        if (vpContent instanceof Pager) {
+            ((Pager) vpContent).setScrollAble(mScrollAble);
+        } else {
+            throw new UnsupportedOperationException("Not support setScrollAble unless implement 'Pager' interface.");
+        }
     }
 
     /**
@@ -468,6 +501,15 @@ public class TpgView extends LinearLayout implements Tpg {
      */
     public void setOnPageChangedListener(OnPageChangedListener listener) {
         mPageChangedListener = listener;
+    }
+
+    /**
+     * 获取当前ViewPager
+     *
+     * @return 当前ViewPager
+     */
+    public ViewPager getViewPager() {
+        return vpContent;
     }
 
     /**
