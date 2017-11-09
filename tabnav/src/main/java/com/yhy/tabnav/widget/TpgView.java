@@ -410,6 +410,7 @@ public class TpgView extends LinearLayout implements Tpg {
      * @param index        页面的索引
      * @param smoothScroll 是否支持滑动
      */
+    @SuppressWarnings("SameParameterValue")
     public void setCurrentPager(int index, boolean smoothScroll) {
         vpContent.setCurrentItem(index, smoothScroll);
     }
