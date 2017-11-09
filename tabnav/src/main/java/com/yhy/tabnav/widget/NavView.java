@@ -91,7 +91,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      */
     private void init(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.NavView);
-        mNavHeight = (int) ta.getDimension(R.styleable.TpgView_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
+        mNavHeight = (int) ta.getDimension(R.styleable.NavView_nav_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
         mNavBgColor = ta.getColor(R.styleable.NavView_nav_bg_color, Color.TRANSPARENT);
         mNavBgImg = ta.getDrawable(R.styleable.NavView_nav_bg_img);
         mNavTextDefaultColor = ta.getColor(R.styleable.NavView_nav_text_default_color, Color.BLACK);

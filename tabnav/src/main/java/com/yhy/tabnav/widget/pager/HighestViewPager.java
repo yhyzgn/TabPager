@@ -16,15 +16,15 @@ import com.yhy.tabnav.tpg.Pager;
  * version: 1.0.0
  * desc   : ViewPager按最高方式显示
  */
-public class MostHeightViewPager extends ViewPager implements Pager {
+public class HighestViewPager extends ViewPager implements Pager {
 
     private PagerHelper mHelper;
 
-    public MostHeightViewPager(Context context) {
+    public HighestViewPager(Context context) {
         this(context, null);
     }
 
-    public MostHeightViewPager(Context context, AttributeSet attrs) {
+    public HighestViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         mHelper = new PagerHelper(this);
     }
