@@ -1,6 +1,6 @@
 # `TabPager`
 
-![jCenter](https://img.shields.io/badge/jCenter-1.1.3-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
+![jCenter](https://img.shields.io/badge/jCenter-1.1.4-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
 
 > `TabPager`不仅集成了`TabLayout`和`ViewPager`为顶部选项卡页面，也集成了`RadioGroup`和`ViewPager`为底部导航栏页面，还封装了根据具体页面根据不同的加载状态而显示不同页面的功能，也可以自定义这些页面和其他一些属性。如果某个页面加载数据不成功，切换到其他页面再回来时，框架会自动调用重试加载功能；如果加载成功了，则不再重试加载。
 
@@ -54,6 +54,11 @@ tpgView.setAdapter(mAdapter);
 ---
 
 ### 5. 更新日志
+
+* 1.1.4
+
+  > 修复`NavView`获取导航栏高度属性的`bug`
+
 
 * 1.1.3
   * 提供自定义`ViewPager`功能，只需要在`TpgView`或者`NavView`代码块中设置自定义好的`ViewPager`即可，不过必须实现`Pager`接口
