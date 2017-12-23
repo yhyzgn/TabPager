@@ -125,7 +125,7 @@ tpgView.setAdapter(mAdapter);
       app:text_visible="visible">
 
       <!--在这里将定义好的ViewPager设置进来即可-->
-      <com.yhy.tabnav.widget.pager.MostHeightViewPager
+      <com.yhy.tabnav.widget.pager.HighestViewPager
           android:layout_width="match_parent"
           android:layout_height="match_parent" />
     </com.yhy.tabnav.widget.TpgView>
