@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,17 +80,18 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
 
     public NavView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs);
+        init(context, attrs);
     }
 
     /**
      * 初始化一些属性
      *
-     * @param attrs 属性集
+     * @param context 上下文对象
+     * @param attrs   属性集
      */
-    private void init(AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.NavView);
-        mNavHeight = (int) ta.getDimension(R.styleable.NavView_nav_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
+        mNavHeight = (int) ta.getDimensionPixelSize(R.styleable.NavView_nav_height, DensityUtils.dp2px(context, 48));
         mNavBgColor = ta.getColor(R.styleable.NavView_nav_bg_color, Color.TRANSPARENT);
         mNavBgImg = ta.getDrawable(R.styleable.NavView_nav_bg_img);
         mNavTextDefaultColor = ta.getColor(R.styleable.NavView_nav_text_default_color, Color.BLACK);

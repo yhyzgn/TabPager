@@ -503,7 +503,8 @@ public class TpgView extends LinearLayout implements Tpg {
             tab = tlTabs.getTabAt(i);
             tabView = adapter.getCustomTabView(i, adapter.getTab(i));
             if (null != tab && null != tabView) {
-                tabParent = (View) tabView.getParent();
+                tab.setCustomView(tabView);
+                tabParent = (View) tab.getCustomView().getParent();
                 if (null != tabParent) {
                     tabParent = tabView;
                     tabParent.setTag(i);
@@ -514,7 +515,6 @@ public class TpgView extends LinearLayout implements Tpg {
                         }
                     });
                 }
-                tab.setCustomView(tabView);
             }
         }
     }
