@@ -3,74 +3,76 @@
     <!--顶部控件的自定义属性-->
     <declare-styleable name="TpgView">
         <!--整个Tab栏的高度，默认为：48dp-->
-        <attr name="tab_height" format="reference|dimension"/>
+        <attr name="tab_height" format="reference|dimension" />
         <!--整个Tab栏的背景颜色，默认为：透明-->
-        <attr name="tab_bg_color" format="reference|color"/>
+        <attr name="tab_bg_color" format="reference|color" />
         <!--普通状态下选项卡字体颜色，默认为：#aaff4400-->
-        <attr name="tab_text_normal_color" format="reference|color"/>
+        <attr name="tab_text_normal_color" format="reference|color" />
         <!--选中状态下选项卡字体颜色，默认为：#ffff2200-->
-        <attr name="tab_text_selected_color" format="reference|color"/>
+        <attr name="tab_text_selected_color" format="reference|color" />
         <!--选项指示条的颜色，默认为：#ffff2200-->
-        <attr name="tab_indicator_color" format="reference|color"/>
+        <attr name="tab_indicator_color" format="reference|color" />
         <!--选项指示条的高度，默认为：3dp-->
-        <attr name="tab_indicator_height" format="reference|dimension"/>
+        <attr name="tab_indicator_height" format="reference|dimension" />
         <!--TabLayout的TabMode，默认为：MODE_SCROLLABLE-->
         <attr name="tab_mode" format="integer">
-            <enum name="scrollable" value="0"/>
-            <enum name="fixed" value="1"/>
+            <enum name="scrollable" value="0" />
+            <enum name="fixed" value="1" />
         </attr>
         <!--TabLayout的TabGravity，默认为：GRAVITY_FILL-->
         <attr name="tab_gravity" format="integer">
-            <enum name="fill" value="0"/>
-            <enum name="center" value="1"/>
+            <enum name="fill" value="0" />
+            <enum name="center" value="1" />
         </attr>
         <!--是否显示Tab栏TextView，默认为：GONE-->
         <attr name="text_visible" format="integer">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="4"/>
-            <enum name="gone" value="8"/>
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="4" />
+            <enum name="gone" value="8" />
         </attr>
+        <!--Tab背景图-->
+        <attr name="tab_background" format="reference" />
         <!--Tab栏TextView内容-->
-        <attr name="text_text" format="reference|string"/>
+        <attr name="text_text" format="reference|string" />
         <!--Tab栏TextView字体颜色，默认为：#aaff4400-->
-        <attr name="text_color" format="reference|color"/>
+        <attr name="text_color" format="reference|color" />
         <!--Tab栏TextView字体大小，默认为：14sp-->
-        <attr name="text_size" format="reference|dimension"/>
+        <attr name="text_size" format="reference|dimension" />
         <!--Tab栏TextView左侧边距，默认为：8dp-->
-        <attr name="text_margin_left" format="reference|dimension"/>
+        <attr name="text_margin_left" format="reference|dimension" />
         <!--Tab栏TextView右侧边距，默认为：8dp-->
-        <attr name="text_margin_right" format="reference|dimension"/>
+        <attr name="text_margin_right" format="reference|dimension" />
         <!--是否显示可扩展图标，默认为：VISIBLE-->
         <attr name="expand_visible" format="integer">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="4"/>
-            <enum name="gone" value="8"/>
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="4" />
+            <enum name="gone" value="8" />
         </attr>
         <!--可扩展图标资源-->
-        <attr name="expand_icon" format="reference"/>
+        <attr name="expand_icon" format="reference" />
         <!--是否可滑动-->
-        <attr name="tab_scroll_able" format="boolean"/>
+        <attr name="tab_scroll_able" format="boolean" />
     </declare-styleable>
 
     <!--底部导航栏自定义属性-->
     <declare-styleable name="NavView">
         <!--导航栏高度，默认为：48dp-->
-        <attr name="nav_height" format="reference|dimension"/>
+        <attr name="nav_height" format="reference|dimension" />
         <!--导航栏背景色，默认为：透明-->
-        <attr name="nav_bg_color" format="reference|color"/>
+        <attr name="nav_bg_color" format="reference|color" />
         <!--导航栏背景图片，默认为：null-->
-        <attr name="nav_bg_img" format="reference"/>
+        <attr name="nav_bg_img" format="reference" />
         <!--导航栏默认字体颜色，默认为：#000000-->
-        <attr name="nav_text_default_color" format="reference|color"/>
+        <attr name="nav_text_default_color" format="reference|color" />
         <!--导航栏选中时字体颜色，默认为：#000000-->
-        <attr name="nav_text_checked_color" format="reference|color"/>
+        <attr name="nav_text_checked_color" format="reference|color" />
         <!--导航栏选中时背景颜色，默认为：透明-->
-        <attr name="nav_bg_checked_color" format="reference|color"/>
+        <attr name="nav_bg_checked_color" format="reference|color" />
         <!--导航栏选中时背景，默认为：null-->
-        <attr name="nav_bg_checked_img" format="reference"/>
+        <attr name="nav_bg_checked_img" format="reference" />
         <!--导航栏与内容页面之间的分割线颜色，默认为：透明，不显示-->
-        <attr name="nav_divider_line_color" format="reference"/>
+        <attr name="nav_divider_line_color" format="reference" />
         <!--是否可滑动-->
-        <attr name="nav_scroll_able" format="boolean"/>
+        <attr name="nav_scroll_able" format="boolean" />
     </declare-styleable>
 </resources>

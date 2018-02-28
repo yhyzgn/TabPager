@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".NavActivity" />
         <activity android:name=".TpgActivity" />
+        <activity android:name=".TpgCustomActivity" />
         <activity android:name=".HybridActivity" />
         <activity android:name=".RecyclerActivity" />
     </application>

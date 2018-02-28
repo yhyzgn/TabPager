@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.tv_tpg).setOnClickListener(this);
+        findViewById(R.id.tv_tpg_custom).setOnClickListener(this);
         findViewById(R.id.tv_nav).setOnClickListener(this);
         findViewById(R.id.tv_hybrid).setOnClickListener(this);
         findViewById(R.id.tv_recycler).setOnClickListener(this);
@@ -23,6 +24,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.tv_tpg:
                 startActivity(new Intent(this, TpgActivity.class));
+                break;
+            case R.id.tv_tpg_custom:
+                startActivity(new Intent(this, TpgCustomActivity.class));
                 break;
             case R.id.tv_nav:
                 startActivity(new Intent(this, NavActivity.class));

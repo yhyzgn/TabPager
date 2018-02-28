@@ -18,6 +18,16 @@
         android:text="TpgView使用" />
 
     <TextView
+        android:id="@+id/tv_tpg_custom"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:text="TpgView自定义Tab" />
+
+    <TextView
         android:id="@+id/tv_nav"
         android:layout_width="match_parent"
         android:layout_height="40dp"

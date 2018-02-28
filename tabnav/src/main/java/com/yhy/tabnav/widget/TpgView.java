@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +26,8 @@ import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.utils.ViewUtils;
 import com.yhy.tabnav.widget.pager.TpgViewPager;
+
+import java.lang.reflect.Field;
 
 /**
  * author : 颜洪毅
@@ -84,6 +88,8 @@ public class TpgView extends LinearLayout implements Tpg {
     private OnExpandListener mExpandListener;
     //ViewPager页面切换监听事件
     private OnPageChangedListener mPageChangedListener;
+    //Tab背景图
+    private int mTabBackgroundResId;
 
     public TpgView(Context context) {
         this(context, null);
@@ -95,34 +101,36 @@ public class TpgView extends LinearLayout implements Tpg {
 
     public TpgView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs);
+        init(context, attrs);
     }
 
     /**
      * 初始化控件
      *
-     * @param attrs 属性集
+     * @param context 上下文对象
+     * @param attrs   属性集
      */
-    private void init(AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs) {
         //获取自定义属性值
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.TpgView);
-        mTabHeight = (int) ta.getDimension(R.styleable.TpgView_tab_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, getResources().getDisplayMetrics()));
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TpgView);
+        mTabHeight = ta.getDimensionPixelSize(R.styleable.TpgView_tab_height, DensityUtils.dp2px(context, 48));
         mTabBgColor = ta.getColor(R.styleable.TpgView_tab_bg_color, Color.TRANSPARENT);
         mTabTextNormalColor = ta.getColor(R.styleable.TpgView_tab_text_normal_color, getResources().getColor(R.color.tab_def_normal_color));
         mTabTextSelectedColor = ta.getColor(R.styleable.TpgView_tab_text_selected_color, getResources().getColor(R.color.tab_def_selected_color));
         mTabIndicatorColor = ta.getColor(R.styleable.TpgView_tab_indicator_color, getResources().getColor(R.color.tab_def_indicator_color));
-        mTabIndicatorHeight = (int) ta.getDimension(R.styleable.TpgView_tab_indicator_height, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()));
+        mTabIndicatorHeight = ta.getDimensionPixelSize(R.styleable.TpgView_tab_indicator_height, DensityUtils.dp2px(context, 3));
         mTabMode = ta.getInt(R.styleable.TpgView_tab_mode, TabLayout.MODE_SCROLLABLE);
         mTabGravity = ta.getInt(R.styleable.TpgView_tab_gravity, TabLayout.GRAVITY_FILL);
         mTextVisible = ta.getInt(R.styleable.TpgView_text_visible, GONE);
         mText = ta.getString(R.styleable.TpgView_text_text);
         mTextColor = ta.getColor(R.styleable.TpgView_text_color, getResources().getColor(R.color.tab_def_normal_color));
-        mTextSize = ta.getDimension(R.styleable.TpgView_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, getResources().getDisplayMetrics()));
-        mTextMarginLeft = (int) ta.getDimension(R.styleable.TpgView_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
-        mTextMarginRight = (int) ta.getDimension(R.styleable.TpgView_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
+        mTextSize = ta.getDimensionPixelSize(R.styleable.TpgView_text_size, DensityUtils.dp2px(context, 14));
+        mTextMarginLeft = ta.getDimensionPixelSize(R.styleable.TpgView_text_size, DensityUtils.dp2px(context, 8));
+        mTextMarginRight = ta.getDimensionPixelSize(R.styleable.TpgView_text_size, DensityUtils.dp2px(context, 8));
         mExpandVisible = ta.getInt(R.styleable.TpgView_expand_visible, VISIBLE);
         mExpandIcon = ta.getResourceId(R.styleable.TpgView_expand_icon, R.mipmap.ic_expand);
         mScrollAble = ta.getBoolean(R.styleable.TpgView_tab_scroll_able, true);
+        mTabBackgroundResId = ta.getResourceId(R.styleable.TpgView_tab_background, -1);
 
         ta.recycle();
     }
@@ -278,6 +286,37 @@ public class TpgView extends LinearLayout implements Tpg {
      */
     public void setTabIndicatorColorResId(int resId) {
         tlTabs.setSelectedTabIndicatorColor(getContext().getResources().getColor(resId));
+    }
+
+    /**
+     * 设置Tab背景图
+     *
+     * @param resId 背景图资源id
+     */
+    public void setTabBackground(int resId) {
+        mTabBackgroundResId = resId;
+        if (mTabBackgroundResId > 0) {
+            Field tabViewField;
+            TabLayout.Tab tab;
+            Object tabObj;
+            View tabView;
+            for (int i = 0; i < tlTabs.getTabCount(); i++) {
+                try {
+                    tab = tlTabs.getTabAt(i);
+                    tabViewField = tab.getClass().getDeclaredField("mView");
+                    tabViewField.setAccessible(true);
+                    tabObj = tabViewField.get(tab);
+                    if (null != tabObj && tabObj instanceof View) {
+                        tabView = (View) tabObj;
+                        ViewCompat.setBackground(tabView, AppCompatResources.getDrawable(getContext(), mTabBackgroundResId));
+                    }
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
@@ -438,6 +477,10 @@ public class TpgView extends LinearLayout implements Tpg {
         // 设置适配器
         vpContent.setAdapter(adapter);
         tlTabs.setupWithViewPager(vpContent);
+        // 设置tab背景图
+        setTabBackground(mTabBackgroundResId);
+        // 设置自定义tab
+        setCustomTabView(adapter);
 
         //初始化事件
         initPagerListener();
@@ -445,6 +488,35 @@ public class TpgView extends LinearLayout implements Tpg {
         //绑定适配器与TpgView，为了在适配器中能获取到TpgView中的某些数据，比如当前页面
         //noinspection unchecked
         adapter.bindTpgView(this);
+    }
+
+    /**
+     * 设置自定义tab
+     *
+     * @param adapter 适配器
+     */
+    private void setCustomTabView(TpgAdapter adapter) {
+        TabLayout.Tab tab;
+        View tabView;
+        View tabParent;
+        for (int i = 0; i < tlTabs.getTabCount(); i++) {
+            tab = tlTabs.getTabAt(i);
+            tabView = adapter.getCustomTabView(i, adapter.getTab(i));
+            if (null != tab && null != tabView) {
+                tabParent = (View) tabView.getParent();
+                if (null != tabParent) {
+                    tabParent = tabView;
+                    tabParent.setTag(i);
+                    tabParent.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            vpContent.setCurrentItem((Integer) v.getTag());
+                        }
+                    });
+                }
+                tab.setCustomView(tabView);
+            }
+        }
     }
 
     /**
@@ -456,8 +528,7 @@ public class TpgView extends LinearLayout implements Tpg {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (null != mPageChangedListener) {
-                    mPageChangedListener.onPageScrolled(position, positionOffset,
-                            positionOffsetPixels);
+                    mPageChangedListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 }
             }
 

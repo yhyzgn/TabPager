@@ -51,7 +51,7 @@ public abstract class NavAdapter extends BasePagerAdapter<NavView> {
      * @return 页面数量
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
         return null == mTabList ? 0 : mTabList.size();
     }
 
@@ -62,7 +62,7 @@ public abstract class NavAdapter extends BasePagerAdapter<NavView> {
      * @return 页面标题
      */
     @Override
-    public CharSequence getPageTitle(int position) {
+    public final CharSequence getPageTitle(int position) {
         return mTabList.get(position).tabText;
     }
 
@@ -72,7 +72,7 @@ public abstract class NavAdapter extends BasePagerAdapter<NavView> {
      * @param position 页面索引
      * @return 选项图标
      */
-    public int getTabIconId(int position) {
+    public final int getTabIconId(int position) {
         return mTabList.get(position).tabIconId;
     }
 }

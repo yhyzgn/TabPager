@@ -1,6 +1,7 @@
 package com.yhy.tabnav.adapter;
 
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.yhy.tabnav.adapter.base.BasePagerAdapter;
 import com.yhy.tabnav.config.PagerConfig;
@@ -48,7 +49,7 @@ public abstract class TpgAdapter<T> extends BasePagerAdapter<TpgView> {
      * @return 标题
      */
     @Override
-    public CharSequence getPageTitle(int position) {
+    public final CharSequence getPageTitle(int position) {
         return getTitle(position, mTabList.get(position));
     }
 
@@ -59,7 +60,30 @@ public abstract class TpgAdapter<T> extends BasePagerAdapter<TpgView> {
      * @param data     tab项对象
      * @return 标题
      */
-    public abstract CharSequence getTitle(int position, T data);
+    public CharSequence getTitle(int position, T data) {
+        return null;
+    }
+
+    /**
+     * 获取自定义Tab
+     *
+     * @param position 当前索引
+     * @param data     tab项对象
+     * @return Tab
+     */
+    public View getCustomTabView(int position, T data) {
+        return null;
+    }
+
+    /**
+     * 获取Tab数据
+     *
+     * @param position 当前索引
+     * @return tab数据
+     */
+    public final T getTab(int position) {
+        return mTabList.get(position);
+    }
 
     /**
      * 获取页面数量
@@ -67,7 +91,7 @@ public abstract class TpgAdapter<T> extends BasePagerAdapter<TpgView> {
      * @return 页面数量
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
         return null == mTabList ? 0 : mTabList.size();
     }
 }
