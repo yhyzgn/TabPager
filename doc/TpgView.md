@@ -166,25 +166,26 @@
 
   > 在布局文件中自行定义
 
-  | 属性名                       | 属性说明                     | 默认值               |
-  | :------------------------ | :----------------------- | :---------------- |
-  | `tab_height`              | `Tab`栏高度                 | `48dp`            |
-  | `tab_bg_color`            | `Tab`栏的背景颜色              | 透明                |
-  | `tab_text_normal_color`   | 普通状态下选项卡字体颜色             | `#aaff4400`       |
-  | `tab_text_selected_color` | 选中状态下选项卡字体颜色             | `#ffff2200`       |
-  | `tab_indicator_color`     | 选项指示条的颜色                 | `#ffff2200`       |
-  | `tab_indicator_height`    | 选项指示条的高度                 | `3dp`             |
+  | 属性名                    | 属性说明                  | 默认值            |
+  | :------------------------ | :------------------------ | :---------------- |
+  | `tab_height`              | `Tab`栏高度               | `48dp`            |
+  | `tab_bg_color`            | `Tab`栏的背景颜色         | 透明              |
+  | `tab_text_normal_color`   | 普通状态下选项卡字体颜色  | `#aaff4400`       |
+  | `tab_text_selected_color` | 选中状态下选项卡字体颜色  | `#ffff2200`       |
+  | `tab_indicator_color`     | 选项指示条的颜色          | `#ffff2200`       |
+  | `tab_indicator_height`    | 选项指示条的高度          | `3dp`             |
   | `tab_mode`                | `TabLayout`的`TabMode`    | `MODE_SCROLLABLE` |
   | `tab_gravity`             | `TabLayout`的`TabGravity` | `GRAVITY_FILL`    |
-  | `text_visible`            | 是否显示`Tab`栏`TextView`     | `GONE`            |
-  | `text_text`               | `Tab`栏`TextView`内容       | ——                |
-  | `text_color`              | `Tab`栏`TextView`字体颜色     | `#aaff4400`       |
-  | `text_size`               | `Tab`栏`TextView`字体大小     | `14sp`            |
-  | `text_margin_left`        | `Tab`栏`TextView`左侧边距     | `8dp`             |
-  | `text_margin_right`       | `Tab`栏`TextView`右侧边距     | `8dp`             |
-  | `expand_visible`          | 是否显示可扩展图标                | `VISIBLE`         |
-  | `expand_icon`             | 可扩展图标资源                  | ——                |
-  | `tab_scroll_able`         | 是否可滑动                    | `true`            |
+  | `text_visible`            | 是否显示`Tab`栏`TextView` | `GONE`            |
+  | `text_text`               | `Tab`栏`TextView`内容     | ——                |
+  | `text_color`              | `Tab`栏`TextView`字体颜色 | `#aaff4400`       |
+  | `text_size`               | `Tab`栏`TextView`字体大小 | `14sp`            |
+  | `text_margin_left`        | `Tab`栏`TextView`左侧边距 | `8dp`             |
+  | `text_margin_right`       | `Tab`栏`TextView`右侧边距 | `8dp`             |
+  | `expand_visible`          | 是否显示可扩展图标        | `VISIBLE`         |
+  | `expand_icon`             | 可扩展图标资源`id`        | ——                |
+  | `tab_scroll_able`         | 是否可滑动                | `true`            |
+  | `tab_background`          | `tab`背景图资源`id`       | ——                |
 
 - 页面配置参数（上文提到过）
 

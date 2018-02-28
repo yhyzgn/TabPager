@@ -1,6 +1,6 @@
 # `TabPager`
 
-![jCenter](https://img.shields.io/badge/jCenter-1.1.4-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
+![jCenter](https://img.shields.io/badge/jCenter-1.1.5-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
 
 > `TabPager`不仅集成了`TabLayout`和`ViewPager`为顶部选项卡页面，也集成了`RadioGroup`和`ViewPager`为底部导航栏页面，还封装了根据具体页面根据不同的加载状态而显示不同页面的功能，也可以自定义这些页面和其他一些属性。如果某个页面加载数据不成功，切换到其他页面再回来时，框架会自动调用重试加载功能；如果加载成功了，则不再重试加载。
 
@@ -54,6 +54,52 @@ tpgView.setAdapter(mAdapter);
 ---
 
 ### 5. 更新日志
+
+* 1.1.5
+
+  * `TpgView`设置每个`tab`的背景图
+
+    > 在布局文件中使用
+
+    ```xml
+    <com.yhy.tabnav.widget.TpgView
+       ...
+       app:tab_background="@drawable/tab_background_selector" />
+    ```
+
+    > 在代码中设置
+
+    ```java
+    tvContent.setTabBackground(R.drawable.tab_background_selector);
+    ```
+
+  * `TpgView`自定义`tab`控件
+
+    > 重写适配器`TpgAdapter`的`View getCustomTabView(int position, String data)`方法，返回具体的`tab`控件即可
+    >
+    > 注意：此时可以不重写`String getTitle(position)`方法
+
+    ```java
+    private class PagersAdapter extends TpgAdapter<String> {
+        public PagersAdapter(FragmentManager fm, PagerConfig config) {
+            super(fm, Arrays.asList(TABS), config);
+        }
+
+        @Override
+        public PagerFace getPager(int position) {
+            return PagerFactory.create(position);
+        }
+
+        @Override
+        public View getCustomTabView(int position, String data) {
+            TextView tv = (TextView) LayoutInflater.from(TpgCustomActivity.this).inflate(R.layout.tab_custom_view, null);
+            tv.setText(data);
+            return tv;
+        }
+    }
+    ```
+
+    > 注意：`TpgAdapter`中的`View getCustomTabView(int position, String data)`和`String getTitle(position)`两个方法必须二选一重写，前者用于自定义`tab`控件，后者则普通情况下使用！！
 
 * 1.1.4
 
