@@ -8,15 +8,13 @@
     <RelativeLayout
         android:id="@+id/rl_tab"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#f20">
+        android:layout_height="48dp">
 
         <TextView
             android:id="@+id/tv_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textColor="#f20"
             android:textSize="14sp"
             android:visibility="gone" />
 
@@ -35,10 +33,14 @@
             android:layout_toLeftOf="@id/iv_expand"
             android:layout_toRightOf="@id/tv_text"
             app:tabGravity="center"
-            app:tabIndicatorColor="#f20"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="#f20" />
+            app:tabMode="scrollable" />
     </RelativeLayout>
+
+    <View
+        android:id="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/nav_def_line_divider_color" />
 
     <FrameLayout
         android:id="@+id/fl_content"

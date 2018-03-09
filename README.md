@@ -1,6 +1,6 @@
 # `TabPager`
 
-![jCenter](https://img.shields.io/badge/jCenter-1.1.6-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
+![jCenter](https://img.shields.io/badge/jCenter-1.1.7-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
 
 > `TabPager`不仅集成了`TabLayout`和`ViewPager`为顶部选项卡页面，也集成了`RadioGroup`和`ViewPager`为底部导航栏页面，还封装了根据具体页面根据不同的加载状态而显示不同页面的功能，也可以自定义这些页面和其他一些属性。如果某个页面加载数据不成功，切换到其他页面再回来时，框架会自动调用重试加载功能；如果加载成功了，则不再重试加载。
 
@@ -55,9 +55,101 @@ tpgView.setAdapter(mAdapter);
 
 ### 5. 更新日志
 
+* 1.1.7
+
+  * `PagerFace`中添加设置和获取参数的方法，并在`TpgFragment`中实现
+
+    > `PagerFace`
+
+    ```java
+    //...
+    /**
+     * 设置Bundle参数
+     *
+     * @param params Bundle参数
+     */
+    void setParams(Bundle params);
+
+    /**
+     * 获取Bundle参数
+     *
+     * @return Bundle参数
+     */
+    Bundle getParams();
+    //...
+    ```
+
+    > `TpgFragment`
+
+    ```java
+    //...
+    /**
+     * 设置Bundle参数
+     *
+     * @param params Bundle参数
+     */
+    @Override
+    public void setParams(Bundle params) {
+        setArguments(params);
+    }
+
+    /**
+     * 获取Bundle参数
+     *
+     * @return Bundle参数
+     */
+    @Override
+    public Bundle getParams() {
+        return getArguments();
+    }
+    //...
+    ```
+
+  * `TpgView`中添加菜单栏与内容页面的分割线
+
+    > 布局文件中设置属性`nav_divider_line_color`即可，默认为透明，此时分割线不显示
+
+  * `NavView`中徽章控件的升级，并添加了设置徽章控件背景和字体颜色的相关方法
+
+    > 布局文件中设置属性`nav_badge_bg_color`和`nav_badge_text_color`即可。
+    >
+    > 不过这里设置的属性将对底部全部徽章有效，如果需要针对某些徽章单独配置的话，可以在代码中调用以下方法配置
+
+    ```java
+    /**
+     * 设置徽章背景颜色
+     * 作用范围：全部徽章
+     * @param color 背景颜色
+     */
+    setBadgeBgColor(int color);
+
+    /**
+     * 设置徽章背景颜色
+     * 作用范围：指定索引的徽章
+     * @param index 徽章索引
+     * @param color 背景颜色
+     */
+    setBadgeBgColor(int color);
+
+    /*
+     * 设置徽章字体颜色
+     * 作用范围：全部徽章
+     * @param color 字体颜色
+     */
+    setBadgeTextColor(int color);
+
+    /**
+     * 设置徽章字体颜色
+     * 作用范围：指定索引的徽章
+     * @param index 徽章索引
+     * @param color 字体颜色
+     */
+    setBadgeTextColor(int index, int color);
+    ```
+
 * 1.1.6
 
-  > 修复一直`bug`
+  > 修复一只`bug`
 
 * 1.1.5
 
@@ -116,7 +208,7 @@ tpgView.setAdapter(mAdapter);
     > 这是一个自适应高度的`ViewPager`，实现`Pager`接口
 
     ```java
-    public class MostHeightViewPager extends ViewPager implements Pager {
+    public class HighestViewPager extends ViewPager implements Pager {
 
       // 定义辅助类对象
       private PagerHelper mHelper;

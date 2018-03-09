@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +44,8 @@ public class TpgView extends LinearLayout implements Tpg {
     private TextView tvText;
     //可扩展的ImageView控件
     private ImageView ivExpand;
+    // 分割线
+    private View vDivider;
     // ViewPager显示区域
     private FrameLayout flContent;
     //ViewPager控件
@@ -83,6 +84,8 @@ public class TpgView extends LinearLayout implements Tpg {
     private int mExpandIcon;
     //是否可滑动
     private boolean mScrollAble;
+    //导航栏与页面之间的分割线颜色，默认为透明，此时分割线不显示
+    private int mNavDividerLineColor;
 
     //扩展图标点击监听事件
     private OnExpandListener mExpandListener;
@@ -127,10 +130,11 @@ public class TpgView extends LinearLayout implements Tpg {
         mTextSize = ta.getDimensionPixelSize(R.styleable.TpgView_text_size, DensityUtils.dp2px(context, 14));
         mTextMarginLeft = ta.getDimensionPixelSize(R.styleable.TpgView_text_size, DensityUtils.dp2px(context, 8));
         mTextMarginRight = ta.getDimensionPixelSize(R.styleable.TpgView_text_size, DensityUtils.dp2px(context, 8));
-        mExpandVisible = ta.getInt(R.styleable.TpgView_expand_visible, VISIBLE);
+        mExpandVisible = ta.getInt(R.styleable.TpgView_expand_visible, GONE);
         mExpandIcon = ta.getResourceId(R.styleable.TpgView_expand_icon, R.mipmap.ic_expand);
         mScrollAble = ta.getBoolean(R.styleable.TpgView_tab_scroll_able, true);
         mTabBackgroundResId = ta.getResourceId(R.styleable.TpgView_tab_background, -1);
+        mNavDividerLineColor = ta.getColor(R.styleable.NavView_nav_divider_line_color, Color.TRANSPARENT);
 
         ta.recycle();
     }
@@ -166,6 +170,7 @@ public class TpgView extends LinearLayout implements Tpg {
         tvText = view.findViewById(R.id.tv_text);
         tlTabs = view.findViewById(R.id.tl_tabs);
         ivExpand = view.findViewById(R.id.iv_expand);
+        vDivider = view.findViewById(R.id.v_divider);
         flContent = view.findViewById(R.id.fl_content);
 
         // 将ViewPager添加到界面
@@ -203,6 +208,15 @@ public class TpgView extends LinearLayout implements Tpg {
         setExpandIcon(mExpandIcon);
         //设置是否可滑动
         setScrollAble(mScrollAble);
+
+        if (mNavDividerLineColor == Color.TRANSPARENT) {
+            //如果颜色透明，就隐藏分割线
+            vDivider.setVisibility(View.GONE);
+        } else {
+            //否则就显示分割线，并设置相应颜色
+            vDivider.setBackgroundColor(mNavDividerLineColor);
+            vDivider.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

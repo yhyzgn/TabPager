@@ -90,9 +90,10 @@ public class NavActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putBoolean("isHybrid", false);
             args.putBoolean("firstPage", position == 0);
-            PagerFace fragment = new NavPager();
-            fragment.getFragment().setArguments(args);
-            return fragment;
+            PagerFace pager = new NavPager();
+//            fragment.getFragment().setArguments(args);
+            pager.setParams(args);
+            return pager;
         }
     }
 }

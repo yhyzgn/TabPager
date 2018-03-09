@@ -135,17 +135,19 @@
 
   > 在布局文件中自行定义
 
-  | 属性名                      | 属性说明             | 默认值       |
-  | :----------------------- | :--------------- | :-------- |
-  | `nav_bg_color`           | 导航栏背景色           | 透明        |
-  | `nav_height`             | 导航栏高度            | `48dp`    |
-  | `nav_bg_img`             | 导航栏背景图片          | 无         |
-  | `nav_text_default_color` | 普通状态下选项字体颜色      | `#000000` |
-  | `nav_text_checked_color` | 选中状态下选项字体颜色      | `#000000` |
-  | `nav_bg_checked_color`   | 选中状态下选项背景颜色      | 透明        |
-  | `nav_bg_checked_img`     | 选中状态下选项背景图片      | 无         |
-  | `nav_divider_line_color` | 导航栏与内容页面之间的分割线颜色 | 透明，不显示    |
-  | `nav_scroll_able`        | 是否可滑动            | `true`    |
+  | 属性名                   | 属性说明                         | 默认值       |
+  | :----------------------- | :------------------------------- | :----------- |
+  | `nav_bg_color`           | 导航栏背景色                     | 透明         |
+  | `nav_height`             | 导航栏高度                       | `48dp`       |
+  | `nav_bg_img`             | 导航栏背景图片                   | 无           |
+  | `nav_text_default_color` | 普通状态下选项字体颜色           | `#000000`    |
+  | `nav_text_checked_color` | 选中状态下选项字体颜色           | `#000000`    |
+  | `nav_bg_checked_color`   | 选中状态下选项背景颜色           | 透明         |
+  | `nav_bg_checked_img`     | 选中状态下选项背景图片           | 无           |
+  | `nav_divider_line_color` | 导航栏与内容页面之间的分割线颜色 | 透明，不显示 |
+  | `nav_scroll_able`        | 是否可滑动                       | `true`       |
+  | `nav_badge_text_color`   | 徽章字体颜色                     | `#ffffffff`  |
+  | `nav_badge_bg_color`     | 徽章背景颜色                     | `#ffff2200`  |
 
 - 页面配置参数（上文提到过）
 

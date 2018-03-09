@@ -114,6 +114,26 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
     }
 
     /**
+     * 设置Bundle参数
+     *
+     * @param params Bundle参数
+     */
+    @Override
+    public void setParams(Bundle params) {
+        setArguments(params);
+    }
+
+    /**
+     * 获取Bundle参数
+     *
+     * @return Bundle参数
+     */
+    @Override
+    public Bundle getParams() {
+        return getArguments();
+    }
+
+    /**
      * PagerFace接口方法--设置页面参数
      *
      * @param config 页面参数

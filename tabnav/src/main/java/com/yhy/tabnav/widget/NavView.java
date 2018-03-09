@@ -30,6 +30,7 @@ import com.yhy.tabnav.widget.pager.TpgViewPager;
 import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
 import cn.bingoogolapple.badgeview.BGABadgeable;
 import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
+import cn.bingoogolapple.badgeview.annotation.BGABadge;
 
 /**
  * author : 颜洪毅
@@ -38,6 +39,7 @@ import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
  * version: 1.0.0
  * desc   : 用于底部导航栏布局页面
  */
+@BGABadge(RadioButton.class)
 public class NavView extends RelativeLayout implements Tpg, Badge {
     // ViewPager的显示区域
     private FrameLayout flContent;
@@ -69,6 +71,10 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
     private int mNavDividerLineColor;
     //是否可滑动，默认可滑动
     private boolean mScrollAble;
+    // 徽章背景颜色，默认：#ffff2200
+    private int mBadgeBgColor;
+    // 徽章字体颜色，默认：#ffffffff
+    private int mBadgeTextColor;
 
     public NavView(Context context) {
         this(context, null);
@@ -100,6 +106,8 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
         mNavBgCheckedImg = ta.getDrawable(R.styleable.NavView_nav_bg_checked_img);
         mNavDividerLineColor = ta.getColor(R.styleable.NavView_nav_divider_line_color, Color.TRANSPARENT);
         mScrollAble = ta.getBoolean(R.styleable.NavView_nav_scroll_able, true);
+        mBadgeBgColor = ta.getColor(R.styleable.NavView_nav_badge_bg_color, Color.parseColor("#ffff2200"));
+        mBadgeTextColor = ta.getColor(R.styleable.NavView_nav_badge_text_color, Color.WHITE);
 
         ta.recycle();
     }
@@ -193,19 +201,18 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
     public void setAdapter(NavAdapter adapter) {
         //动态生成菜单
         int pageCount = adapter.getCount();
-        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams
-                .WRAP_CONTENT, RadioGroup.LayoutParams.MATCH_PARENT, 1);
+        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.MATCH_PARENT, 1);
         //先移除所有的菜单项
         rgTabs.removeAllViews();
         for (int i = 0; i < pageCount; i++) {
-            BGABadgeRadioButton tab = (BGABadgeRadioButton) LayoutInflater.from(getContext())
-                    .inflate(R.layout.view_nav_tab, null);
+            BGABadgeRadioButton tab = (BGABadgeRadioButton) LayoutInflater.from(getContext()).inflate(R.layout.view_nav_tab, null);
             tab.setLayoutParams(params);
-            tab.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(adapter
-                    .getTabIconId(i)), null, null);
+            tab.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(adapter.getTabIconId(i)), null, null);
             tab.setText(adapter.getPageTitle(i));
             tab.setTextColor(mNavTextDefaultColor);
             tab.setTag(i);
+            tab.getBadgeViewHelper().setBadgeBgColorInt(mBadgeBgColor);
+            tab.getBadgeViewHelper().setBadgeTextColorInt(mBadgeTextColor);
 
             rgTabs.addView(tab, i);
         }
@@ -224,7 +231,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
         //初始化事件
         initListener();
 
-        //绑定适配器与BtgView，为了在适配器中能获取到BtgView中的某些数据，比如当前页面
+        //绑定适配器与NavView，为了在适配器中能获取到NavView中的某些数据，比如当前页面
         adapter.bindTpgView(this);
     }
 
@@ -361,6 +368,80 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
     }
 
     /**
+     * 设置徽章背景颜色
+     * <p>
+     * 作用范围：全部徽章
+     *
+     * @param color 背景颜色
+     */
+    public void setBadgeBgColor(int color) {
+        setBadgeBgColor(-1, color);
+    }
+
+    /**
+     * 设置徽章背景颜色
+     * <p>
+     * 作用范围：指定索引的徽章
+     *
+     * @param index 徽章索引
+     * @param color 背景颜色
+     */
+    public void setBadgeBgColor(int index, int color) {
+        BGABadgeRadioButton tab;
+        if (index > -1) {
+            tab = getTabByIndex(index);
+            if (null != tab) {
+                tab.getBadgeViewHelper().setBadgeBgColorInt(color);
+            }
+        } else {
+            int count = rgTabs.getChildCount();
+            for (int i = 0; i < count; i++) {
+                tab = getTabByIndex(i);
+                if (null != tab) {
+                    tab.getBadgeViewHelper().setBadgeBgColorInt(color);
+                }
+            }
+        }
+    }
+
+    /**
+     * 设置徽章字体颜色
+     * <p>
+     * 作用范围：全部徽章
+     *
+     * @param color 字体颜色
+     */
+    public void setBadgeTextColor(int color) {
+        setBadgeTextColor(-1, color);
+    }
+
+    /**
+     * 设置徽章字体颜色
+     * <p>
+     * 作用范围：指定索引的徽章
+     *
+     * @param index 徽章索引
+     * @param color 字体颜色
+     */
+    public void setBadgeTextColor(int index, int color) {
+        BGABadgeRadioButton tab;
+        if (index > -1) {
+            tab = getTabByIndex(index);
+            if (null != tab) {
+                tab.getBadgeViewHelper().setBadgeTextColorInt(color);
+            }
+        } else {
+            int count = rgTabs.getChildCount();
+            for (int i = 0; i < count; i++) {
+                tab = getTabByIndex(i);
+                if (null != tab) {
+                    tab.getBadgeViewHelper().setBadgeTextColorInt(color);
+                }
+            }
+        }
+    }
+
+    /**
      * 设置徽章销毁时的回调事件
      *
      * @param index    Tab的索引
@@ -368,7 +449,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      */
     @Override
     public void setOnDismissListener(int index, final OnDismissBadgeListener listener) {
-        getTabByIndex(index).setDragDismissDelegage(new BGADragDismissDelegate() {
+        getTabByIndex(index).setDragDismissDelegate(new BGADragDismissDelegate() {
             @Override
             public void onDismiss(BGABadgeable badgeable) {
                 if (null != listener) {

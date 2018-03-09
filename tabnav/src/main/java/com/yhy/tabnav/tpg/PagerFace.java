@@ -56,6 +56,20 @@ public interface PagerFace<RT> {
     void getPagerActivity(Context context);
 
     /**
+     * 设置Bundle参数
+     *
+     * @param params Bundle参数
+     */
+    void setParams(Bundle params);
+
+    /**
+     * 获取Bundle参数
+     *
+     * @return Bundle参数
+     */
+    Bundle getParams();
+
+    /**
      * 子类Fragment创建View时调用
      *
      * @param inflater           布局映射器

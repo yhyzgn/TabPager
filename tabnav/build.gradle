@@ -36,14 +36,15 @@ dependencies {
     compile 'com.android.support:design:27.0.2'
     compile 'com.android.support:support-v4:27.0.2'
 
-    compile 'cn.bingoogolapple:bga-badgeview:1.1.3@aar'
+    compile 'cn.bingoogolapple:bga-badgeview-api:1.1.7'
+    annotationProcessor "cn.bingoogolapple:bga-badgeview-compiler:1.1.7"
 }
 
 publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy.widget'
     artifactId = 'tabnav'
-    publishVersion = '1.1.6'
+    publishVersion = '1.1.7'
     desc = 'TabLayout + ViewPager + Fragment, RadioGroup + ViewPager + Fragment. Display different pager according to internet status. And you could custom every pager layout.'
     website = 'https://github.com/yhyzgn/TabPager'
 }

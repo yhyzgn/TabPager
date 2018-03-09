@@ -31,7 +31,8 @@ public class NavPager extends TpgFragment<MainActivity> {
 
     @Override
     public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mArgs = getArguments();
+//        mArgs = getArguments();
+        mArgs = getParams();
         mIsHybrid = mArgs.getBoolean("isHybrid");
         if (mIsHybrid) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.activity_tpg, null);
