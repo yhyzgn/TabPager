@@ -35,6 +35,7 @@ import java.lang.reflect.Field;
  * version: 1.0.0
  * desc   : 用于顶部选项卡布局类型页面
  */
+@SuppressWarnings("unchecked")
 public class TpgView extends LinearLayout implements Tpg {
     //包含了TabLayout和ImageView的布局
     private RelativeLayout rlTab;
@@ -518,16 +519,18 @@ public class TpgView extends LinearLayout implements Tpg {
             tabView = adapter.getCustomTabView(i, adapter.getTab(i));
             if (null != tab && null != tabView) {
                 tab.setCustomView(tabView);
-                tabParent = (View) tab.getCustomView().getParent();
-                if (null != tabParent) {
-                    tabParent = tabView;
-                    tabParent.setTag(i);
-                    tabParent.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            vpContent.setCurrentItem((Integer) v.getTag());
-                        }
-                    });
+                if (null != tab.getCustomView()) {
+                    tabParent = (View) tab.getCustomView().getParent();
+                    if (null != tabParent) {
+                        tabParent = tabView;
+                        tabParent.setTag(i);
+                        tabParent.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                vpContent.setCurrentItem((Integer) v.getTag());
+                            }
+                        });
+                    }
                 }
             }
         }

@@ -148,6 +148,7 @@
   | `nav_scroll_able`        | 是否可滑动                       | `true`       |
   | `nav_badge_text_color`   | 徽章字体颜色                     | `#ffffffff`  |
   | `nav_badge_bg_color`     | 徽章背景颜色                     | `#ffff2200`  |
+  | `nav_badge_drag_enable`  | 徽章是否可拖拽                   | `false`      |
 
 - 页面配置参数（上文提到过）
 

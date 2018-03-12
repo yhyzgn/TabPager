@@ -1,11 +1,12 @@
 package com.yhy.tabpager;
 
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.yhy.tabnav.tpg.PagerFace;
-import com.yhy.tabnav.tpg.Badge;
+import com.yhy.tabnav.tpg.TabBadge;
 import com.yhy.tabpager.pager.NavPager;
 import com.yhy.tabpager.utils.ToastUtils;
 import com.yhy.tabnav.adapter.NavAdapter;
@@ -50,13 +51,14 @@ public class NavActivity extends AppCompatActivity {
         //徽章测试
         bvContent.showCirclePointBadge(0);
         bvContent.showTextBadge(1, "2");
-        bvContent.setOnDismissListener(1, new Badge.OnDismissBadgeListener() {
+        bvContent.setBadgeDragEnable(1, true);
+        bvContent.setOnDismissListener(1, new TabBadge.OnDismissBadgeListener() {
             @Override
             public void onDismiss() {
                 ToastUtils.shortToast("消失了");
             }
         });
-//        bvContent.showDrawableBadge(2, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        bvContent.showDrawableBadge(3, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
 
         //页面切换事件测试
         bvContent.setOnPageChangedListener(new OnPageChangedListener() {

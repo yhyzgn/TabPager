@@ -16,21 +16,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.yhy.badge.Badge;
+import com.yhy.badge.BadgeRadioButton;
+import com.yhy.badge.OnDismissListener;
+import com.yhy.badge.annotation.BadgeViews;
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.tpg.Badge;
 import com.yhy.tabnav.tpg.Pager;
+import com.yhy.tabnav.tpg.TabBadge;
 import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.utils.ViewUtils;
 import com.yhy.tabnav.widget.pager.TpgViewPager;
-
-import cn.bingoogolapple.badgeview.BGABadgeRadioButton;
-import cn.bingoogolapple.badgeview.BGABadgeable;
-import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
-import cn.bingoogolapple.badgeview.annotation.BGABadge;
 
 /**
  * author : 颜洪毅
@@ -39,8 +38,8 @@ import cn.bingoogolapple.badgeview.annotation.BGABadge;
  * version: 1.0.0
  * desc   : 用于底部导航栏布局页面
  */
-@BGABadge(RadioButton.class)
-public class NavView extends RelativeLayout implements Tpg, Badge {
+@BadgeViews(RadioButton.class)
+public class NavView extends RelativeLayout implements Tpg, TabBadge {
     // ViewPager的显示区域
     private FrameLayout flContent;
     // 显示内容的ViewPager
@@ -75,6 +74,8 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
     private int mBadgeBgColor;
     // 徽章字体颜色，默认：#ffffffff
     private int mBadgeTextColor;
+    // 徽章是否可拖拽，默认：false，不可拖拽
+    private boolean mBadgeDragEnable;
 
     public NavView(Context context) {
         this(context, null);
@@ -108,6 +109,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
         mScrollAble = ta.getBoolean(R.styleable.NavView_nav_scroll_able, true);
         mBadgeBgColor = ta.getColor(R.styleable.NavView_nav_badge_bg_color, Color.parseColor("#ffff2200"));
         mBadgeTextColor = ta.getColor(R.styleable.NavView_nav_badge_text_color, Color.WHITE);
+        mBadgeDragEnable = ta.getBoolean(R.styleable.NavView_nav_badge_drag_enable, false);
 
         ta.recycle();
     }
@@ -205,7 +207,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
         //先移除所有的菜单项
         rgTabs.removeAllViews();
         for (int i = 0; i < pageCount; i++) {
-            BGABadgeRadioButton tab = (BGABadgeRadioButton) LayoutInflater.from(getContext()).inflate(R.layout.view_nav_tab, null);
+            BadgeRadioButton tab = (BadgeRadioButton) LayoutInflater.from(getContext()).inflate(R.layout.view_nav_tab, null);
             tab.setLayoutParams(params);
             tab.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(adapter.getTabIconId(i)), null, null);
             tab.setText(adapter.getPageTitle(i));
@@ -213,6 +215,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
             tab.setTag(i);
             tab.getBadgeViewHelper().setBadgeBgColorInt(mBadgeBgColor);
             tab.getBadgeViewHelper().setBadgeTextColorInt(mBadgeTextColor);
+            tab.getBadgeViewHelper().setDragEnable(mBadgeDragEnable);
 
             rgTabs.addView(tab, i);
         }
@@ -387,7 +390,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      * @param color 背景颜色
      */
     public void setBadgeBgColor(int index, int color) {
-        BGABadgeRadioButton tab;
+        BadgeRadioButton tab;
         if (index > -1) {
             tab = getTabByIndex(index);
             if (null != tab) {
@@ -424,7 +427,7 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      * @param color 字体颜色
      */
     public void setBadgeTextColor(int index, int color) {
-        BGABadgeRadioButton tab;
+        BadgeRadioButton tab;
         if (index > -1) {
             tab = getTabByIndex(index);
             if (null != tab) {
@@ -442,6 +445,43 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
     }
 
     /**
+     * 设置徽章是否可滑动
+     * <p>
+     * 作用范围：全部徽章
+     *
+     * @param enable 是否可滑动
+     */
+    public void setBadgeDragEnable(boolean enable) {
+        setBadgeDragEnable(-1, enable);
+    }
+
+    /**
+     * 设置徽章是否可滑动
+     * <p>
+     * 作用范围：指定索引的徽章
+     *
+     * @param index  徽章索引
+     * @param enable 是否可滑动
+     */
+    public void setBadgeDragEnable(int index, boolean enable) {
+        BadgeRadioButton tab;
+        if (index > -1) {
+            tab = getTabByIndex(index);
+            if (null != tab) {
+                tab.getBadgeViewHelper().setDragEnable(enable);
+            }
+        } else {
+            int count = rgTabs.getChildCount();
+            for (int i = 0; i < count; i++) {
+                tab = getTabByIndex(i);
+                if (null != tab) {
+                    tab.getBadgeViewHelper().setDragEnable(enable);
+                }
+            }
+        }
+    }
+
+    /**
      * 设置徽章销毁时的回调事件
      *
      * @param index    Tab的索引
@@ -449,9 +489,9 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      */
     @Override
     public void setOnDismissListener(int index, final OnDismissBadgeListener listener) {
-        getTabByIndex(index).setDragDismissDelegate(new BGADragDismissDelegate() {
+        getTabByIndex(index).setOnDismissListener(new OnDismissListener() {
             @Override
-            public void onDismiss(BGABadgeable badgeable) {
+            public void onDismiss(Badge badge) {
                 if (null != listener) {
                     listener.onDismiss();
                 }
@@ -495,11 +535,11 @@ public class NavView extends RelativeLayout implements Tpg, Badge {
      * @param index 索引
      * @return Tab项
      */
-    private BGABadgeRadioButton getTabByIndex(int index) {
+    private BadgeRadioButton getTabByIndex(int index) {
         int count = rgTabs.getChildCount();
         if (index < 0 || index > count) {
             throw new IllegalArgumentException("The argument index must between 0 and RadioGroup's childCount");
         }
-        return (BGABadgeRadioButton) rgTabs.getChildAt(index);
+        return (BadgeRadioButton) rgTabs.getChildAt(index);
     }
 }

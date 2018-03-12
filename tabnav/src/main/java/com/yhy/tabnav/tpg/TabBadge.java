@@ -2,8 +2,6 @@ package com.yhy.tabnav.tpg;
 
 import android.graphics.Bitmap;
 
-import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
-
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
@@ -11,7 +9,7 @@ import cn.bingoogolapple.badgeview.BGADragDismissDelegate;
  * version: 1.0.0
  * desc   : 徽章控件相关的接口
  */
-public interface Badge {
+public interface TabBadge {
 
     /**
      * 显示圆点徽章

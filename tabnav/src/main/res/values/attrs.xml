@@ -80,5 +80,7 @@
         <attr name="nav_badge_bg_color" format="color" />
         <!--徽章字体颜色，默认：#ffffffff-->
         <attr name="nav_badge_text_color" format="color" />
+        <!--徽章是否可拖拽，默认：false，不可拖拽-->
+        <attr name="nav_badge_drag_enable" format="boolean" />
     </declare-styleable>
 </resources>
