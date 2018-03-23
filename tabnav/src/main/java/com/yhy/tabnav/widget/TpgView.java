@@ -135,7 +135,7 @@ public class TpgView extends LinearLayout implements Tpg {
         mExpandIcon = ta.getResourceId(R.styleable.TpgView_expand_icon, R.mipmap.ic_expand);
         mScrollAble = ta.getBoolean(R.styleable.TpgView_tab_scroll_able, true);
         mTabBackgroundResId = ta.getResourceId(R.styleable.TpgView_tab_background, -1);
-        mNavDividerLineColor = ta.getColor(R.styleable.NavView_nav_divider_line_color, Color.TRANSPARENT);
+        mNavDividerLineColor = ta.getColor(R.styleable.TpgView_tab_divider_line_color, Color.TRANSPARENT);
 
         ta.recycle();
     }

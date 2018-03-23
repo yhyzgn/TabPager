@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         app:expand_visible="visible"
         app:tab_background="@drawable/tab_background_selector"
+        app:tab_divider_line_color="#f20"
         app:text_color="#666"
         app:text_size="16sp"
         app:text_text="请选择："

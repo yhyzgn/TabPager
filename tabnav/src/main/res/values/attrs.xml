@@ -53,7 +53,7 @@
         <!--是否可滑动-->
         <attr name="tab_scroll_able" format="boolean" />
         <!--菜单栏与内容页面之间的分割线颜色，默认为：透明，不显示-->
-        <attr name="tab_divider_line_color" format="reference" />
+        <attr name="tab_divider_line_color" format="reference|color" />
     </declare-styleable>
 
     <!--底部导航栏自定义属性-->
@@ -73,13 +73,13 @@
         <!--导航栏选中时背景，默认为：null-->
         <attr name="nav_bg_checked_img" format="reference" />
         <!--导航栏与内容页面之间的分割线颜色，默认为：透明，不显示-->
-        <attr name="nav_divider_line_color" format="reference" />
+        <attr name="nav_divider_line_color" format="reference|color" />
         <!--是否可滑动，默认：true，可滑动-->
         <attr name="nav_scroll_able" format="boolean" />
         <!--徽章背景颜色，默认：#ffff2200-->
-        <attr name="nav_badge_bg_color" format="color" />
+        <attr name="nav_badge_bg_color" format="reference|color" />
         <!--徽章字体颜色，默认：#ffffffff-->
-        <attr name="nav_badge_text_color" format="color" />
+        <attr name="nav_badge_text_color" format="reference|color" />
         <!--徽章是否可拖拽，默认：false，不可拖拽-->
         <attr name="nav_badge_drag_enable" format="boolean" />
     </declare-styleable>
