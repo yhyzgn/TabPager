@@ -26,17 +26,17 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 
-    compile 'com.android.support:appcompat-v7:27.1.0'
-    compile 'com.android.support:design:27.1.0'
-    compile 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:support-v4:27.1.0'
 
-    compile 'com.yhy.widget:badge:1.0.0'
+    implementation 'com.yhy.widget:badge:1.0.0'
     annotationProcessor 'com.yhy.widget:badge-compiler:1.0.0'
 }
 
@@ -44,7 +44,7 @@ publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy.widget'
     artifactId = 'tabnav'
-    publishVersion = '1.1.10'
+    publishVersion = '1.1.11'
     desc = 'TabLayout + ViewPager + Fragment, RadioGroup + ViewPager + Fragment. Display different pager according to internet status. And you could custom every pager layout.'
     website = 'https://github.com/yhyzgn/TabPager'
 }
