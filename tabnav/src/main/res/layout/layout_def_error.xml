@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="哎呀，出错啦，点击屏幕重试"
-        android:textColor="@color/tab_def_pager_text_color"
+        android:textColor="@color/tab_def_pager_primary_color"
         android:textSize="14sp" />
 
 </RelativeLayout>
