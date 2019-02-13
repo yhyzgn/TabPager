@@ -1,0 +1,26 @@
+ext {
+    pkg = [
+            groupId   : 'com.yhy.widget',
+            artifactId: 'tabnav',
+            version   : '1.1.11',
+            desc      : 'TabLayout + ViewPager + Fragment, RadioGroup + ViewPager + Fragment. Display different pager according to internet status. And you could custom every pager layout.'
+    ]
+
+    developer = [
+            id   : 'yhyzgn',
+            name : 'yhyzgn',
+            email: 'yhyzgn@gmail.com'
+    ]
+
+    user = [
+            org: 'yhyzgn'
+    ]
+
+    cvs = [
+            url: 'https://github.com/yhyzgn/TabPager'
+    ]
+
+    doc = [
+            title: 'TabViewPagerLayout'
+    ]
+}

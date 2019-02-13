@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -32,9 +31,9 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
 
     implementation 'com.yhy.widget:badge:1.0.0'
     annotationProcessor 'com.yhy.widget:badge-compiler:1.0.0'
@@ -42,11 +41,4 @@ dependencies {
     implementation 'com.wang.avi:library:2.1.3'
 }
 
-publish {
-    userOrg = 'yhyzgn'
-    groupId = 'com.yhy.widget'
-    artifactId = 'tabnav'
-    publishVersion = '1.1.11'
-    desc = 'TabLayout + ViewPager + Fragment, RadioGroup + ViewPager + Fragment. Display different pager according to internet status. And you could custom every pager layout.'
-    website = 'https://github.com/yhyzgn/TabPager'
-}
+apply from: 'bintray.gradle'
