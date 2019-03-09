@@ -1,5 +1,6 @@
 package com.yhy.tabnav.dispatch;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,10 @@ import android.widget.FrameLayout;
 
 import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.global.TpgConst;
+import com.yhy.tabnav.interceptor.EmptyInterceptor;
+import com.yhy.tabnav.interceptor.ErrorInterceptor;
+import com.yhy.tabnav.interceptor.LoadingInterceptor;
+import com.yhy.tabnav.interceptor.SuccessInterceptor;
 
 /**
  * author : 颜洪毅
@@ -35,6 +40,15 @@ public abstract class DispatchLoading extends FrameLayout {
     //成功页面
     private View mSuccessView;
 
+    // 加载中拦截器
+    private LoadingInterceptor mLoadingInterceptor;
+    // 空数据拦截器
+    private EmptyInterceptor mEmptyInterceptor;
+    // 错误拦截器
+    private ErrorInterceptor mErrorInterceptor;
+    // 成功拦截器
+    private SuccessInterceptor mSuccessInterceptor;
+
     //当前页面的状态
     private int mCurrentState;
 
@@ -54,6 +68,7 @@ public abstract class DispatchLoading extends FrameLayout {
     /**
      * 初始化
      */
+    @SuppressLint("HandlerLeak")
     private void init() {
         //初始化数据
         mHandler = new Handler() {
@@ -72,11 +87,25 @@ public abstract class DispatchLoading extends FrameLayout {
         //创建结果集Handler
         mResultHandler = new ResultHandler(mHandler);
 
+        // 获取拦截器
+        if (null == mLoadingInterceptor) {
+            mLoadingInterceptor = getLoadingInterceptor();
+        }
+        if (null == mEmptyInterceptor) {
+            mEmptyInterceptor = getEmptyInterceptor();
+        }
+        if (null == mErrorInterceptor) {
+            mErrorInterceptor = getErrorInterceptor();
+        }
+        if (null == mSuccessInterceptor) {
+            mSuccessInterceptor = getSuccessInterceptor();
+        }
+
         //获取具体页面
         if (null == mLoadingView) {
             mLoadingView = getLoadingView();
             addView(mLoadingView);
-            mLoadingView.setVisibility(VISIBLE);
+            mLoadingView.setVisibility(mLoadingInterceptor.processAhead() ? VISIBLE : GONE);
         }
         if (null == mErrorView) {
             mErrorView = getErrorView();
@@ -97,6 +126,34 @@ public abstract class DispatchLoading extends FrameLayout {
         //当前状态为默认状态
         mCurrentState = TpgConst.LoadingStatus.STATE_DEFAULT;
     }
+
+    /**
+     * 获取加载中拦截器
+     *
+     * @return 加载中拦截器
+     */
+    protected abstract LoadingInterceptor getLoadingInterceptor();
+
+    /**
+     * 获取空数据拦截器
+     *
+     * @return 空数据拦截器
+     */
+    protected abstract EmptyInterceptor getEmptyInterceptor();
+
+    /**
+     * 获取错误拦截器
+     *
+     * @return 错误拦截器
+     */
+    protected abstract ErrorInterceptor getErrorInterceptor();
+
+    /**
+     * 获取成功拦截器
+     *
+     * @return 成功拦截器
+     */
+    protected abstract SuccessInterceptor getSuccessInterceptor();
 
     /**
      * 获取到成功页面
@@ -148,18 +205,33 @@ public abstract class DispatchLoading extends FrameLayout {
      * 更新UI
      */
     private void updateUI() {
+        // 加载中
         if (null != mLoadingView) {
-            mLoadingView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_LOADING ? VISIBLE : GONE);
+            mLoadingView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_LOADING && mLoadingInterceptor.processAhead() ? VISIBLE : GONE);
         }
-        if (null != mErrorView) {
-            mErrorView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_ERROR ? VISIBLE : GONE);
+        if (null != mLoadingView) {
+            mEmptyView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_EMPTY && mEmptyInterceptor.processAhead() ? VISIBLE : GONE);
         }
-        if (null != mEmptyView) {
-            mEmptyView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_EMPTY ? VISIBLE : GONE);
+        if (null != mLoadingView) {
+            mErrorView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_ERROR && mErrorInterceptor.processAhead() ? VISIBLE : GONE);
         }
-        if (null != mSuccessView) {
-            mSuccessView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_SUCCESS ? VISIBLE : GONE);
+        if (null != mLoadingView) {
+            mSuccessView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_SUCCESS && mSuccessInterceptor.processAhead() ? VISIBLE : GONE);
         }
+
+        // 加上拦截器后，改用以上方法切换页面
+//        if (null != mLoadingView) {
+//            mLoadingView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_LOADING ? VISIBLE : GONE);
+//        }
+//        if (null != mErrorView) {
+//            mErrorView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_ERROR ? VISIBLE : GONE);
+//        }
+//        if (null != mEmptyView) {
+//            mEmptyView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_EMPTY ? VISIBLE : GONE);
+//        }
+//        if (null != mSuccessView) {
+//            mSuccessView.setVisibility(mCurrentState == TpgConst.LoadingStatus.STATE_SUCCESS ? VISIBLE : GONE);
+//        }
     }
 
     /**

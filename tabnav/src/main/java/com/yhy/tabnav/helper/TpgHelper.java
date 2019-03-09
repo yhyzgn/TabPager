@@ -12,6 +12,10 @@ import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.dispatch.DispatchLoading;
 import com.yhy.tabnav.global.TpgConst;
 import com.yhy.tabnav.handler.ResultHandler;
+import com.yhy.tabnav.interceptor.EmptyInterceptor;
+import com.yhy.tabnav.interceptor.ErrorInterceptor;
+import com.yhy.tabnav.interceptor.LoadingInterceptor;
+import com.yhy.tabnav.interceptor.SuccessInterceptor;
 import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.utils.ViewUtils;
 
@@ -107,6 +111,26 @@ public class TpgHelper<RT> {
             //创建mDispatch对象，实现其抽象方法，并回调页面中相应的抽象方法
             mDispatch = new DispatchLoading(mActivity) {
                 @Override
+                protected LoadingInterceptor getLoadingInterceptor() {
+                    return face.getLoadingInterceptor();
+                }
+
+                @Override
+                protected EmptyInterceptor getEmptyInterceptor() {
+                    return face.getEmptyInterceptor();
+                }
+
+                @Override
+                protected ErrorInterceptor getErrorInterceptor() {
+                    return face.getErrorInterceptor();
+                }
+
+                @Override
+                protected SuccessInterceptor getSuccessInterceptor() {
+                    return face.getSuccessInterceptor();
+                }
+
+                @Override
                 public View getSuccessView() {
                     return face.getSuccessView(inflater, container, savedInstanceState);
                 }
@@ -143,6 +167,62 @@ public class TpgHelper<RT> {
     }
 
     /**
+     * 获取加载中拦截器
+     *
+     * @return 加载中拦截器
+     */
+    public LoadingInterceptor getLoadingInterceptor() {
+        return null != mConfig && null != mConfig.getLoadingInterceptor() ? mConfig.getLoadingInterceptor() : new LoadingInterceptor() {
+            @Override
+            public boolean processAhead() {
+                return true;
+            }
+        };
+    }
+
+    /**
+     * 获取空数据拦截器
+     *
+     * @return 空数据拦截器
+     */
+    public EmptyInterceptor getEmptyInterceptor() {
+        return null != mConfig && null != mConfig.getLoadingInterceptor() ? mConfig.getEmptyInterceptor() : new EmptyInterceptor() {
+            @Override
+            public boolean processAhead() {
+                return true;
+            }
+        };
+    }
+
+    /**
+     * 获取错误拦截器
+     *
+     * @return 错误拦截器
+     */
+    public ErrorInterceptor getErrorInterceptor() {
+        return null != mConfig && null != mConfig.getLoadingInterceptor() ? mConfig.getErrorInterceptor() : new ErrorInterceptor() {
+            @Override
+            public boolean processAhead() {
+                return true;
+            }
+        };
+    }
+
+    /**
+     * 获取成功拦截器
+     *
+     * @return 成功拦截器
+     */
+    public SuccessInterceptor getSuccessInterceptor() {
+        return null != mConfig && null != mConfig.getLoadingInterceptor() ? mConfig.getSuccessInterceptor() : new SuccessInterceptor() {
+            @Override
+            public boolean processAhead() {
+                return true;
+            }
+        };
+    }
+
+    /**
      * 获取[加载中]页面
      *
      * @param inflater           布局映射器
@@ -157,8 +237,7 @@ public class TpgHelper<RT> {
                 return inflater.inflate(loadingViewResId, container, false);
             }
         }
-        View loadingView = inflater.inflate(R.layout.layout_def_loading, container, false);
-        return loadingView;
+        return inflater.inflate(R.layout.layout_def_loading, container, false);
     }
 
     /**

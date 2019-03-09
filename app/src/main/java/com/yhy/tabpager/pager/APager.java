@@ -9,12 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yhy.tabnav.interceptor.LoadingInterceptor;
 import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabpager.utils.ToastUtils;
 
 import java.util.Random;
 
 public class APager extends TpgFragment {
+
+    @Override
+    public LoadingInterceptor getLoadingInterceptor() {
+        return new LoadingInterceptor() {
+            @Override
+            public boolean processAhead() {
+                ToastUtils.longToast("APager加载中");
+                return true;
+            }
+        };
+    }
 
     @Override
     public View getSuccessView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

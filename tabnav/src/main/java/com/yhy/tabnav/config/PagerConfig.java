@@ -1,6 +1,10 @@
 package com.yhy.tabnav.config;
 
 import com.yhy.tabnav.global.TpgConst;
+import com.yhy.tabnav.interceptor.EmptyInterceptor;
+import com.yhy.tabnav.interceptor.ErrorInterceptor;
+import com.yhy.tabnav.interceptor.LoadingInterceptor;
+import com.yhy.tabnav.interceptor.SuccessInterceptor;
 
 /**
  * author : 颜洪毅
@@ -11,14 +15,16 @@ import com.yhy.tabnav.global.TpgConst;
  */
 public class PagerConfig {
     private int mLoadingViewLayoutId;
-
     private int mErrorViewLayoutId;
-
     private int mErrorViewRetryResId;
-
     private int mEmptyViewLayoutId;
-
     private int mEmptyViewRetryResId;
+
+    // 各种拦截器
+    private LoadingInterceptor mLoadingInterceptor;
+    private EmptyInterceptor mEmptyInterceptor;
+    private ErrorInterceptor mErrorInterceptor;
+    private SuccessInterceptor mSuccessInterceptor;
 
     /**
      * 创建页面配置对象
@@ -112,5 +118,85 @@ public class PagerConfig {
      */
     public int getEmptyViewRetryResId() {
         return mEmptyViewRetryResId;
+    }
+
+    /**
+     * 设置加载中拦截器
+     *
+     * @param interceptor 加载中拦截器
+     * @return 当前对象，便于链式编程
+     */
+    public PagerConfig setLoadingInterceptor(LoadingInterceptor interceptor) {
+        mLoadingInterceptor = interceptor;
+        return this;
+    }
+
+    /**
+     * 获取加载中拦截器
+     *
+     * @return 加载中拦截器
+     */
+    public LoadingInterceptor getLoadingInterceptor() {
+        return mLoadingInterceptor;
+    }
+
+    /**
+     * 设置空数据拦截器
+     *
+     * @param interceptor 空数据拦截器
+     * @return 当前对象，便于链式编程
+     */
+    public PagerConfig setEmptyInterceptor(EmptyInterceptor interceptor) {
+        mEmptyInterceptor = interceptor;
+        return this;
+    }
+
+    /**
+     * 获取空数据拦截器
+     *
+     * @return 空数据拦截器
+     */
+    public EmptyInterceptor getEmptyInterceptor() {
+        return mEmptyInterceptor;
+    }
+
+    /**
+     * 设置错误拦截器
+     *
+     * @param interceptor 错误拦截器
+     * @return 当前对象，便于链式编程
+     */
+    public PagerConfig setErrorInterceptor(ErrorInterceptor interceptor) {
+        mErrorInterceptor = interceptor;
+        return this;
+    }
+
+    /**
+     * 获取错误拦截器
+     *
+     * @return 错误拦截器
+     */
+    public ErrorInterceptor getErrorInterceptor() {
+        return mErrorInterceptor;
+    }
+
+    /**
+     * 设置成功拦截器
+     *
+     * @param interceptor 成功拦截器
+     * @return 当前对象，便于链式编程
+     */
+    public PagerConfig setSuccessInterceptor(SuccessInterceptor interceptor) {
+        mSuccessInterceptor = interceptor;
+        return this;
+    }
+
+    /**
+     * 获取成功拦截器
+     *
+     * @return 成功拦截器
+     */
+    public SuccessInterceptor getSuccessInterceptor() {
+        return mSuccessInterceptor;
     }
 }

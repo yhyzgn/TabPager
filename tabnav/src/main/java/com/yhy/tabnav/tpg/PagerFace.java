@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.handler.ResultHandler;
+import com.yhy.tabnav.interceptor.EmptyInterceptor;
+import com.yhy.tabnav.interceptor.ErrorInterceptor;
+import com.yhy.tabnav.interceptor.LoadingInterceptor;
+import com.yhy.tabnav.interceptor.SuccessInterceptor;
 
 /**
  * author : 颜洪毅
@@ -85,6 +89,34 @@ public interface PagerFace<RT> {
      * @param isVisible 是否显示
      */
     void onPagerVisible(boolean isVisible);
+
+    /**
+     * 获取加载中拦截器
+     *
+     * @return 加载中拦截器
+     */
+    LoadingInterceptor getLoadingInterceptor();
+
+    /**
+     * 获取空数据拦截器
+     *
+     * @return 空数据拦截器
+     */
+    EmptyInterceptor getEmptyInterceptor();
+
+    /**
+     * 获取错误拦截器
+     *
+     * @return 错误拦截器
+     */
+    ErrorInterceptor getErrorInterceptor();
+
+    /**
+     * 获取成功拦截器
+     *
+     * @return 成功拦截器
+     */
+    SuccessInterceptor getSuccessInterceptor();
 
     /**
      * 获取[记载中]显示的View

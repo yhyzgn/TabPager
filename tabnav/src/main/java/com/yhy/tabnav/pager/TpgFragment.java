@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.helper.TpgHelper;
+import com.yhy.tabnav.interceptor.EmptyInterceptor;
+import com.yhy.tabnav.interceptor.ErrorInterceptor;
+import com.yhy.tabnav.interceptor.LoadingInterceptor;
+import com.yhy.tabnav.interceptor.SuccessInterceptor;
 import com.yhy.tabnav.tpg.PagerFace;
 
 /**
@@ -179,6 +183,46 @@ public abstract class TpgFragment<RT> extends Fragment implements PagerFace<RT> 
         if (isVisible) {
             shouldLoadData();
         }
+    }
+
+    /**
+     * PagerFace接口方法--获取加载中拦截器
+     *
+     * @return 加载中拦截器
+     */
+    @Override
+    public LoadingInterceptor getLoadingInterceptor() {
+        return mHelper.getLoadingInterceptor();
+    }
+
+    /**
+     * PagerFace接口方法--获取空数据拦截器
+     *
+     * @return 空数据拦截器
+     */
+    @Override
+    public EmptyInterceptor getEmptyInterceptor() {
+        return mHelper.getEmptyInterceptor();
+    }
+
+    /**
+     * PagerFace接口方法--获取错误拦截器
+     *
+     * @return 错误拦截器
+     */
+    @Override
+    public ErrorInterceptor getErrorInterceptor() {
+        return mHelper.getErrorInterceptor();
+    }
+
+    /**
+     * PagerFace接口方法--获取成功拦截器
+     *
+     * @return 成功拦截器
+     */
+    @Override
+    public SuccessInterceptor getSuccessInterceptor() {
+        return mHelper.getSuccessInterceptor();
     }
 
     /**
