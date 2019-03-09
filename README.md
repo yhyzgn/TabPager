@@ -1,6 +1,6 @@
 # `TabPager`
 
-![jCenter](https://img.shields.io/badge/jCenter-1.1.10-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
+![jCenter](https://img.shields.io/badge/jCenter-1.2.0-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-TabLayout+ViewPager-brightgreen.svg) ![Fragment](https://img.shields.io/badge/Fragment-RadioGroup+ViewPager-brightgreen.svg)
 
 > `TabPager`不仅集成了`TabLayout`和`ViewPager`为顶部选项卡页面，也集成了`RadioGroup`和`ViewPager`为底部导航栏页面，还封装了根据具体页面根据不同的加载状态而显示不同页面的功能，也可以自定义这些页面和其他一些属性。如果某个页面加载数据不成功，切换到其他页面再回来时，框架会自动调用重试加载功能；如果加载成功了，则不再重试加载。
 
@@ -54,6 +54,64 @@ tpgView.setAdapter(mAdapter);
 ---
 
 ### 5. 更新日志
+
+* 1.2.0
+
+  > 添加页面切换前的拦截器，用来执行切换前的一些操作。如有些【加载中】页面并不是状态管理页面，而是弹窗提示，此时只需要设置【加载中拦截器】，并最后返回`false`即可阻止切换到原来的【加载中】页面
+
+  > 共有两种配置方式
+
+  * 全局级别配置
+
+    > 对**单一**的`TpgView`或者`NavView`有效
+
+    ```java
+    PagerConfig config = new PagerConfig();
+    // 设置加载中拦截器
+    config.setLoadingInterceptor(new LoadingInterceptor() {
+        public boolean processAhead() {
+            ...
+            // 返回false，表示不再继续切换到原来的加载中页面
+            return false;
+        }
+    });
+    // 同理设置： 空数据拦截器，错误拦截器，成功拦截器
+    config.setEmptyInterceptor(...);
+    config.setErrorInterceptor(...);
+    config.setSuccessInterceptor(...);
+    ```
+
+  * 页面级别配置
+
+    > 需要对每个`TpgFragment`页面进行配置，重写页面方法即可。
+
+    ```java
+    public class InterceptorPager extends TpgFragment<RT> {
+        
+        // 设置该页面专用的加载中拦截器
+        public LoadingInterceptor getLoadingInterceptor() {
+            ...
+            // 返回false，表示不再继续切换到原来的加载中页面
+            return false;
+        }
+        
+        // 空数据拦截器
+        public EmptyInterceptor getEmptyInterceptor() {
+            // 返回true，表示继续切换到原来的空数据页面
+            return true;
+        }
+        
+        // 错误拦截器
+        public ErrorInterceptor getErrorInterceptor() {
+            return false;
+        }
+        
+        // 成功拦截器
+        public SuccessInterceptor getSuccessInterceptor() {
+            return true;
+        }
+    }
+    ```
 
 * 1.1.10
 
