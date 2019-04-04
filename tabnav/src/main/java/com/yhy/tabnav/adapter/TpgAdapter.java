@@ -1,6 +1,5 @@
 package com.yhy.tabnav.adapter;
 
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.yhy.tabnav.adapter.base.BasePagerAdapter;
@@ -8,6 +7,8 @@ import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.widget.TpgView;
 
 import java.util.List;
+
+import androidx.fragment.app.FragmentManager;
 
 /**
  * author : 颜洪毅

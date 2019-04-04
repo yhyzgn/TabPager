@@ -1,14 +1,15 @@
 package com.yhy.tabnav.adapter.base;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import com.yhy.tabnav.cache.PagerCache;
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.tpg.Tpg;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 /**
  * author : 颜洪毅

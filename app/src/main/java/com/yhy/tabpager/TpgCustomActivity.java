@@ -1,8 +1,6 @@
 package com.yhy.tabpager;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +13,9 @@ import com.yhy.tabnav.widget.TpgView;
 import com.yhy.tabpager.pager.factory.PagerFactory;
 
 import java.util.Arrays;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class TpgCustomActivity extends AppCompatActivity {
     private static final String[] TABS = {"菜单A", "菜单B菜单B菜单B", "菜单C"};

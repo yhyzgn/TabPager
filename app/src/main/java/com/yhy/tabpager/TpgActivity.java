@@ -1,18 +1,19 @@
 package com.yhy.tabpager;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.yhy.tabnav.tpg.PagerFace;
-import com.yhy.tabpager.pager.factory.PagerFactory;
 import com.yhy.tabnav.adapter.TpgAdapter;
-import com.yhy.tabnav.listener.OnPageChangedListener;
 import com.yhy.tabnav.config.PagerConfig;
+import com.yhy.tabnav.listener.OnPageChangedListener;
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.widget.TpgView;
+import com.yhy.tabpager.pager.factory.PagerFactory;
 
 import java.util.Arrays;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class TpgActivity extends AppCompatActivity {
     private static final String[] TABS = {"菜单A", "菜单B菜单B菜单B", "菜单C"};

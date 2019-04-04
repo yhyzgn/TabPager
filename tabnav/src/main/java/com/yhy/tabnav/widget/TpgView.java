@@ -3,10 +3,6 @@ package com.yhy.tabnav.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.yhy.tabnav.R;
 import com.yhy.tabnav.adapter.TpgAdapter;
 import com.yhy.tabnav.listener.OnPageChangedListener;
@@ -27,6 +24,10 @@ import com.yhy.tabnav.utils.ViewUtils;
 import com.yhy.tabnav.widget.pager.TpgViewPager;
 
 import java.lang.reflect.Field;
+
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.view.ViewCompat;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * author : 颜洪毅

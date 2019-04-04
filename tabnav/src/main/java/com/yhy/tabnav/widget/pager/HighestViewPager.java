@@ -1,13 +1,14 @@
 package com.yhy.tabnav.widget.pager;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.yhy.tabnav.helper.PagerHelper;
 import com.yhy.tabnav.tpg.Pager;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * author : 颜洪毅

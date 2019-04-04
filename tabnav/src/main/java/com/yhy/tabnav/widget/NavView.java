@@ -5,8 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.IdRes;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +28,9 @@ import com.yhy.tabnav.tpg.Tpg;
 import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.utils.ViewUtils;
 import com.yhy.tabnav.widget.pager.TpgViewPager;
+
+import androidx.annotation.IdRes;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * author : 颜洪毅

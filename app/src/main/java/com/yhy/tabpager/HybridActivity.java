@@ -1,19 +1,20 @@
 package com.yhy.tabpager;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.yhy.tabnav.tpg.PagerFace;
-import com.yhy.tabpager.pager.NavPager;
 import com.yhy.tabnav.adapter.NavAdapter;
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.entity.NavTab;
 import com.yhy.tabnav.listener.OnPageChangedListener;
+import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.widget.NavView;
+import com.yhy.tabpager.pager.NavPager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class HybridActivity extends AppCompatActivity {
 

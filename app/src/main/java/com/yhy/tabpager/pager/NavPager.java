@@ -3,24 +3,25 @@ package com.yhy.tabpager.pager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yhy.tabnav.adapter.TpgAdapter;
+import com.yhy.tabnav.listener.OnPageChangedListener;
 import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabnav.tpg.PagerFace;
+import com.yhy.tabnav.widget.TpgView;
 import com.yhy.tabpager.MainActivity;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.utils.ToastUtils;
-import com.yhy.tabnav.adapter.TpgAdapter;
-import com.yhy.tabnav.listener.OnPageChangedListener;
-import com.yhy.tabnav.widget.TpgView;
 
 import java.util.Arrays;
 import java.util.Random;
+
+import androidx.fragment.app.FragmentManager;
 
 public class NavPager extends TpgFragment<MainActivity> {
     private static final String[] TABS = {"菜单A", "菜单B", "菜单C"};

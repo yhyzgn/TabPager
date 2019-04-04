@@ -2,17 +2,17 @@ package com.yhy.tabnav.tpg;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.yhy.tabnav.config.PagerConfig;
-import com.yhy.tabnav.handler.ResultHandler;
 import com.yhy.tabnav.interceptor.EmptyInterceptor;
 import com.yhy.tabnav.interceptor.ErrorInterceptor;
 import com.yhy.tabnav.interceptor.LoadingInterceptor;
 import com.yhy.tabnav.interceptor.SuccessInterceptor;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * author : 颜洪毅
