@@ -1,12 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
-}
-
 android {
     compileSdkVersion 31
 
@@ -66,7 +60,7 @@ afterEvaluate {
                 artifactId = "TabPager"
 
                 // Adds javadocs and sources as separate jars.
-                artifact androidJavadocsJar
+//                artifact androidJavadocsJar
                 artifact(sourceJar)
 
                 pom {
@@ -96,21 +90,31 @@ afterEvaluate {
     }
 }
 
-task androidJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    android.libraryVariants.all { variant ->
-        if (variant.name == 'release') {
-            owner.classpath += variant.javaCompileProvider.get().classpath
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', "$buildDir/generated/ap_generated_sources/release/out"]
         }
     }
-    exclude '**/R.html', '**/R.*.html', '**/index.html'
 }
 
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    archiveClassifier.set('javadoc')
-    from androidJavadocs.destinationDir
-}
+//task androidJavadocs(type: Javadoc) {
+//    println("$buildDir")
+//
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//    android.libraryVariants.all { variant ->
+//        if (variant.name == 'release') {
+//            owner.classpath += variant.javaCompileProvider.get().classpath
+//        }
+//    }
+//    exclude '**/R.html', '**/R.*.html', '**/index.html'
+//}
+//
+//task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+//    archiveClassifier.set('javadoc')
+//    from androidJavadocs.destinationDir
+//}
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
