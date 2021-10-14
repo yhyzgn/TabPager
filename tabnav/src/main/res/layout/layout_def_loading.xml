@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:gravity="center"
-    android:orientation="horizontal">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        style="@style/AVLoadingIndicatorView.Small"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:indicatorColor="@color/tab_def_pager_primary_color"
-        app:indicatorName="PacmanIndicator" />
+    <com.yhy.widget.core.loading.LoadingView
+            style="@style/LoadingView.Small"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:indicator_color="@color/tab_def_pager_primary_color"
+            app:indicator_name="PacmanIndicator" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:text="正在加载..."
-        android:textColor="@color/tab_def_pager_primary_color"
-        android:textSize="14sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="正在加载..."
+            android:textColor="@color/tab_def_pager_primary_color"
+            android:textSize="14sp" />
 </LinearLayout>
