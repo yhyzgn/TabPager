@@ -319,16 +319,15 @@ public class TpgView extends LinearLayout implements Tpg {
             for (int i = 0; i < tlTabs.getTabCount(); i++) {
                 try {
                     tab = tlTabs.getTabAt(i);
-                    tabViewField = tab.getClass().getDeclaredField("mView");
+                    assert tab != null;
+                    tabViewField = tab.getClass().getDeclaredField("view");
                     tabViewField.setAccessible(true);
                     tabObj = tabViewField.get(tab);
-                    if (null != tabObj && tabObj instanceof View) {
+                    if (tabObj instanceof View) {
                         tabView = (View) tabObj;
                         ViewCompat.setBackground(tabView, AppCompatResources.getDrawable(getContext(), mTabBackgroundResId));
                     }
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                } catch (NoSuchFieldException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
