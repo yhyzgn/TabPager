@@ -44,10 +44,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.5.0-alpha04'
 
+    api 'com.github.ybq:Android-SpinKit:1.4.0'
+
     api 'com.github.yhyzgn.Badge:badge:1.0.2'
     annotationProcessor 'com.github.yhyzgn.Badge:badge-compiler:1.0.2'
-
-    implementation 'com.github.yhyzgn:Widgets:1.0.0'
 }
 
 afterEvaluate {

@@ -7,18 +7,10 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-    <com.yhy.widget.core.loading.LoadingView
-            style="@style/LoadingView.Small"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:indicator_color="@color/tab_def_pager_primary_color"
-            app:indicator_name="PacmanIndicator" />
-
-    <TextView
+    <com.github.ybq.android.spinkit.SpinKitView
+            style="@style/SpinKitView.Large.ThreeBounce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="正在加载..."
-            android:textColor="@color/tab_def_pager_primary_color"
-            android:textSize="14sp" />
+            android:layout_gravity="center"
+            app:SpinKit_Color="collor"/>
 </LinearLayout>
