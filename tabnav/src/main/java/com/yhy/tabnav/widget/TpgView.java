@@ -23,10 +23,8 @@ import com.yhy.tabnav.utils.DensityUtils;
 import com.yhy.tabnav.utils.ViewUtils;
 import com.yhy.tabnav.widget.pager.TpgViewPager;
 
-import java.lang.reflect.Field;
-
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.view.ViewCompat;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.viewpager.widget.ViewPager;
 
 /**
@@ -184,7 +182,7 @@ public class TpgView extends LinearLayout implements Tpg {
         //设置自定义属性值到相应控件上
         //设置整个Tab栏的高度和背景颜色
         setTabHeight((int) DensityUtils.px2dp(getContext(), mTabHeight));
-        setTabBgColor(mTabBgColor);
+        setTabBackgroundColor(mTabBgColor);
 
         //设置TabLayout的字体颜色、TabMode和TabGravity
         setTabTextColor(mTabTextNormalColor, mTabTextSelectedColor);
@@ -238,7 +236,7 @@ public class TpgView extends LinearLayout implements Tpg {
      *
      * @param color Tab栏背景颜色值
      */
-    public void setTabBgColor(int color) {
+    public void setTabBackgroundColor(@ColorInt int color) {
         mTabBgColor = color;
         rlTab.setBackgroundColor(color);
     }
@@ -248,7 +246,7 @@ public class TpgView extends LinearLayout implements Tpg {
      *
      * @param resId Tab栏背景颜色资源id
      */
-    public void setTabBgColorResId(int resId) {
+    public void setTabBackgroundColorResId(@ColorRes int resId) {
         rlTab.setBackgroundColor(getContext().getResources().getColor(resId));
     }
 
@@ -309,26 +307,14 @@ public class TpgView extends LinearLayout implements Tpg {
      *
      * @param resId 背景图资源id
      */
-    public void setTabBackground(int resId) {
+    public void setTabBackgroundDrawable(int resId) {
         mTabBackgroundResId = resId;
         if (mTabBackgroundResId > 0) {
-            Field tabViewField;
             TabLayout.Tab tab;
-            Object tabObj;
-            View tabView;
             for (int i = 0; i < tlTabs.getTabCount(); i++) {
-                try {
-                    tab = tlTabs.getTabAt(i);
-                    assert tab != null;
-                    tabViewField = tab.getClass().getDeclaredField("view");
-                    tabViewField.setAccessible(true);
-                    tabObj = tabViewField.get(tab);
-                    if (tabObj instanceof View) {
-                        tabView = (View) tabObj;
-                        ViewCompat.setBackground(tabView, AppCompatResources.getDrawable(getContext(), mTabBackgroundResId));
-                    }
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    e.printStackTrace();
+                tab = tlTabs.getTabAt(i);
+                if (null != tab) {
+                    tab.view.setBackgroundResource(mTabBackgroundResId);
                 }
             }
         }
@@ -484,7 +470,7 @@ public class TpgView extends LinearLayout implements Tpg {
      *
      * @param adapter ViewPager的适配器
      */
-    public void setAdapter(TpgAdapter adapter) {
+    public <T> void setAdapter(TpgAdapter<T> adapter) {
         if (null == adapter) {
             throw new RuntimeException("The adapter of TpgView can not be null");
         }
@@ -493,7 +479,7 @@ public class TpgView extends LinearLayout implements Tpg {
         vpContent.setAdapter(adapter);
         tlTabs.setupWithViewPager(vpContent);
         // 设置tab背景图
-        setTabBackground(mTabBackgroundResId);
+        setTabBackgroundDrawable(mTabBackgroundResId);
         // 设置自定义tab
         setCustomTabView(adapter);
 
@@ -501,7 +487,6 @@ public class TpgView extends LinearLayout implements Tpg {
         initPagerListener();
 
         //绑定适配器与TpgView，为了在适配器中能获取到TpgView中的某些数据，比如当前页面
-        //noinspection unchecked
         adapter.bindTpgView(this);
     }
 
@@ -510,7 +495,7 @@ public class TpgView extends LinearLayout implements Tpg {
      *
      * @param adapter 适配器
      */
-    private void setCustomTabView(TpgAdapter adapter) {
+    private <T> void setCustomTabView(TpgAdapter<T> adapter) {
         TabLayout.Tab tab;
         View tabView;
         View tabParent;
@@ -524,12 +509,7 @@ public class TpgView extends LinearLayout implements Tpg {
                     if (null != tabParent) {
                         tabParent = tabView;
                         tabParent.setTag(i);
-                        tabParent.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                vpContent.setCurrentItem((Integer) v.getTag());
-                            }
-                        });
+                        tabParent.setOnClickListener(v -> vpContent.setCurrentItem((Integer) v.getTag()));
                     }
                 }
             }

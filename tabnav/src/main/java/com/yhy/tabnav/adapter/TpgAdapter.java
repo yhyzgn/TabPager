@@ -2,13 +2,13 @@ package com.yhy.tabnav.adapter;
 
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.yhy.tabnav.adapter.base.BasePagerAdapter;
 import com.yhy.tabnav.config.PagerConfig;
 import com.yhy.tabnav.widget.TpgView;
 
 import java.util.List;
-
-import androidx.fragment.app.FragmentManager;
 
 /**
  * author : 颜洪毅
@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentManager;
  */
 public abstract class TpgAdapter<T> extends BasePagerAdapter<TpgView> {
     // Tab标题名称集合
-    private List<T> mTabList;
+    private final List<T> mTabList;
 
     /**
      * 创建适配器
