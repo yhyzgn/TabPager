@@ -3,9 +3,14 @@ package com.yhy.tabpager;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.yhy.tabnav.adapter.TpgAdapter;
 import com.yhy.tabnav.tpg.PagerFace;
 import com.yhy.tabnav.widget.TpgView;
@@ -13,13 +18,10 @@ import com.yhy.tabpager.entity.User;
 import com.yhy.tabpager.pager.UserPager;
 import com.yhy.tabpager.utils.ImgUrls;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * author : 颜洪毅
@@ -49,12 +51,12 @@ public class RecyclerActivity extends AppCompatActivity {
         mUserList.add(new User("梁夜翊", ImgUrls.getAImgUrl(), 12, "梁夜翊梁夜翊梁夜翊梁夜翊梁夜翊"));
 
         rvContent.setLayoutManager(new LinearLayoutManager(this));
-        rvContent.setAdapter(new BaseQuickAdapter<User, BaseViewHolder>(R.layout.item_user_rv, mUserList) {
+        rvContent.setAdapter(new BaseQuickAdapter<>(R.layout.item_user_rv, mUserList) {
             @Override
-            protected void convert(BaseViewHolder helper, User item) {
-                Glide.with(mContext).load(item.avatar).into((ImageView) helper.getView(R.id.iv_avatar));
-                helper.setText(R.id.tv_name, item.name);
-                helper.setText(R.id.tv_introduction, item.introduction);
+            protected void convert(@NotNull BaseViewHolder holder, User item) {
+                Glide.with(RecyclerActivity.this).load(item.avatar).into((ImageView) holder.getView(R.id.iv_avatar));
+                holder.setText(R.id.tv_name, item.name);
+                holder.setText(R.id.tv_introduction, item.introduction);
             }
         });
 

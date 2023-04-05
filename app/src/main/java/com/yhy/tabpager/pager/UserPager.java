@@ -6,19 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.yhy.tabnav.pager.TpgFragment;
 import com.yhy.tabpager.R;
 import com.yhy.tabpager.entity.User;
 import com.yhy.tabpager.utils.ImgUrls;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * author : 颜洪毅
@@ -49,12 +51,12 @@ public class UserPager extends TpgFragment {
         tpgSuccess();
 
         rvUser.setLayoutManager(new LinearLayoutManager(mActivity));
-        rvUser.setAdapter(new BaseQuickAdapter<User, BaseViewHolder>(R.layout.item_user_rv, mUserList) {
+        rvUser.setAdapter(new BaseQuickAdapter<>(R.layout.item_user_rv, mUserList) {
             @Override
-            protected void convert(BaseViewHolder helper, User item) {
-                Glide.with(mContext).load(item.avatar).into((ImageView) helper.getView(R.id.iv_avatar));
-                helper.setText(R.id.tv_name, item.name);
-                helper.setText(R.id.tv_introduction, item.introduction);
+            protected void convert(@NotNull BaseViewHolder holder, User item) {
+                Glide.with(mActivity).load(item.avatar).into((ImageView) holder.getView(R.id.iv_avatar));
+                holder.setText(R.id.tv_name, item.name);
+                holder.setText(R.id.tv_introduction, item.introduction);
             }
         });
     }

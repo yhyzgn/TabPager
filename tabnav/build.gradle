@@ -1,14 +1,16 @@
-apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 31
+    namespace 'com.yhy.tabnav'
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -20,47 +22,43 @@ android {
         }
     }
 
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
+
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    api 'com.github.ybq:Android-SpinKit:1.4.0'
+    api 'com.github.yhyzgn.Badge:badge:1.0.2'
+    api 'com.google.android.material:material:1.8.0'
+    annotationProcessor 'com.github.yhyzgn.Badge:badge-compiler:1.0.2'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.4.0-alpha05', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.13.2'
-
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.5.0-alpha04'
-
-    api 'com.github.ybq:Android-SpinKit:1.4.0'
-
-    api 'com.github.yhyzgn.Badge:badge:1.0.2'
-    annotationProcessor 'com.github.yhyzgn.Badge:badge-compiler:1.0.2'
 }
 
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
-
                 group = "com.github.yhyzgn"
                 artifactId = "TabPager"
-
-                // Adds javadocs and sources as separate jars.
-//                artifact androidJavadocsJar
                 artifact(sourceJar)
 
                 pom {
@@ -97,24 +95,6 @@ sourceSets {
         }
     }
 }
-
-//task androidJavadocs(type: Javadoc) {
-//    println("$buildDir")
-//
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//    android.libraryVariants.all { variant ->
-//        if (variant.name == 'release') {
-//            owner.classpath += variant.javaCompileProvider.get().classpath
-//        }
-//    }
-//    exclude '**/R.html', '**/R.*.html', '**/index.html'
-//}
-//
-//task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-//    archiveClassifier.set('javadoc')
-//    from androidJavadocs.destinationDir
-//}
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
