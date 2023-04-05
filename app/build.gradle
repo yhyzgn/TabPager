@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     namespace 'com.yhy.tabpager'
-    compileSdkVersion 33
+    compileSdk 33
 
     defaultConfig {
         applicationId 'com.yhy.tabpager'
-        minSdkVersion 24
-        targetSdkVersion 33
+        minSdk 24
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 

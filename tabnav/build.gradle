@@ -1,16 +1,17 @@
 plugins {
     id 'com.android.library'
-    id 'maven-publish'
     id 'org.jetbrains.kotlin.android'
 }
 
+group = 'com.github.yhyzgn.TabPager'
+
 android {
     namespace 'com.yhy.tabnav'
-    compileSdkVersion 33
+    compileSdk 33
 
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion 33
+        minSdk 24
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -21,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -35,6 +35,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
     lint {
         abortOnError false
         checkReleaseBuilds false
@@ -51,52 +52,4 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.13.2'
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                group = "com.github.yhyzgn"
-                artifactId = "TabPager"
-                artifact(sourceJar)
-
-                pom {
-                    name = "Widgets"
-                    description = 'TabLayout + ViewPager + Fragment, RadioGroup + ViewPager + Fragment. Display different pager according to internet status. And you could custom every pager layout.'
-                    url = 'https://github.com/yhyzgn/TabPager'
-                    licenses {
-                        license {
-                            name = 'The Apache License, Version 2.0'
-                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id = 'yhyzgn'
-                            name = 'yhyzgn'
-                        }
-                    }
-                    scm {
-                        connection = 'scm:git@github.com/yhyzgn/TabPager.git'
-                        developerConnection = 'scm:git@github.com/yhyzgn/TabPager.git'
-                        url = 'https://github.com/yhyzgn/TabPager'
-                    }
-                }
-            }
-        }
-    }
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java', "$buildDir/generated/ap_generated_sources/release/out"]
-        }
-    }
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
 }
