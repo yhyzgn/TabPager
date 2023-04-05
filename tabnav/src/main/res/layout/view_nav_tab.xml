@@ -11,5 +11,6 @@
         android:textSize="12sp"
         android:clickable="true"
         android:focusable="true"
+        android:focusableInTouchMode="true"
         app:bdg_drag_enable="true"
         app:bdg_horizontal_margin="16dp" />
