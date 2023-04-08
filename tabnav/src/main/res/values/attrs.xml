@@ -18,6 +18,7 @@
         <attr name="tab_mode" format="integer">
             <enum name="scrollable" value="0" />
             <enum name="fixed" value="1" />
+            <enum name="auto" value="2" />
         </attr>
         <!--TabLayout的TabGravity，默认为：GRAVITY_FILL-->
         <attr name="tab_gravity" format="integer">
