@@ -19,7 +19,7 @@ import java.util.List;
  */
 public abstract class TpgAdapter<T> extends BasePagerAdapter<TpgView> {
     // Tab标题名称集合
-    private final List<T> mTabList;
+    protected List<T> mTabList;
 
     /**
      * 创建适配器
