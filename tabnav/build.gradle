@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'maven-publish'
 }
 
 group = 'com.github.yhyzgn.TabPager'
@@ -24,16 +25,25 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+    // 在 Android 构建流程中 AAPT 会使用内置的压缩算法来优化 res/drawable/ 目录下的 PNG 图片，但也可能会导致本来已经优化过的图片体积变大
+    aaptOptions {
+        cruncherEnabled false
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+
+    publishing {
+        singleVariant("release")
     }
 
     lint {
@@ -45,11 +55,41 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     api 'com.github.ybq:Android-SpinKit:1.4.0'
-    api 'com.github.yhyzgn.Badge:badge:1.0.2'
-    api 'com.google.android.material:material:1.8.0'
-    annotationProcessor 'com.github.yhyzgn.Badge:badge-compiler:1.0.2'
+    api 'com.google.android.material:material:1.9.0'
+    api 'com.github.yhyzgn.Badge:badge:1.0.5'
+
+    annotationProcessor 'com.github.yhyzgn.Badge:badge-compiler:1.0.5'
+
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.4.0-alpha05', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation 'junit:junit:4.13.2'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main
+    archiveClassifier = 'sources'
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = "${group}"
+            artifactId = "${project.name}"
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+    // 发布的仓库配置
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://jitpack.io"
+        }
+    }
 }
