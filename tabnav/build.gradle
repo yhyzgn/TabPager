@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
     id 'maven-publish'
 }
 
@@ -27,19 +26,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    // 在 Android 构建流程中 AAPT 会使用内置的压缩算法来优化 res/drawable/ 目录下的 PNG 图片，但也可能会导致本来已经优化过的图片体积变大
-    aaptOptions {
-        cruncherEnabled false
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-
-    testOptions {
-        unitTests.returnDefaultValues = true
     }
 
     publishing {
